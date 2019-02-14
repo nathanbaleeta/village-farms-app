@@ -16,13 +16,55 @@ import { Link } from "react-router-dom";
 
 const columns = [
   "",
-  "Name",
-  "Title",
-  "Sex",
-  "Marital Status",
-  "Village",
-  "Traditional Authority",
-  "District",
+  {
+    name: "Name",
+    options: {
+      filter: true,
+      sort: true
+    }
+  },
+  {
+    name: "Title",
+    options: {
+      filter: true,
+      sort: true
+    }
+  },
+  {
+    name: "Sex",
+    options: {
+      filter: true,
+      sort: true
+    }
+  },
+  {
+    name: "Marital Status",
+    options: {
+      filter: true,
+      sort: true
+    }
+  },
+  {
+    name: "Village",
+    options: {
+      filter: true,
+      sort: true
+    }
+  },
+  {
+    name: "Traditional Authority",
+    options: {
+      filter: true,
+      sort: true
+    }
+  },
+  {
+    name: "District",
+    options: {
+      filter: true,
+      sort: true
+    }
+  },
   "Actions"
 ];
 
@@ -82,10 +124,16 @@ class FarmerList extends React.Component {
     const { classes } = this.props;
 
     const options = {
-      filterType: "checkbox",
+      filter: true,
+      filterType: "dropdown",
+      responsive: "stacked",
+      serverSide: false,
+      rowsPerPage: 10,
+      pagination: true,
       customToolbar: () => {
         return <CustomToolbar />;
       },
+
       // Delete farmers
       onRowsDelete: rowsDeleted => {
         const row = rowsDeleted.data[0].index;

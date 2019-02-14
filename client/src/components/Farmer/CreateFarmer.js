@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
-//import firebase from "../common/firebase";
+import firebase from "../common/firebase";
 
 const styles = theme => ({});
 
@@ -40,7 +40,7 @@ class CreateFarmer extends React.Component {
       title: "",
       sex: "",
       maritalStatus: "",
-      mobile: "",
+      phone: "",
       mmRegistered: "",
       district: "",
       traditionalAuthority: "",
@@ -66,7 +66,7 @@ class CreateFarmer extends React.Component {
       title: this.state.title,
       sex: this.state.sex,
       maritalStatus: this.state.maritalStatus,
-      mobile: this.state.mobile,
+      phone: this.state.phone,
       mmRegistered: this.state.mmRegistered,
       district: this.state.district,
       traditionalAuthority: this.state.traditionalAuthority,
@@ -74,13 +74,15 @@ class CreateFarmer extends React.Component {
     };
 
     //Save farmer module
+    const farmersRef = firebase.database().ref("farmers");
 
+    farmersRef.push(farmer);
     this.setState({
       name: "",
       title: "",
       sex: "",
       maritalStatus: "",
-      mobile: "",
+      phone: "",
       mmRegistered: "",
       district: "",
       traditionalAuthority: "",
@@ -94,7 +96,7 @@ class CreateFarmer extends React.Component {
       title,
       sex,
       maritalStatus,
-      mobile,
+      phone,
       mmRegistered,
       district,
       traditionalAuthority,
@@ -160,9 +162,9 @@ class CreateFarmer extends React.Component {
             <Grid item xs={6} sm={6}>
               <TextField
                 required
-                id="mobile"
-                name="mobile"
-                value={mobile}
+                id="phone"
+                name="phone"
+                value={phone}
                 onChange={this.onChange}
                 label="Mobile phone"
                 fullWidth
