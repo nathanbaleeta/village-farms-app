@@ -9,32 +9,9 @@ import firebase from "../common/firebase";
 
 const styles = theme => ({});
 
-const expenses = [
-  {
-    value: "Electricity",
-    label: "Electricity"
-  },
-  {
-    value: "Internet",
-    label: "Internet"
-  },
-  {
-    value: "Mobile",
-    label: "Mobile"
-  },
-  {
-    value: "Travelling",
-    label: "Travelling"
-  },
-  {
-    value: "Uncategorized",
-    label: "Uncategorized"
-  }
-];
-
-class CreateFarmer extends React.Component {
-  constructor() {
-    super();
+class EditFarmer extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       name: "",
       title: "",
@@ -57,57 +34,12 @@ class CreateFarmer extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-
-    // get our form data out of state
-    const farmer = {
-      name: this.state.name,
-      title: this.state.title,
-      sex: this.state.sex,
-      maritalStatus: this.state.maritalStatus,
-      phone: this.state.phone,
-      mmRegistered: this.state.mmRegistered,
-      district: this.state.district,
-      traditionalAuthority: this.state.traditionalAuthority,
-      village: this.state.village
-    };
-
-    //Save farmer module
-    const farmersRef = firebase.database().ref("farmers");
-
-    farmersRef.push(farmer);
-    this.setState({
-      name: "",
-      title: "",
-      sex: "",
-      maritalStatus: "",
-      phone: "",
-      mmRegistered: "",
-      district: "",
-      traditionalAuthority: "",
-      village: ""
-    });
-  };
-
   render() {
-    const {
-      name,
-      title,
-      sex,
-      maritalStatus,
-      phone,
-      mmRegistered,
-      district,
-      traditionalAuthority,
-      village
-    } = this.state;
-
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
           <Typography component="h1" variant="h4" align="center">
-            Register Farmer
+            Edit Farmer
           </Typography>
           <Grid container spacing={24}>
             <Grid item xs={12} sm={12}>
@@ -115,7 +47,7 @@ class CreateFarmer extends React.Component {
                 required
                 id="name"
                 name="name"
-                value={name}
+                value={this.state.name}
                 onChange={this.onChange}
                 label="Fullname"
                 fullWidth
@@ -127,7 +59,7 @@ class CreateFarmer extends React.Component {
                 required
                 id="title"
                 name="title"
-                value={title}
+                value={this.state.title}
                 onChange={this.onChange}
                 label="Title"
                 fullWidth
@@ -139,7 +71,7 @@ class CreateFarmer extends React.Component {
                 required
                 id="sex"
                 name="sex"
-                value={sex}
+                value={this.state.sex}
                 onChange={this.onChange}
                 label="Sex"
                 fullWidth
@@ -152,7 +84,7 @@ class CreateFarmer extends React.Component {
                 required
                 id="maritalStatus"
                 name="maritalStatus"
-                value={maritalStatus}
+                value={this.state.maritalStatus}
                 onChange={this.onChange}
                 label="Marital Status"
                 fullWidth
@@ -164,7 +96,7 @@ class CreateFarmer extends React.Component {
                 required
                 id="phone"
                 name="phone"
-                value={phone}
+                value={this.state.phone}
                 onChange={this.onChange}
                 label="Mobile phone"
                 fullWidth
@@ -177,7 +109,7 @@ class CreateFarmer extends React.Component {
                 required
                 id="mmRegistered"
                 name="mmRegistered"
-                value={mmRegistered}
+                value={this.state.mmRegistered}
                 onChange={this.onChange}
                 label="Mobile Money Registered"
                 fullWidth
@@ -190,7 +122,7 @@ class CreateFarmer extends React.Component {
                 required
                 id="district"
                 name="district"
-                value={district}
+                value={this.state.district}
                 onChange={this.onChange}
                 label="District"
                 fullWidth
@@ -203,7 +135,7 @@ class CreateFarmer extends React.Component {
                 required
                 id="traditionalAuthority"
                 name="traditionalAuthority"
-                value={traditionalAuthority}
+                value={this.state.traditionalAuthority}
                 onChange={this.onChange}
                 label="Traditional Authority"
                 fullWidth
@@ -216,7 +148,7 @@ class CreateFarmer extends React.Component {
                 required
                 id="village"
                 name="village"
-                value={village}
+                value={this.state.village}
                 onChange={this.onChange}
                 label="Village"
                 fullWidth
@@ -231,7 +163,7 @@ class CreateFarmer extends React.Component {
                 size="large"
                 color="primary"
               >
-                Save Farmer
+                Update Farmer
               </Button>
             </Grid>
           </Grid>
@@ -241,4 +173,4 @@ class CreateFarmer extends React.Component {
   }
 }
 
-export default withStyles(styles)(CreateFarmer);
+export default withStyles(styles)(EditFarmer);
