@@ -9,19 +9,17 @@ import firebase from "../common/firebase";
 
 const styles = theme => ({});
 
-class CreateFarmer extends React.Component {
+class CreateProcurement extends React.Component {
   constructor() {
     super();
     this.state = {
-      name: "",
-      title: "",
-      sex: "",
-      maritalStatus: "",
-      phone: "",
-      mmRegistered: "",
-      district: "",
-      traditionalAuthority: "",
-      village: ""
+      advanceBalance: "",
+      cashAvailabletoday: "",
+      coffeeType: "",
+      pricePerKg: "",
+      todayValueSale: "",
+      valueOfSaleLiability: "",
+      weight: ""
     };
   }
 
@@ -38,63 +36,59 @@ class CreateFarmer extends React.Component {
     event.preventDefault();
 
     // get our form data out of state
-    const farmer = {
-      name: this.state.name,
-      title: this.state.title,
-      sex: this.state.sex,
-      maritalStatus: this.state.maritalStatus,
-      phone: this.state.phone,
-      mmRegistered: this.state.mmRegistered,
-      district: this.state.district,
-      traditionalAuthority: this.state.traditionalAuthority,
-      village: this.state.village
+    const procurement = {
+      advanceBalance: this.state.advanceBalance,
+      cashAvailabletoday: this.state.cashAvailabletoday,
+      coffeeType: this.state.coffeeType,
+      pricePerKg: this.state.pricePerKg,
+      todayValueSale: this.state.todayValueSale,
+      valueOfSaleLiability: this.state.valueOfSaleLiability,
+      weight: this.state.weight
     };
 
     //Save farmer module
-    const farmersRef = firebase.database().ref("farmers");
+    const procurementRef = firebase
+      .database()
+      .ref("procurement/-LZUABJm0f5vqmasA9qy");
 
-    farmersRef.push(farmer);
+    procurementRef.push(procurement);
     this.setState({
-      name: "",
-      title: "",
-      sex: "",
-      maritalStatus: "",
-      phone: "",
-      mmRegistered: "",
-      district: "",
-      traditionalAuthority: "",
-      village: ""
+      advanceBalance: "",
+      cashAvailabletoday: "",
+      coffeeType: "",
+      pricePerKg: "",
+      todayValueSale: "",
+      valueOfSaleLiability: "",
+      weight: ""
     });
   };
 
   render() {
     const {
-      name,
-      title,
-      sex,
-      maritalStatus,
-      phone,
-      mmRegistered,
-      district,
-      traditionalAuthority,
-      village
+      advanceBalance,
+      cashAvailabletoday,
+      coffeeType,
+      pricePerKg,
+      todayValueSale,
+      valueOfSaleLiability,
+      weight
     } = this.state;
 
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
           <Typography component="h1" variant="h4" align="center">
-            Register Farmer
+            Add Procurement
           </Typography>
           <Grid container spacing={24}>
             <Grid item xs={12} sm={12}>
               <TextField
                 required
-                id="name"
-                name="name"
-                value={name}
+                id="advanceBalance"
+                name="advanceBalance"
+                value={advanceBalance}
                 onChange={this.onChange}
-                label="Fullname"
+                label="Advance Balance"
                 fullWidth
                 autoComplete="off"
               />
@@ -102,11 +96,11 @@ class CreateFarmer extends React.Component {
             <Grid item xs={6} sm={6}>
               <TextField
                 required
-                id="title"
-                name="title"
-                value={title}
+                id="cashAvalaibletoday"
+                name="cashAvalaibletoday"
+                value={cashAvailabletoday}
                 onChange={this.onChange}
-                label="Title"
+                label="Is cash avalaible today"
                 fullWidth
                 autoComplete="off"
               />
@@ -114,36 +108,11 @@ class CreateFarmer extends React.Component {
             <Grid item xs={6} sm={6}>
               <TextField
                 required
-                id="sex"
-                name="sex"
-                value={sex}
+                id="coffeeType"
+                name="coffeeType"
+                value={coffeeType}
                 onChange={this.onChange}
-                label="Sex"
-                fullWidth
-                autoComplete="off"
-              />
-            </Grid>
-
-            <Grid item xs={6} sm={6}>
-              <TextField
-                required
-                id="maritalStatus"
-                name="maritalStatus"
-                value={maritalStatus}
-                onChange={this.onChange}
-                label="Marital Status"
-                fullWidth
-                autoComplete="off"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6}>
-              <TextField
-                required
-                id="phone"
-                name="phone"
-                value={phone}
-                onChange={this.onChange}
-                label="Mobile phone"
+                label="Coffee Type"
                 fullWidth
                 autoComplete="off"
               />
@@ -152,11 +121,23 @@ class CreateFarmer extends React.Component {
             <Grid item xs={6} sm={6}>
               <TextField
                 required
-                id="mmRegistered"
-                name="mmRegistered"
-                value={mmRegistered}
+                id="pricePerKg"
+                name="pricePerKg"
+                value={pricePerKg}
                 onChange={this.onChange}
-                label="Mobile Money Registered"
+                label="Price Per Kg"
+                fullWidth
+                autoComplete="off"
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <TextField
+                required
+                id="todayValueSale"
+                name="todayValueSale"
+                value={todayValueSale}
+                onChange={this.onChange}
+                label="Today Value Sale"
                 fullWidth
                 autoComplete="off"
               />
@@ -165,11 +146,11 @@ class CreateFarmer extends React.Component {
             <Grid item xs={6} sm={6}>
               <TextField
                 required
-                id="district"
-                name="district"
-                value={district}
+                id="valueOfSaleLiability"
+                name="valueOfSaleLiability"
+                value={valueOfSaleLiability}
                 onChange={this.onChange}
-                label="District"
+                label="Value of sale liability"
                 fullWidth
                 autoComplete="off"
               />
@@ -178,24 +159,11 @@ class CreateFarmer extends React.Component {
             <Grid item xs={6} sm={6}>
               <TextField
                 required
-                id="traditionalAuthority"
-                name="traditionalAuthority"
-                value={traditionalAuthority}
+                id="weight"
+                name="weight"
+                value={weight}
                 onChange={this.onChange}
-                label="Traditional Authority"
-                fullWidth
-                autoComplete="off"
-              />
-            </Grid>
-
-            <Grid item xs={6} sm={6}>
-              <TextField
-                required
-                id="village"
-                name="village"
-                value={village}
-                onChange={this.onChange}
-                label="Village"
+                label="Weight"
                 fullWidth
                 autoComplete="off"
               />
@@ -208,7 +176,7 @@ class CreateFarmer extends React.Component {
                 size="large"
                 color="primary"
               >
-                Save Farmer
+                Add Procurement
               </Button>
             </Grid>
           </Grid>
@@ -218,4 +186,4 @@ class CreateFarmer extends React.Component {
   }
 }
 
-export default withStyles(styles)(CreateFarmer);
+export default withStyles(styles)(CreateProcurement);

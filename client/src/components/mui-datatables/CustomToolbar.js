@@ -12,6 +12,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import { Switch, Route } from "react-router-dom";
 
 import CreateFarmer from "../Farmer/CreateFarmer";
+import CreateProcurement from "../procurement/CreateProcurement";
 
 const styles = theme => ({
   iconButton: {},
@@ -54,6 +55,7 @@ class CustomToolbar extends React.Component {
           <DialogContent>
             <Switch>
               <Route path="/farmers" component={CreateFarmer} />
+              <Route path="/procurement" component={CreateProcurement} />
             </Switch>
           </DialogContent>
           <DialogActions>

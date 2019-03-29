@@ -6,6 +6,8 @@ import IconButton from "@material-ui/core/IconButton";
 
 import EditIcon from "@material-ui/icons/Edit";
 
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
@@ -201,14 +203,15 @@ class FarmerList extends React.Component {
     return (
       <React.Fragment>
         <MUIDataTable
-          title={"Farmers' list"}
+          title={"Procurement list"}
           data={data.map((farmer, index) => {
             return [
               <Avatar className={classes.purpleAvatar}>
-                {this.CapitalizeInitial(farmer.name)}
+                <ShoppingCartIcon />
               </Avatar>,
+
               <Link
-                to={`/show/${farmer.id}`}
+                to={`/farmers/${farmer.id}`}
                 style={{
                   color: "darkblue",
                   textDecoration: "none"
