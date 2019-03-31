@@ -1,253 +1,291 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
-import { withStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import CloseIcon from "@material-ui/icons/Close";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import PersonIcon from "@material-ui/icons/Person";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
-import { Link } from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
+import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
-import MenuList from "@material-ui/core/MenuList";
+import Menu from "@material-ui/core/Menu";
+import { fade } from "@material-ui/core/styles/colorManipulator";
+import { withStyles } from "@material-ui/core/styles";
+import SearchIcon from "@material-ui/icons/Search";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import MailIcon from "@material-ui/icons/Mail";
+import PollIcon from "@material-ui/icons/Poll";
+import PersonIcon from "@material-ui/icons/Person";
+import HomeIcon from "@material-ui/icons/Home";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import MoreIcon from "@material-ui/icons/MoreVert";
+import { Link } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import Avatar from "@material-ui/core/Avatar";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import Tooltip from "@material-ui/core/Tooltip";
+import LockIcon from "@material-ui/icons/Lock";
 
-const drawerWidth = 240;
+import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
   root: {
-    display: "flex"
-  },
-  appBar: {
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    })
+    width: "100%"
   },
   grow: {
     flexGrow: 1
   },
   menuButton: {
-    marginLeft: 12,
+    textTransform: "capitalize",
+    fontWeight: "bold",
+    marginLeft: -12,
     marginRight: 20
   },
-  hide: {
-    display: "none"
+  link: {
+    textDecoration: "none",
+    color: "white"
   },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0
+  avatar: {
+    margin: 10
   },
-  drawerPaper: {
-    width: drawerWidth
+  title: {
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block"
+    }
   },
-  drawerHeader: {
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: "white",
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.75)
+    },
+    marginRight: theme.spacing.unit * 2,
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing.unit * 3,
+      width: "auto"
+    }
+  },
+  searchIcon: {
+    color: "black",
+    "&:hover": {
+      color: fade(theme.palette.common.white, 0.25)
+    },
+    width: theme.spacing.unit * 9,
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
     display: "flex",
-    color: "primary",
     alignItems: "center",
-    padding: "0 8px",
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-end"
+    justifyContent: "center"
   },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    marginLeft: -drawerWidth
+  inputRoot: {
+    color: "primary",
+    width: "100%"
   },
-  contentShift: {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    }),
-    marginLeft: 0
+  inputInput: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: 200
+    }
+  },
+  sectionDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex"
+    }
+  },
+  sectionMobile: {
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none"
+    }
   }
 });
 
 class Header extends React.Component {
   state = {
-    open: false
+    anchorEl: null,
+    mobileMoreAnchorEl: null
   };
 
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
+  handleProfileMenuOpen = event => {
+    this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleDrawerClose = () => {
-    this.setState({ open: false });
+  handleMenuClose = () => {
+    this.setState({ anchorEl: null });
+    this.handleMobileMenuClose();
+  };
+
+  handleMobileMenuOpen = event => {
+    this.setState({ mobileMoreAnchorEl: event.currentTarget });
+  };
+
+  handleMobileMenuClose = () => {
+    this.setState({ mobileMoreAnchorEl: null });
   };
 
   render() {
-    const { classes, theme } = this.props;
-    const { open } = this.state;
+    const { anchorEl, mobileMoreAnchorEl } = this.state;
+    const { classes } = this.props;
+    const isMenuOpen = Boolean(anchorEl);
+    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    const renderMenu = (
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        open={isMenuOpen}
+        onClose={this.handleMenuClose}
+      >
+        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
+        <MenuItem onClick={this.handleMenuClose}>Settings</MenuItem>
+        <Link to="/logout" className={classes.link}>
+          <MenuItem onClick={this.handleMenuClose}>Logout</MenuItem>
+        </Link>
+        <Typography
+          variant="title"
+          gutterBottom
+          style={{ fontSize: "13px", color: "#D23E56" }}
+          align="center"
+        >
+          <Link to="/logon">Following</Link>
+        </Typography>
+      </Menu>
+    );
+
+    const renderMobileMenu = (
+      <Menu
+        anchorEl={mobileMoreAnchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        open={isMobileMenuOpen}
+        onClose={this.handleMenuClose}
+      >
+        <MenuItem>
+          <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <MailIcon />
+            </Badge>
+          </IconButton>
+          <p>Messages</p>
+        </MenuItem>
+
+        <MenuItem onClick={this.handleMobileMenuClose}>
+          <IconButton color="inherit">
+            <Badge badgeContent={11} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>Notifications</p>
+        </MenuItem>
+        <MenuItem onClick={this.handleProfileMenuOpen}>
+          <IconButton color="inherit">
+            <AccountCircle />
+          </IconButton>
+          <p>Profile</p>
+        </MenuItem>
+      </Menu>
+    );
 
     return (
       <div className={classes.root}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          //color="primary"
-          style={{ background: "navy" }}
-          className={classNames(classes.appBar, {
-            [classes.appBarShift]: open
-          })}
-        >
-          <Toolbar disableGutters={!open} variant="dense">
-            <IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={this.handleDrawerOpen}
-              className={classNames(classes.menuButton, open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
+        <AppBar position="fixed" style={{ background: "navy" }}>
+          <Toolbar>
             <Typography
-              variant="title"
+              className={classes.title}
+              variant="h6"
               color="inherit"
-              className={classes.grow}
+              noWrap
+              style={{ fontWeight: "bold" }}
             >
-              Village Farms Manager
+              Village Farms App
             </Typography>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+              />
+            </div>
+            <div className={classes.grow} />
+            <div className={classes.sectionDesktop}>
+              <div>
+                <Grid container justify="center" alignItems="center">
+                  <Link to="/" className={classes.link}>
+                    <Button color="inherit" className={classes.menuButton}>
+                      Dashboard
+                    </Button>
+                  </Link>
+                  <Link to="/farmers" className={classes.link}>
+                    <Button color="inherit" className={classes.menuButton}>
+                      Farmers
+                    </Button>
+                  </Link>
 
-            <section className={classes.toolbarButtons}>
-              <IconButton color="inherit">
-                <PersonIcon />
+                  <Link to="/procurement" className={classes.link}>
+                    <Button color="inherit" className={classes.menuButton}>
+                      Procurement
+                    </Button>
+                  </Link>
+
+                  <Link to="/advances" className={classes.link}>
+                    <Button color="inherit" className={classes.menuButton}>
+                      Advances
+                    </Button>
+                  </Link>
+
+                  <Avatar
+                    alt="Remy Sharp"
+                    src="/static/images/avatar/1.jpg"
+                    className={classes.avatar}
+                  />
+                </Grid>
+              </div>
+
+              <IconButton
+                aria-owns={isMenuOpen ? "material-appbar" : undefined}
+                aria-haspopup="true"
+                onClick={this.handleProfileMenuOpen}
+                color="inherit"
+              >
+                <ArrowDropDownIcon />
               </IconButton>
-              <IconButton color="inherit" aria-label="More Options">
-                <MoreVertIcon
-                  items={["Profile", "User Management", "Logout"]}
-                />
+            </div>
+            <div className={classes.sectionMobile}>
+              <IconButton
+                aria-haspopup="true"
+                onClick={this.handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
               </IconButton>
-            </section>
+            </div>
           </Toolbar>
         </AppBar>
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          open={open}
-          classes={{
-            paper: classes.drawerPaper
-          }}
-        >
-          <div className={classes.drawerHeader}>
-            <IconButton color="primary" onClick={this.handleDrawerClose}>
-              {theme.direction === "ltr" ? <CloseIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </div>
-          <Divider />
-          <MenuList>
-            <MenuItem component={Link} to="/">
-              <ListItemIcon className={classes.icon}>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText
-                classes={{ primary: classes.primary }}
-                inset
-                primary="Dashboard"
-              />
-            </MenuItem>
-            <MenuItem component={Link} to="/farmers">
-              <ListItemIcon className={classes.icon}>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText
-                classes={{ primary: classes.primary }}
-                inset
-                primary="Farmers "
-              />
-            </MenuItem>
-
-            <MenuItem component={Link} to="/procurement">
-              <ListItemIcon className={classes.icon}>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText
-                classes={{ primary: classes.primary }}
-                inset
-                primary="Procurement"
-              />
-            </MenuItem>
-            <MenuItem component={Link} to="/advances">
-              <ListItemIcon className={classes.icon}>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText
-                classes={{ primary: classes.primary }}
-                inset
-                primary="Advances"
-              />
-            </MenuItem>
-            <MenuItem component={Link} to="/reports">
-              <ListItemIcon className={classes.icon}>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText
-                classes={{ primary: classes.primary }}
-                inset
-                primary="Reports"
-              />
-            </MenuItem>
-            <MenuItem component={Link} to="/settings">
-              <ListItemIcon className={classes.icon}>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText
-                classes={{ primary: classes.primary }}
-                inset
-                primary="Settings"
-              />
-            </MenuItem>
-          </MenuList>
-
-          <Divider />
-          <List>
-            {["Settings", "Logout"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        <main
-          className={classNames(classes.content, {
-            [classes.contentShift]: open
-          })}
-        />
+        {renderMenu}
+        {renderMobileMenu}
       </div>
     );
   }
 }
 
 Header.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(Header);
+export default withStyles(styles)(Header);

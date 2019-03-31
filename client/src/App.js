@@ -22,6 +22,11 @@ const App = ({ classes }) => (
   <React.Fragment>
     <CssBaseline />
     <Header />
+    <br />
+    <br />
+    <br />
+    <br />
+
     <main className={classes.main}>
       <Switch>
         <Route exact path="/" component={Dashboard} />

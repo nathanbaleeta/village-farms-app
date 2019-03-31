@@ -88,7 +88,7 @@ const styles = {
   purpleAvatar: {
     margin: 10,
     color: "#fff",
-    backgroundColor: deepPurple[500]
+    backgroundColor: "navy"
   }
 };
 
