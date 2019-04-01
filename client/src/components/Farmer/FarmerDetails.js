@@ -7,6 +7,9 @@ import { Link } from "react-router-dom";
 
 import Divider from "@material-ui/core/Divider";
 
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+
 import firebase from "../common/firebase";
 
 import Fab from "@material-ui/core/Fab";
@@ -60,10 +63,14 @@ class FarmerDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
+      firstname: "",
+      lastname: "",
       title: "",
       sex: "",
       maritalStatus: "",
+      phone: "",
+      mmRegistered: "",
+      mmPayment: "",
       traditionalAuthority: "",
       village: "",
       district: "",
@@ -77,20 +84,29 @@ class FarmerDetails extends React.Component {
     const farmersRef = firebase.database().ref(`farmers/${key}`);
     farmersRef.once("value", snapshot => {
       // handle read data.
-      const name = snapshot.child("name").val();
+      const firstname = snapshot.child("firstname").val();
+      const lastname = snapshot.child("lastname").val();
       const title = snapshot.child("title").val();
       const sex = snapshot.child("sex").val();
       const maritalStatus = snapshot.child("maritalStatus").val();
+
+      const phone = snapshot.child("phone").val();
+      const mmRegistered = snapshot.child("mmRegistered").val();
+      const mmPayment = snapshot.child("mmPayment").val();
 
       const village = snapshot.child("village").val();
       const traditionalAuthority = snapshot.child("traditionalAuthority").val();
       const district = snapshot.child("district").val();
 
       this.setState({
-        name: name,
+        firstname: firstname,
+        lastname: lastname,
         title: title,
         sex: sex,
         maritalStatus: maritalStatus,
+        phone: phone,
+        mmRegistered: mmRegistered,
+        mmPayment: mmPayment,
         village: village,
         traditionalAuthority: traditionalAuthority,
         district: district
@@ -141,7 +157,8 @@ class FarmerDetails extends React.Component {
                 />
 
                 <Typography variant="h6" component="h4">
-                  {this.state.title}. {this.state.name}
+                  {this.state.title}.{" "}
+                  {this.state.firstname + " " + this.state.lastname}
                 </Typography>
                 <Typography variant="body1" gutterBottom align="center">
                   Lives in {this.state.traditionalAuthority},{" "}
@@ -172,11 +189,20 @@ class FarmerDetails extends React.Component {
               </Typography>
 
               <Typography variant="body1" gutterBottom align="left">
-                <b style={{ color: "black" }}>Mobile number:</b> 0787212321
+                <b style={{ color: "black" }}>Mobile number:</b>{" "}
+                {this.state.phone}
               </Typography>
 
               <Typography variant="body1" gutterBottom align="left">
-                <b style={{ color: "black" }}>Mobile Money registered?:</b> Yes
+                <b style={{ color: "black" }}>Mobile Money Registered?:</b>{" "}
+                {this.state.mmRegistered}
+              </Typography>
+
+              <Typography variant="body1" gutterBottom align="left">
+                <b style={{ color: "black" }}>
+                  Receive payments via Mobile Money?:
+                </b>{" "}
+                {this.state.mmPayment}
               </Typography>
               <br />
               <Divider />

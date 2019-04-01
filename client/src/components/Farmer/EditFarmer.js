@@ -5,15 +5,14 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 
-import firebase from "../common/firebase";
-
 const styles = theme => ({});
 
 class EditFarmer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
+      firstname: "",
+      lastname: "",
       title: "",
       sex: "",
       maritalStatus: "",
@@ -42,14 +41,26 @@ class EditFarmer extends React.Component {
             Edit Farmer
           </Typography>
           <Grid container spacing={24}>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <TextField
                 required
-                id="name"
-                name="name"
-                value={this.state.name}
+                id="firstname"
+                name="firstname"
+                value={this.state.firstname}
                 onChange={this.onChange}
-                label="Fullname"
+                label="Firstname"
+                fullWidth
+                autoComplete="off"
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <TextField
+                required
+                id="lastname"
+                name="lastname"
+                value={this.state.lastname}
+                onChange={this.onChange}
+                label="Lastname"
                 fullWidth
                 autoComplete="off"
               />

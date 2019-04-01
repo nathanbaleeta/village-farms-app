@@ -3,20 +3,23 @@ import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import EditIcon from "@material-ui/icons/Edit";
 
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import InputMask from "react-input-mask";
 
 import Avatar from "@material-ui/core/Avatar";
 import deepOrange from "@material-ui/core/colors/deepOrange";
-import deepPurple from "@material-ui/core/colors/deepPurple";
 
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+
+import MenuItem from "@material-ui/core/MenuItem";
 
 import MUIDataTable from "mui-datatables";
 import CustomToolbar from "../mui-datatables/CustomToolbar";
@@ -25,10 +28,10 @@ import firebase from "../common/firebase";
 const columns = [
   "",
   {
-    name: "Name",
+    name: "Fullname",
     options: {
-      filter: true,
-      sort: true
+      filter: false,
+      sort: false
     }
   },
   {
@@ -92,6 +95,111 @@ const styles = {
   }
 };
 
+const titles = [
+  {
+    value: "Prof",
+    label: "Prof"
+  },
+  {
+    value: "Dr",
+    label: "Dr"
+  },
+  {
+    value: "Mr",
+    label: "Mr"
+  },
+  {
+    value: "Ms",
+    label: "Ms"
+  },
+  {
+    value: "Mrs",
+    label: "Mrs"
+  },
+  {
+    value: "Col",
+    label: "Col"
+  },
+  {
+    value: "Capt",
+    label: "Capt"
+  }
+];
+
+const genders = [
+  {
+    value: "Male",
+    label: "Male"
+  },
+  {
+    value: "Female",
+    label: "Female"
+  }
+];
+
+const maritalStatuses = [
+  {
+    value: "Married",
+    label: "Married"
+  },
+  {
+    value: "Single",
+    label: "Single"
+  },
+  {
+    value: "Widowed",
+    label: "Widowed"
+  },
+  {
+    value: "Separated",
+    label: "Separated"
+  }
+];
+
+const districts = [
+  {
+    value: "Chitipa",
+    label: "Chitipa"
+  },
+  {
+    value: "Rumphi",
+    label: "Rumphi"
+  },
+  {
+    value: "Nkhatabay",
+    label: "Nkhatabay"
+  },
+  {
+    value: "Mzimba",
+    label: "Mzimba"
+  },
+  {
+    value: "Ntchisi",
+    label: "Ntchisi"
+  }
+];
+
+const mmOptions = [
+  {
+    value: "Yes",
+    label: "Yes"
+  },
+  {
+    value: "No",
+    label: "No"
+  }
+];
+
+const mmPayments = [
+  {
+    value: "Yes",
+    label: "Yes"
+  },
+  {
+    value: "No",
+    label: "No"
+  }
+];
 class FarmerList extends React.Component {
   constructor(props) {
     super(props);
@@ -117,15 +225,21 @@ class FarmerList extends React.Component {
       for (let item in items) {
         newState.push({
           id: item,
+          firstname: items[item].firstname,
+          lastname: items[item].lastname,
           title: items[item].title,
-          name: items[item].name,
           sex: items[item].sex,
           maritalStatus: items[item].maritalStatus,
+          mmRegistered: items[item].mmRegistered,
+          mmPayment: items[item].mmPayment,
+          phone: items[item].phone,
           village: items[item].village,
           traditionalAuthority: items[item].traditionalAuthority,
           district: items[item].district
         });
       }
+
+      console.log(newState);
       this.setState({
         data: newState
       });
@@ -138,11 +252,14 @@ class FarmerList extends React.Component {
     this.setState({
       open: true,
 
-      name: recordToEdit.name,
+      firstname: recordToEdit.firstname,
+      lastname: recordToEdit.lastname,
       title: recordToEdit.title,
       sex: recordToEdit.sex,
       maritalStatus: recordToEdit.maritalStatus,
+      phone: recordToEdit.phone,
       mmRegistered: recordToEdit.mmRegistered,
+      mmPayment: recordToEdit.mmPayment,
       district: recordToEdit.district,
       traditionalAuthority: recordToEdit.traditionalAuthority,
       village: recordToEdit.village
@@ -205,7 +322,8 @@ class FarmerList extends React.Component {
           data={data.map((farmer, index) => {
             return [
               <Avatar className={classes.purpleAvatar}>
-                {this.CapitalizeInitial(farmer.name)}
+                {this.CapitalizeInitial(farmer.firstname) +
+                  this.CapitalizeInitial(farmer.lastname)}
               </Avatar>,
               <Link
                 to={`/show/${farmer.id}`}
@@ -214,7 +332,7 @@ class FarmerList extends React.Component {
                   textDecoration: "none"
                 }}
               >
-                {farmer.name}
+                {farmer.firstname + " " + farmer.lastname}
               </Link>,
               farmer.title,
               farmer.sex,
@@ -250,14 +368,14 @@ class FarmerList extends React.Component {
               Edit Farmer
             </Typography>
             <Grid container spacing={24}>
-              <Grid item xs={12} sm={12}>
+              <Grid item xs={6} sm={6}>
                 <TextField
                   required
-                  id="name"
-                  name="name"
-                  value={this.state.name}
+                  id="firstname"
+                  name="firstname"
+                  value={this.state.firstname}
                   onChange={this.onChange}
-                  label="Fullname"
+                  label="Firstname"
                   fullWidth
                   autoComplete="off"
                 />
@@ -265,75 +383,159 @@ class FarmerList extends React.Component {
               <Grid item xs={6} sm={6}>
                 <TextField
                   required
+                  id="lastname"
+                  name="lastname"
+                  value={this.state.lastname}
+                  onChange={this.onChange}
+                  label="Lastname"
+                  fullWidth
+                  autoComplete="off"
+                />
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <TextField
                   id="title"
+                  select
                   name="title"
                   value={this.state.title}
                   onChange={this.onChange}
-                  label="Title"
+                  label="Title*"
                   fullWidth
-                  autoComplete="off"
-                />
+                  helperText="Please select title"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                >
+                  {titles.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <Grid item xs={6} sm={6}>
                 <TextField
-                  required
                   id="sex"
+                  select
                   name="sex"
                   value={this.state.sex}
                   onChange={this.onChange}
-                  label="Sex"
+                  label="Sex*"
                   fullWidth
-                  autoComplete="off"
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <TextField
-                  required
-                  id="maritalStatus"
-                  name="maritalStatus"
-                  value={this.state.maritalStatus}
-                  onChange={this.onChange}
-                  label="Marital Status"
-                  fullWidth
-                  autoComplete="off"
-                />
-              </Grid>
-              <Grid item xs={6} sm={6}>
-                <TextField
-                  required
-                  id="phone"
-                  name="phone"
-                  value={this.state.phone}
-                  onChange={this.onChange}
-                  label="Mobile phone"
-                  fullWidth
-                  autoComplete="off"
-                />
+                  helperText="Please select gender"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                >
+                  {genders.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
 
               <Grid item xs={6} sm={6}>
                 <TextField
-                  required
+                  id="maritalStatus"
+                  select
+                  name="maritalStatus"
+                  value={this.state.maritalStatus}
+                  onChange={this.onChange}
+                  label="Marital Status*"
+                  fullWidth
+                  helperText="Please select marital status"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                >
+                  {maritalStatuses.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <InputMask
+                  mask="(+265) 999 999 999"
+                  value={this.state.phone}
+                  onChange={this.onChange}
+                >
+                  {() => (
+                    <TextField
+                      id="phone"
+                      name="phone"
+                      label="Phone"
+                      fullWidth
+                      autoComplete="phone"
+                    />
+                  )}
+                </InputMask>
+              </Grid>
+
+              <Grid item xs={6} sm={6}>
+                <TextField
                   id="mmRegistered"
+                  select
                   name="mmRegistered"
                   value={this.state.mmRegistered}
                   onChange={this.onChange}
-                  label="Mobile Money Registered"
+                  label="Mobile Money Registered*"
                   fullWidth
-                  autoComplete="off"
-                />
+                  helperText="Please select option"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                >
+                  {mmOptions.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <Grid item xs={6} sm={6}>
                 <TextField
-                  required
+                  id="mmPayment"
+                  select
+                  name="mmPayment"
+                  value={this.state.mmPayment}
+                  onChange={this.onChange}
+                  label="Receive payments on MM*"
+                  fullWidth
+                  helperText="Please select option"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                >
+                  {mmPayments.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <TextField
                   id="district"
+                  select
                   name="district"
                   value={this.state.district}
                   onChange={this.onChange}
-                  label="District"
+                  label="District*"
                   fullWidth
-                  autoComplete="off"
-                />
+                  helperText="Please select district"
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                >
+                  {districts.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
 
               <Grid item xs={6} sm={6}>
@@ -349,7 +551,7 @@ class FarmerList extends React.Component {
                 />
               </Grid>
 
-              <Grid item xs={6} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   required
                   id="village"
