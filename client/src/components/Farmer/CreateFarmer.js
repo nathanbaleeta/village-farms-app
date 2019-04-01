@@ -129,6 +129,7 @@ class CreateFarmer extends React.Component {
       maritalStatus: "",
       phone: "",
       mmRegistered: "",
+      mmPayment: "",
       district: "",
       traditionalAuthority: "",
       village: ""
@@ -156,6 +157,7 @@ class CreateFarmer extends React.Component {
       maritalStatus: this.state.maritalStatus,
       phone: this.state.phone,
       mmRegistered: this.state.mmRegistered,
+      mmPayment: this.state.mmPayment,
       district: this.state.district,
       traditionalAuthority: this.state.traditionalAuthority,
       village: this.state.village
@@ -173,6 +175,7 @@ class CreateFarmer extends React.Component {
       maritalStatus: "",
       phone: "",
       mmRegistered: "",
+      mmPayment: "",
       district: "",
       traditionalAuthority: "",
       village: ""
@@ -300,6 +303,7 @@ class CreateFarmer extends React.Component {
                     name="phone"
                     label="Phone"
                     fullWidth
+                    helperText="For example: 772 123 456"
                     autoComplete="phone"
                   />
                 )}

@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 
 import FarmerList from "./components/Farmer/FarmerList";
 import FarmerDetails from "./components/Farmer/FarmerDetails";
+import EditFarmer from "./components/Farmer/EditFarmer";
 import ProcurementList from "./components/procurement/ProcurementList";
 
 const styles = theme => ({
@@ -32,6 +33,7 @@ const App = ({ classes }) => (
         <Route exact path="/" component={Dashboard} />
         <Route path="/farmers" component={FarmerList} />
         <Route path="/show/:id" component={FarmerDetails} />
+        <Route path="/farmers/edit" component={EditFarmer} />
         <Route path="/procurement" component={ProcurementList} />
         <Route path="/advances" />
         <Route path="/reports" />

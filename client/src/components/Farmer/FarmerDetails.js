@@ -7,9 +7,6 @@ import { Link } from "react-router-dom";
 
 import Divider from "@material-ui/core/Divider";
 
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-
 import firebase from "../common/firebase";
 
 import Fab from "@material-ui/core/Fab";
