@@ -8,6 +8,8 @@ import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import { Typography } from "@material-ui/core";
 
 import { Switch, Route } from "react-router-dom";
 
@@ -52,6 +54,22 @@ class CustomToolbar extends React.Component {
           aria-labelledby="form-dialog-title"
           onClose={this.handleClose}
         >
+          <DialogTitle
+            id="simple-dialog-title"
+            color="default"
+            style={{
+              backgroundColor: "navy"
+            }}
+          >
+            <Typography
+              component="h1"
+              variant="display1"
+              align="center"
+              style={{ color: "white" }}
+            >
+              Register Farmer
+            </Typography>
+          </DialogTitle>
           <DialogContent>
             <Switch>
               <Route path="/farmers" component={CreateFarmer} />

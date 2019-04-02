@@ -15,15 +15,12 @@ import deepOrange from "@material-ui/core/colors/deepOrange";
 
 import MenuItem from "@material-ui/core/MenuItem";
 
-import { Switch, Route } from "react-router-dom";
-
 import MUIDataTable from "mui-datatables";
 import CustomToolbar from "../mui-datatables/CustomToolbar";
 import firebase from "../common/firebase";
 
-import EditFarmer from "./EditFarmer";
-
 import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -94,7 +91,7 @@ const styles = {
   purpleAvatar: {
     margin: 10,
     color: "#fff",
-    backgroundColor: "navy"
+    backgroundColor: "#327F24"
   }
 };
 
@@ -221,7 +218,12 @@ class FarmerList extends React.Component {
       mmPayment: "",
       village: "",
       traditionalAuthority: "",
-      district: ""
+      district: "",
+
+      yearOpened: "",
+      matureTrees: "",
+      immatureTrees: "",
+      hectarage: ""
     };
 
     this.handleOpen = () => {
@@ -251,7 +253,12 @@ class FarmerList extends React.Component {
           phone: items[item].phone,
           village: items[item].village,
           traditionalAuthority: items[item].traditionalAuthority,
-          district: items[item].district
+          district: items[item].district,
+
+          yearOpened: items[item].yearOpened,
+          matureTrees: items[item].matureTrees,
+          immatureTrees: items[item].immatureTrees,
+          hectarage: items[item].hectarage
         });
       }
 
@@ -286,7 +293,12 @@ class FarmerList extends React.Component {
         mmPayment: snapshot.child("mmPayment").val(),
         village: snapshot.child("village").val(),
         traditionalAuthority: snapshot.child("traditionalAuthority").val(),
-        district: snapshot.child("district").val()
+        district: snapshot.child("district").val(),
+
+        yearOpened: snapshot.child("yearOpened").val(),
+        matureTrees: snapshot.child("matureTrees").val(),
+        immatureTrees: snapshot.child("immatureTrees").val(),
+        hectarage: snapshot.child("hectarage").val()
       });
     });
     console.log(
@@ -318,7 +330,12 @@ class FarmerList extends React.Component {
       mmPayment: this.state.mmPayment,
       district: this.state.district,
       traditionalAuthority: this.state.traditionalAuthority,
-      village: this.state.village
+      village: this.state.village,
+
+      yearOpened: this.state.yearOpened,
+      matureTrees: this.state.matureTrees,
+      immatureTrees: this.state.immatureTrees,
+      hectarage: this.state.hectarage
     };
 
     //Update farmer module
@@ -417,17 +434,33 @@ class FarmerList extends React.Component {
 
         <Dialog
           id="myDialog"
+          maxWidth="sm"
           open={this.state.open}
           aria-labelledby="form-dialog-title"
           onClose={this.handleClose}
         >
+          <DialogTitle
+            id="simple-dialog-title"
+            color="default"
+            style={{ backgroundColor: "navy" }}
+          >
+            <Typography
+              component="h1"
+              variant="display1"
+              align="center"
+              style={{ color: "white" }}
+            >
+              Edit Farmer
+            </Typography>
+          </DialogTitle>
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
-              <Typography component="h1" variant="h4" align="center">
-                Edit Farmer
-              </Typography>
               <br />
 
+              <Typography variant="headline" align="left" color="inherit">
+                Autobiography
+              </Typography>
+              <br />
               <Grid container spacing={24}>
                 <Grid item xs={6} sm={6}>
                   <TextField
@@ -643,11 +676,76 @@ class FarmerList extends React.Component {
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
+                  <Typography variant="headline" align="left" color="inherit">
+                    Farm History and Status
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    required
+                    id="yearOpened"
+                    name="yearOpened"
+                    value={this.state.yearOpened}
+                    onChange={this.onChange}
+                    label="Year farm opened"
+                    type="date"
+                    fullWidth
+                    autoComplete="off"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    required
+                    id="matureTrees"
+                    name="matureTrees"
+                    value={this.state.matureTrees}
+                    onChange={this.onChange}
+                    label="Number of mature trees"
+                    type="number"
+                    fullWidth
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    required
+                    id="immatureTrees"
+                    name="immatureTrees"
+                    value={this.state.immatureTrees}
+                    onChange={this.onChange}
+                    label="Number of immature trees"
+                    helperText="(below 3 years)"
+                    type="number"
+                    fullWidth
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    required
+                    id="hectarage"
+                    name="hectarage"
+                    value={this.state.hectarage}
+                    onChange={this.onChange}
+                    label="Hectarage under cultivation"
+                    helperText="(Enter in Acres)"
+                    type="number"
+                    fullWidth
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
                   <Button
                     type="submit"
                     variant="contained"
                     size="large"
-                    color="primary"
+                    color="secondary"
                   >
                     Update Farmer
                   </Button>

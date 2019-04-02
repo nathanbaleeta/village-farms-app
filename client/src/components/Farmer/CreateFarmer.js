@@ -132,7 +132,11 @@ class CreateFarmer extends React.Component {
       mmPayment: "",
       district: "",
       traditionalAuthority: "",
-      village: ""
+      village: "",
+      yearOpened: "",
+      matureTrees: "",
+      immatureTrees: "",
+      hectarage: ""
     };
   }
 
@@ -160,7 +164,11 @@ class CreateFarmer extends React.Component {
       mmPayment: this.state.mmPayment,
       district: this.state.district,
       traditionalAuthority: this.state.traditionalAuthority,
-      village: this.state.village
+      village: this.state.village,
+      yearOpened: this.state.yearOpened,
+      matureTrees: this.state.matureTrees,
+      immatureTrees: this.state.immatureTrees,
+      hectarage: this.state.hectarage
     };
 
     //Save farmer module
@@ -178,7 +186,11 @@ class CreateFarmer extends React.Component {
       mmPayment: "",
       district: "",
       traditionalAuthority: "",
-      village: ""
+      village: "",
+      yearOpened: "",
+      matureTrees: "",
+      immatureTrees: "",
+      hectarage: ""
     });
   };
 
@@ -193,15 +205,22 @@ class CreateFarmer extends React.Component {
       mmRegistered,
       district,
       traditionalAuthority,
-      village
+      village,
+      yearOpened,
+      matureTrees,
+      immatureTrees,
+      hectarage
     } = this.state;
 
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <Typography component="h1" variant="h4" align="center">
-            Register Farmer
+          <br />
+
+          <Typography variant="headline" align="left" color="inherit">
+            Autobiography
           </Typography>
+
           <Grid container spacing={24}>
             <Grid item xs={6} sm={6}>
               <TextField
@@ -400,13 +419,77 @@ class CreateFarmer extends React.Component {
                 autoComplete="off"
               />
             </Grid>
+            <Grid item xs={12} sm={12}>
+              <Typography variant="headline" align="left" color="inherit">
+                Farm History and Status
+              </Typography>
+            </Grid>
+
+            <Grid item xs={6} sm={6}>
+              <TextField
+                required
+                id="yearOpened"
+                name="yearOpened"
+                value={yearOpened}
+                onChange={this.onChange}
+                label="Year farm opened"
+                type="date"
+                fullWidth
+                autoComplete="off"
+                InputLabelProps={{
+                  shrink: true
+                }}
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <TextField
+                required
+                id="matureTrees"
+                name="matureTrees"
+                value={matureTrees}
+                onChange={this.onChange}
+                label="Number of mature trees"
+                type="number"
+                fullWidth
+                autoComplete="off"
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <TextField
+                required
+                id="immatureTrees"
+                name="immatureTrees"
+                value={immatureTrees}
+                onChange={this.onChange}
+                label="Number of immature trees"
+                helperText="(below 3 years)"
+                type="number"
+                fullWidth
+                autoComplete="off"
+              />
+            </Grid>
+
+            <Grid item xs={6} sm={6}>
+              <TextField
+                required
+                id="hectarage"
+                name="hectarage"
+                value={hectarage}
+                onChange={this.onChange}
+                label="Hectarage under cultivation"
+                helperText="(Enter in Acres)"
+                type="number"
+                fullWidth
+                autoComplete="off"
+              />
+            </Grid>
 
             <Grid item xs={12} sm={12}>
               <Button
                 type="submit"
                 variant="contained"
                 size="large"
-                color="primary"
+                color="secondary"
               >
                 Save Farmer
               </Button>

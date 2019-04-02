@@ -6,14 +6,8 @@ import InputMask from "react-input-mask";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Fab from "@material-ui/core/Fab";
-
-import { Link } from "react-router-dom";
 
 import MenuItem from "@material-ui/core/MenuItem";
-import firebase from "../common/firebase";
-
-import Paper from "@material-ui/core/Paper";
 
 const styles = theme => ({});
 
@@ -142,39 +136,7 @@ class EditFarmer extends React.Component {
   }
 
   componentDidMount() {
-    const key = this.props.match.params.id;
-    const farmersRef = firebase.database().ref(`farmers/${key}`);
-    //console.log(key);
-    /* farmersRef.once("value", snapshot => {
-      // handle read data.
-      const firstname = snapshot.child("firstname").val();
-      const lastname = snapshot.child("lastname").val();
-      const title = snapshot.child("title").val();
-      const sex = snapshot.child("sex").val();
-      const maritalStatus = snapshot.child("maritalStatus").val();
-
-      const phone = snapshot.child("phone").val();
-      const mmRegistered = snapshot.child("mmRegistered").val();
-      const mmPayment = snapshot.child("mmPayment").val();
-
-      const village = snapshot.child("village").val();
-      const traditionalAuthority = snapshot.child("traditionalAuthority").val();
-      const district = snapshot.child("district").val();
-
-      this.setState({
-        firstname: firstname,
-        lastname: lastname,
-        title: title,
-        sex: sex,
-        maritalStatus: maritalStatus,
-        phone: phone,
-        mmRegistered: mmRegistered,
-        mmPayment: mmPayment,
-        village: village,
-        traditionalAuthority: traditionalAuthority,
-        district: district
-      });
-    }); */
+    //const key = this.props.match.params.id;
   }
 
   onChange = e => {
