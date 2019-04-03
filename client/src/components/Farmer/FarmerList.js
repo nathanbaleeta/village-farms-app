@@ -237,6 +237,7 @@ class FarmerList extends React.Component {
 
   componentDidMount() {
     const farmersRef = firebase.database().ref("farmers");
+
     farmersRef.on("value", snapshot => {
       let items = snapshot.val();
       let newState = [];

@@ -10,8 +10,10 @@ import Grid from "@material-ui/core/Grid";
 import LineChart from "../components/analytics/LineChart";
 import PieChart from "../components/analytics/PieChart";
 import BarChart from "../components/analytics/BarChart";
-import GeoChart from "../components/analytics/GeoChart";
-import LinearDeterminate from "../components/analytics/LinearDeterminate";
+import RegistrationSummary from "../components/analytics/RegistrationSummary";
+import FarmHistoryStatus from "../components/analytics/FarmHistoryStatus";
+import AdvancesSummary from "../components/analytics/AdvancesSummary";
+import ProcurementSummary from "../components/analytics/ProcurementSummary";
 
 const styles = theme => ({
   root: {
@@ -35,55 +37,20 @@ class Visualization extends React.Component {
 
     return (
       <div>
-        <Grid container spacing={24}>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>
-              <img src="group.png" alt="Kitten" height="45" width="45" />
-              <Typography component="h2" variant="h6" gutterBottom>
-                Total Number Registered
-              </Typography>
-              <Typography component="h2" variant="h4" gutterBottom>
-                172
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>
-              <img src="trees.png" alt="Kitten" height="45" width="45" />
-              <Typography component="h2" variant="h6" gutterBottom>
-                Total Mature trees
-              </Typography>
-              <Typography component="h2" variant="h4" gutterBottom>
-                1289
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>
-              <img src="tree.png" alt="Kitten" height="45" width="45" />
-              <Typography component="h2" variant="h6" gutterBottom>
-                Total Immature trees
-              </Typography>
-              <Typography component="h2" variant="h4" gutterBottom>
-                122
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>
-              <img src="hills.png" alt="Kitten" height="45" width="45" />
-              <Typography component="h2" variant="h6" gutterBottom>
-                Total Hectarage
-              </Typography>
-              <Typography component="h2" variant="h4" gutterBottom>
-                1232
-              </Typography>
-            </Paper>
-          </Grid>
-        </Grid>
-
         <br />
         <Grid container spacing={24}>
+          <Grid item xs={3}>
+            <RegistrationSummary />
+          </Grid>
+          <Grid item xs={3}>
+            <FarmHistoryStatus />
+          </Grid>
+          <Grid item xs={3}>
+            <AdvancesSummary />
+          </Grid>
+          <Grid item xs={3}>
+            <ProcurementSummary />
+          </Grid>
           <Grid item xs={4}>
             <Paper className={classes.paper}>
               <PieChart />
@@ -99,23 +66,8 @@ class Visualization extends React.Component {
               <BarChart />
             </Paper>
           </Grid>
-          <Grid item xs={4}>
-            <Paper className={classes.paper}>
-              <GeoChart />
-            </Paper>
-          </Grid>
-
-          <Grid item xs={4}>
-            <Paper className={classes.paper}>
-              <LinearDeterminate />
-            </Paper>
-          </Grid>
         </Grid>
         <br />
-
-        <Typography component="h2" variant="h4" gutterBottom>
-          Farmers' List
-        </Typography>
 
         <br />
       </div>

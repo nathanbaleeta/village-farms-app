@@ -5,8 +5,6 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 
-import Divider from "@material-ui/core/Divider";
-
 import firebase from "../common/firebase";
 
 import Fab from "@material-ui/core/Fab";
@@ -16,7 +14,6 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 
 import Avatar from "@material-ui/core/Avatar";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
 import PersonIcon from "@material-ui/icons/Person";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
@@ -71,8 +68,14 @@ class FarmerDetails extends React.Component {
       traditionalAuthority: "",
       village: "",
       district: "",
+      yearOpened: "",
+      matureTrees: "",
+      immatureTrees: "",
+      hectarage: "",
 
-      value: 0
+      value: 0,
+      males: 0,
+      females: 0
     };
   }
 
@@ -95,6 +98,11 @@ class FarmerDetails extends React.Component {
       const traditionalAuthority = snapshot.child("traditionalAuthority").val();
       const district = snapshot.child("district").val();
 
+      const yearOpened = snapshot.child("yearOpened").val();
+      const matureTrees = snapshot.child("matureTrees").val();
+      const immatureTrees = snapshot.child("immatureTrees").val();
+      const hectarage = snapshot.child("hectarage").val();
+
       this.setState({
         firstname: firstname,
         lastname: lastname,
@@ -106,7 +114,11 @@ class FarmerDetails extends React.Component {
         mmPayment: mmPayment,
         village: village,
         traditionalAuthority: traditionalAuthority,
-        district: district
+        district: district,
+        yearOpened: yearOpened,
+        matureTrees: matureTrees,
+        immatureTrees: immatureTrees,
+        hectarage: hectarage
       });
     });
   }
@@ -153,14 +165,63 @@ class FarmerDetails extends React.Component {
                   className={classes.bigAvatar}
                 />
 
-                <Typography variant="h6" component="h4">
+                <Typography
+                  variant="h6"
+                  component="h4"
+                  style={{ fontWeight: "bold" }}
+                >
                   {this.state.title}.{" "}
                   {this.state.firstname + " " + this.state.lastname}
                 </Typography>
                 <Typography variant="body1" gutterBottom align="center">
-                  Lives in {this.state.traditionalAuthority},{" "}
-                  {this.state.district}
+                  Lives in {this.state.village},{" "}
+                  {this.state.traditionalAuthority}, {this.state.district}
                 </Typography>
+                <Typography variant="body1" gutterBottom align="center">
+                  Farm opened in <b>{this.state.yearOpened}</b>
+                </Typography>
+                <br />
+                <Grid container spacing={24}>
+                  <Grid item xs={4} sm={4}>
+                    <Typography variant="title" gutterBottom align="center">
+                      Hectarage
+                    </Typography>
+                    <Typography
+                      variant="title"
+                      gutterBottom
+                      align="center"
+                      color="Primary"
+                    >
+                      {this.state.hectarage}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} sm={4}>
+                    <Typography variant="title" gutterBottom align="center">
+                      Mature
+                    </Typography>
+                    <Typography
+                      variant="title"
+                      gutterBottom
+                      align="center"
+                      color="Primary"
+                    >
+                      {this.state.matureTrees}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} sm={4}>
+                    <Typography variant="title" gutterBottom align="center">
+                      Immature
+                    </Typography>
+                    <Typography
+                      variant="title"
+                      gutterBottom
+                      align="center"
+                      color="Primary"
+                    >
+                      {this.state.immatureTrees}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </CardContent>
             </Card>
             <br />
@@ -176,58 +237,45 @@ class FarmerDetails extends React.Component {
               </Fab>
               <br />
               <br />
-              <Typography variant="body1" gutterBottom align="left">
-                <b style={{ color: "black" }}>Gender:</b> {this.state.sex}
-              </Typography>
-
-              <Typography variant="body1" gutterBottom align="left">
-                <b style={{ color: "black" }}>Marital status:</b>{" "}
-                {this.state.maritalStatus}
-              </Typography>
-
-              <Typography variant="body1" gutterBottom align="left">
-                <b style={{ color: "black" }}>Mobile number:</b>{" "}
-                {this.state.phone}
-              </Typography>
-
-              <Typography variant="body1" gutterBottom align="left">
-                <b style={{ color: "black" }}>Mobile Money Registered?:</b>{" "}
-                {this.state.mmRegistered}
-              </Typography>
-
-              <Typography variant="body1" gutterBottom align="left">
-                <b style={{ color: "black" }}>
-                  Receive payments via Mobile Money?:
-                </b>{" "}
-                {this.state.mmPayment}
-              </Typography>
+              <Grid container spacing={24}>
+                <Grid item xs={5} sm={5}>
+                  <Typography variant="body1" gutterBottom align="left">
+                    Gender:
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    Marital status:
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    Mobile:
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    MM Registered?:
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    Payments via MM?:
+                  </Typography>
+                </Grid>
+                <Grid item xs={7} sm={7}>
+                  <Typography variant="body1" gutterBottom align="left">
+                    {this.state.sex}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    {this.state.maritalStatus}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    {this.state.phone}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    {this.state.mmRegistered}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom align="left">
+                    {this.state.mmPayment}
+                  </Typography>
+                </Grid>
+              </Grid>
               <br />
-              <Divider />
-              <br />
-              <Fab
-                color="primary"
-                size="medium"
-                align="center"
-                aria-label="Add"
-                className={classes.fab}
-              >
-                <LocationOnIcon />
-              </Fab>
-              <br />
-              <br />
-              <Typography variant="body1" gutterBottom align="left">
-                <b style={{ color: "black" }}>Village:</b> {this.state.village}
-              </Typography>
 
-              <Typography variant="body1" gutterBottom align="left">
-                <b style={{ color: "black" }}>Traditional Authority:</b>{" "}
-                {this.state.traditionalAuthority}
-              </Typography>
-
-              <Typography variant="body1" gutterBottom align="left">
-                <b style={{ color: "black" }}>District:</b>{" "}
-                {this.state.district}
-              </Typography>
+              <br />
             </Paper>
             <br />
           </Grid>
@@ -254,7 +302,11 @@ class FarmerDetails extends React.Component {
                   <Advances />
                 </TabContainer>
               )}
-              {value === 2 && <TabContainer>Page Three</TabContainer>}
+              {value === 2 && (
+                <TabContainer>
+                  <Advances />
+                </TabContainer>
+              )}
             </Paper>
           </Grid>
         </Grid>
