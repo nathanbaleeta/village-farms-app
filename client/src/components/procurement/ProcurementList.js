@@ -1,12 +1,13 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
-
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
 import EditIcon from "@material-ui/icons/Edit";
-
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -20,63 +21,7 @@ import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 
-import MUIDataTable from "mui-datatables";
-import CustomToolbar from "../mui-datatables/CustomToolbar";
 import firebase from "../common/firebase";
-
-const columns = [
-  "",
-  {
-    name: "Name",
-    options: {
-      filter: true,
-      sort: true
-    }
-  },
-  {
-    name: "Title",
-    options: {
-      filter: true,
-      sort: true
-    }
-  },
-  {
-    name: "Sex",
-    options: {
-      filter: true,
-      sort: true
-    }
-  },
-  {
-    name: "Marital Status",
-    options: {
-      filter: true,
-      sort: true
-    }
-  },
-  {
-    name: "Village",
-    options: {
-      filter: true,
-      sort: true
-    }
-  },
-  {
-    name: "Traditional Authority",
-    options: {
-      filter: true,
-      sort: true
-    }
-  },
-  {
-    name: "District",
-    options: {
-      filter: true,
-      sort: true
-    }
-  },
-  "Actions"
-];
 
 const styles = {
   avatar: {
@@ -94,11 +39,10 @@ const styles = {
   }
 };
 
-class FarmerList extends React.Component {
+class ProcurementList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
       open: false
     };
 
@@ -111,135 +55,83 @@ class FarmerList extends React.Component {
     };
   }
 
-  componentDidMount() {
-    const farmersRef = firebase.database().ref("farmers");
-    farmersRef.on("value", snapshot => {
-      let items = snapshot.val();
-      let newState = [];
-      for (let item in items) {
-        newState.push({
-          id: item,
-          title: items[item].title,
-          name: items[item].name,
-          sex: items[item].sex,
-          maritalStatus: items[item].maritalStatus,
-          village: items[item].village,
-          traditionalAuthority: items[item].traditionalAuthority,
-          district: items[item].district
-        });
-      }
-      this.setState({
-        data: newState
-      });
-    });
-  }
-
-  updateFarmer(id) {
-    const recordToEdit = this.state.data.find(item => item.id === id);
-
-    this.setState({
-      open: true,
-
-      name: recordToEdit.name,
-      title: recordToEdit.title,
-      sex: recordToEdit.sex,
-      maritalStatus: recordToEdit.maritalStatus,
-      mmRegistered: recordToEdit.mmRegistered,
-      district: recordToEdit.district,
-      traditionalAuthority: recordToEdit.traditionalAuthority,
-      village: recordToEdit.village
-    });
-  }
-
-  onChange = e => {
-    /*
-          Because we named the inputs to match their
-          corresponding values in state, it's
-          super easy to update the state
-        */
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  CapitalizeInitial(str) {
-    return str.charAt(0).toUpperCase();
-  }
+  componentDidMount() {}
 
   render() {
-    const { data } = this.state;
     const { classes } = this.props;
-
-    const options = {
-      filter: true,
-      filterType: "dropdown",
-      responsive: "stacked",
-      serverSide: false,
-      rowsPerPage: 10,
-      pagination: true,
-      customToolbar: () => {
-        return <CustomToolbar />;
-      },
-
-      // Update farmers
-      onRowClick: rowIndex => {
-        //console.log(rowIndex);
-        //this.handleOpen();
-      },
-      // Delete farmers
-      onRowsDelete: rowsDeleted => {
-        // get the corresponding id in state
-        const row = rowsDeleted.data[0].index;
-        const id = this.state.data[row]["id"];
-        console.log(id);
-
-        // Perform deletion using Firebase native remove method
-        firebase
-          .database()
-          .ref("farmers")
-          .child(id)
-          .remove();
-      }
-    };
 
     return (
       <React.Fragment>
-        <MUIDataTable
-          title={"Procurement list"}
-          data={data.map((farmer, index) => {
-            return [
-              <Avatar className={classes.purpleAvatar}>
-                <ShoppingCartIcon />
-              </Avatar>,
+        <br />
 
-              <Link
-                to={`/farmers/${farmer.id}`}
-                style={{
-                  color: "darkblue",
-                  textDecoration: "none"
-                }}
-              >
-                {farmer.name}
-              </Link>,
-              farmer.title,
-              farmer.sex,
-              farmer.maritalStatus,
-              farmer.village,
-              farmer.traditionalAuthority,
-              farmer.district,
-
-              <IconButton
-                color="primary"
-                //onClick={() => this.updateFarmer(index)}
-                // The bind method also works
-                onClick={this.updateFarmer.bind(this, farmer.id)}
-              >
-                <EditIcon color="primary" />
-              </IconButton>
-            ];
-          })}
-          columns={columns}
-          options={options}
-        />
-
+        <Typography variant="h5" component="h3" color="default" align="center">
+          Procurements
+        </Typography>
+        <br />
+        <Grid container spacing={24}>
+          <Grid item xs={4} sm={4}>
+            <Card className={classes.card}>
+              <CardHeader
+                avatar={
+                  <Avatar
+                    alt="Remy Sharp"
+                    src="/static/images/avatar/procurement.png"
+                    className={classes.bigAvatar}
+                  />
+                }
+                action={
+                  <IconButton>
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                title="Otim Tony"
+                subheader="September 14, 2018"
+              />
+            </Card>
+          </Grid>
+          <Grid item xs={4} sm={4}>
+            <Card className={classes.card}>
+              <CardHeader
+                avatar={
+                  <Avatar
+                    alt="Remy Sharp"
+                    src="/static/images/avatar/procurement.png"
+                    className={classes.bigAvatar}
+                  />
+                }
+                action={
+                  <IconButton>
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                title="Diego Angemi"
+                subheader="September 14, 2016"
+              />
+            </Card>
+          </Grid>
+          <br />
+          <Grid item xs={4} sm={4}>
+            <Card className={classes.card}>
+              <CardHeader
+                avatar={
+                  <Avatar
+                    alt="Remy Sharp"
+                    src="/static/images/avatar/procurement.png"
+                    className={classes.bigAvatar}
+                  />
+                }
+                action={
+                  <IconButton>
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                title="Nathan Baleeta"
+                subheader="September 14, 2018"
+              />
+            </Card>
+          </Grid>
+          <Grid item xs={6} sm={6} />
+        </Grid>
         <Dialog
           id="myDialog"
           open={this.state.open}
@@ -390,4 +282,4 @@ class FarmerList extends React.Component {
   }
 }
 
-export default withStyles(styles)(FarmerList);
+export default withStyles(styles)(ProcurementList);

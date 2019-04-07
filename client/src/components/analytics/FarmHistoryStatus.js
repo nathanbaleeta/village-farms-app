@@ -37,16 +37,16 @@ class FarmHistoryStatus extends React.Component {
       let immatureCounter = 0;
       let hectarageCounter = 0;
       snapshot.forEach(function(childSnapshot) {
-        // Immature trees counter
+        // Immature trees counter; convert string to int
         immatureCounter =
           immatureCounter +
           parseInt(childSnapshot.child("immatureTrees").val());
 
-        // Mature trees counter
+        // Mature trees counter; convert string to int
         matureCounter =
           matureCounter + parseInt(childSnapshot.child("matureTrees").val());
 
-        // Hectarage counter
+        // Hectarage counter; convert string to int
         hectarageCounter =
           hectarageCounter + parseInt(childSnapshot.child("hectarage").val());
       });

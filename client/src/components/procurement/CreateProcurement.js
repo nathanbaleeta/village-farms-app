@@ -1,18 +1,46 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
+import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+
+import MenuItem from "@material-ui/core/MenuItem";
 
 import firebase from "../common/firebase";
 
 const styles = theme => ({});
 
+const coffeeTypes = [
+  {
+    value: "Cherry",
+    label: "Cherry"
+  },
+  {
+    value: "Parchment",
+    label: "Parchment"
+  },
+  {
+    value: "Mbuni",
+    label: "Mbuni"
+  }
+];
+
+const cashAvailability = [
+  {
+    value: "Yes",
+    label: "Yes"
+  },
+  {
+    value: "No",
+    label: "No"
+  }
+];
 class CreateProcurement extends React.Component {
   constructor() {
     super();
     this.state = {
+      id: "",
       advanceBalance: "",
       cashAvailabletoday: "",
       coffeeType: "",
@@ -22,6 +50,8 @@ class CreateProcurement extends React.Component {
       weight: ""
     };
   }
+
+  componentDidMount() {}
 
   onChange = e => {
     /*
@@ -49,7 +79,7 @@ class CreateProcurement extends React.Component {
     //Save farmer module
     const procurementRef = firebase
       .database()
-      .ref("procurement/-LZUABJm0f5vqmasA9qy");
+      .ref("procurement/-LbT3BAlIMK18oBJSnZl");
 
     procurementRef.push(procurement);
     this.setState({
@@ -77,10 +107,13 @@ class CreateProcurement extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <Typography component="h1" variant="h4" align="center">
-            Add Procurement
-          </Typography>
+          <br />
+          <br />
+
           <Grid container spacing={24}>
+            <Typography variant="body1" gutterBottom align="left">
+              {this.state.id}
+            </Typography>
             <Grid item xs={12} sm={12}>
               <TextField
                 required
@@ -89,33 +122,54 @@ class CreateProcurement extends React.Component {
                 value={advanceBalance}
                 onChange={this.onChange}
                 label="Advance Balance"
+                type="number"
                 fullWidth
                 autoComplete="off"
               />
             </Grid>
+
             <Grid item xs={6} sm={6}>
               <TextField
-                required
-                id="cashAvalaibletoday"
-                name="cashAvalaibletoday"
+                id="cashAvailabletoday"
+                select
+                name="cashAvailabletoday"
                 value={cashAvailabletoday}
                 onChange={this.onChange}
-                label="Is cash avalaible today"
+                label="Cash available today?*"
                 fullWidth
-                autoComplete="off"
-              />
+                helperText="Please select option"
+                InputLabelProps={{
+                  shrink: true
+                }}
+              >
+                {cashAvailability.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
+
             <Grid item xs={6} sm={6}>
               <TextField
-                required
                 id="coffeeType"
+                select
                 name="coffeeType"
                 value={coffeeType}
                 onChange={this.onChange}
-                label="Coffee Type"
+                label="Coffee type*"
                 fullWidth
-                autoComplete="off"
-              />
+                helperText="Please select coffee type"
+                InputLabelProps={{
+                  shrink: true
+                }}
+              >
+                {coffeeTypes.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
 
             <Grid item xs={6} sm={6}>
@@ -126,6 +180,7 @@ class CreateProcurement extends React.Component {
                 value={pricePerKg}
                 onChange={this.onChange}
                 label="Price Per Kg"
+                type="number"
                 fullWidth
                 autoComplete="off"
               />
@@ -138,6 +193,7 @@ class CreateProcurement extends React.Component {
                 value={todayValueSale}
                 onChange={this.onChange}
                 label="Today Value Sale"
+                type="number"
                 fullWidth
                 autoComplete="off"
               />
@@ -151,6 +207,7 @@ class CreateProcurement extends React.Component {
                 value={valueOfSaleLiability}
                 onChange={this.onChange}
                 label="Value of sale liability"
+                type="number"
                 fullWidth
                 autoComplete="off"
               />
@@ -164,6 +221,7 @@ class CreateProcurement extends React.Component {
                 value={weight}
                 onChange={this.onChange}
                 label="Weight"
+                type="number"
                 fullWidth
                 autoComplete="off"
               />

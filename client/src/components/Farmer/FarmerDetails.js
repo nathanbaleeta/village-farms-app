@@ -3,11 +3,17 @@ import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import IconButton from "@material-ui/core/IconButton";
+
+import MenuItem from "@material-ui/core/MenuItem";
 import { Link } from "react-router-dom";
 
 import firebase from "../common/firebase";
 
 import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -24,8 +30,13 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import PollIcon from "@material-ui/icons/Poll";
 
-import Procurements from "./Procurements";
 import Advances from "./Advances";
+
+import Dialog from "@material-ui/core/Dialog";
+import Button from "@material-ui/core/Button";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 function TabContainer(props) {
   return (
@@ -45,18 +56,44 @@ const styles = theme => ({
   },
 
   bigAvatar: {
-    width: 100,
-    height: 100
+    width: 60,
+    height: 60
   },
   fab: {
     margin: theme.spacing.unit
   }
 });
 
+const coffeeTypes = [
+  {
+    value: "Cherry",
+    label: "Cherry"
+  },
+  {
+    value: "Parchment",
+    label: "Parchment"
+  },
+  {
+    value: "Mbuni",
+    label: "Mbuni"
+  }
+];
+
+const cashAvailability = [
+  {
+    value: "Yes",
+    label: "Yes"
+  },
+  {
+    value: "No",
+    label: "No"
+  }
+];
 class FarmerDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: "",
       firstname: "",
       lastname: "",
       title: "",
@@ -75,14 +112,56 @@ class FarmerDetails extends React.Component {
 
       value: 0,
       males: 0,
-      females: 0
+      females: 0,
+
+      // Procurement create
+      advanceBalance: "",
+      cashAvailabletoday: "",
+      coffeeType: "",
+      pricePerKg: "",
+      todayValueSale: "",
+      valueOfSaleLiability: "",
+      weight: "",
+
+      // Procurement edit
+      procurementData: []
     };
   }
 
   componentDidMount() {
     const key = this.props.match.params.id;
+
+    // Farmer procurement data.
+    const procurementRef = firebase.database().ref(`procurement/${key}`);
+    procurementRef.on("value", snapshot => {
+      let procurementInfo = {};
+      let newState = [];
+      snapshot.forEach(function(childSnapshot) {
+        // handle read data.
+        var p = childSnapshot.val();
+
+        procurementInfo = {
+          advanceBalance: p.advanceBalance,
+          cashAvailabletoday: p.cashAvailabletoday,
+          coffeeType: p.coffeeType,
+          pricePerKg: p.pricePerKg,
+          todayValueSale: p.todayValueSale,
+          valueOfSaleLiability: p.valueOfSaleLiability,
+          weight: p.weight
+        };
+        // Add procurement objecet to array
+        newState.push(procurementInfo);
+      });
+      this.setState({
+        procurementData: newState
+      });
+
+      console.log(this.state.procurementData);
+    });
+
+    // Farmer registration data.
     const farmersRef = firebase.database().ref(`farmers/${key}`);
-    farmersRef.once("value", snapshot => {
+    farmersRef.on("value", snapshot => {
       // handle read data.
       const firstname = snapshot.child("firstname").val();
       const lastname = snapshot.child("lastname").val();
@@ -104,6 +183,7 @@ class FarmerDetails extends React.Component {
       const hectarage = snapshot.child("hectarage").val();
 
       this.setState({
+        id: key,
         firstname: firstname,
         lastname: lastname,
         title: title,
@@ -118,7 +198,10 @@ class FarmerDetails extends React.Component {
         yearOpened: yearOpened,
         matureTrees: matureTrees,
         immatureTrees: immatureTrees,
-        hectarage: hectarage
+        hectarage: hectarage,
+
+        //Dialog box
+        open: false
       });
     });
   }
@@ -127,9 +210,58 @@ class FarmerDetails extends React.Component {
     this.setState({ value });
   };
 
+  handleOpen = id => {
+    this.setState({ open: true });
+    //console.log(id);
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  onChange = e => {
+    /*
+          Because we named the inputs to match their
+          corresponding values in state, it's
+          super easy to update the state
+        */
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleSubmit = event => {
+    event.preventDefault();
+
+    // get our form data out of state
+    const procurement = {
+      advanceBalance: this.state.advanceBalance,
+      cashAvailabletoday: this.state.cashAvailabletoday,
+      coffeeType: this.state.coffeeType,
+      pricePerKg: this.state.pricePerKg,
+      todayValueSale: this.state.todayValueSale,
+      valueOfSaleLiability: this.state.valueOfSaleLiability,
+      weight: this.state.weight
+    };
+
+    //Save farmer module
+    const procurementRef = firebase
+      .database()
+      //.ref("procurement/-LbT3BAlIMK18oBJSnZl");
+      .ref(`procurement/${this.state.id}`);
+
+    procurementRef.push(procurement);
+    this.setState({
+      advanceBalance: "",
+      cashAvailabletoday: "",
+      coffeeType: "",
+      pricePerKg: "",
+      todayValueSale: "",
+      valueOfSaleLiability: "",
+      weight: ""
+    });
+  };
   render() {
     const { classes } = this.props;
-    const { value } = this.state;
+    const { value, procurementData } = this.state;
 
     return (
       <React.Fragment>
@@ -294,7 +426,123 @@ class FarmerDetails extends React.Component {
               </Tabs>
               {value === 0 && (
                 <TabContainer>
-                  <Procurements />
+                  <Fab
+                    color="primary"
+                    variant="extended"
+                    aria-label="Add"
+                    className={classes.fab}
+                    onClick={this.handleOpen.bind(this, this.state.id)}
+                  >
+                    <AddIcon className={classes.extendedIcon} />
+                    Create Procurement
+                  </Fab>
+                  <br />
+                  <br />
+                  <br />
+
+                  {/* Procurement details for farmer*/}
+
+                  <Grid container spacing={24}>
+                    {this.state.procurementData.map((p, index) => (
+                      <Grid item xs={6} sm={6}>
+                        <Card className={classes.card}>
+                          <CardContent>
+                            <Grid container spacing={24}>
+                              <Grid item xs={5} sm={5}>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  Advance balance:
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  Cash available today:
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  Coffee type:
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  Price per kg:
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  Total value sale:
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  Weight:
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={7} sm={7}>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  {p.advanceBalance}
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  {p.cashAvailabletoday}
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  {p.coffeeType}
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  {p.todayValueSale}
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  {p.valueOfSaleLiability}
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  {p.weight}
+                                </Typography>
+                              </Grid>
+                            </Grid>
+                          </CardContent>
+                        </Card>
+                      </Grid>
+                    ))}
+                  </Grid>
+                  {/* Procurement details for farmer*/}
                 </TabContainer>
               )}
               {value === 1 && (
@@ -310,6 +558,169 @@ class FarmerDetails extends React.Component {
             </Paper>
           </Grid>
         </Grid>
+
+        <Dialog
+          id="myDialog"
+          open={this.state.open}
+          aria-labelledby="form-dialog-title"
+          onClose={this.handleClose}
+        >
+          <DialogTitle
+            id="simple-dialog-title"
+            color="default"
+            style={{
+              backgroundColor: "navy"
+            }}
+          >
+            <Typography
+              component="h1"
+              variant="display1"
+              align="center"
+              style={{ color: "white" }}
+            >
+              Add Procurement
+            </Typography>
+          </DialogTitle>
+          <DialogContent>
+            {/* Create Procurement */}
+            <form onSubmit={this.handleSubmit}>
+              <br />
+              <br />
+
+              <Grid container spacing={24}>
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    required
+                    id="advanceBalance"
+                    name="advanceBalance"
+                    value={this.state.advanceBalance}
+                    onChange={this.onChange}
+                    label="Advance Balance"
+                    type="number"
+                    fullWidth
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    id="cashAvailabletoday"
+                    select
+                    name="cashAvailabletoday"
+                    value={this.state.cashAvailabletoday}
+                    onChange={this.onChange}
+                    label="Cash available today?*"
+                    fullWidth
+                    helperText="Please select option"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  >
+                    {cashAvailability.map(option => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    id="coffeeType"
+                    select
+                    name="coffeeType"
+                    value={this.state.coffeeType}
+                    onChange={this.onChange}
+                    label="Coffee type*"
+                    fullWidth
+                    helperText="Please select coffee type"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  >
+                    {coffeeTypes.map(option => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    required
+                    id="pricePerKg"
+                    name="pricePerKg"
+                    value={this.state.pricePerKg}
+                    onChange={this.onChange}
+                    label="Price Per Kg"
+                    type="number"
+                    fullWidth
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    required
+                    id="todayValueSale"
+                    name="todayValueSale"
+                    value={this.state.todayValueSale}
+                    onChange={this.onChange}
+                    label="Today Value Sale"
+                    type="number"
+                    fullWidth
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    required
+                    id="valueOfSaleLiability"
+                    name="valueOfSaleLiability"
+                    value={this.state.valueOfSaleLiability}
+                    onChange={this.onChange}
+                    label="Value of sale liability"
+                    type="number"
+                    fullWidth
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    required
+                    id="weight"
+                    name="weight"
+                    value={this.state.weight}
+                    onChange={this.onChange}
+                    label="Weight"
+                    type="number"
+                    fullWidth
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    size="large"
+                    color="primary"
+                  >
+                    Add Procurement
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+            {/* Create Procurement */}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
       </React.Fragment>
     );
   }
