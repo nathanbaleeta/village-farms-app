@@ -31,12 +31,17 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import PollIcon from "@material-ui/icons/Poll";
 
 import Advances from "./Advances";
+import CreateProcurement from "../procurement/CreateProcurement";
 
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+
+import Snackbar from "./Snackbar";
+
+import { Switch, Route } from "react-router-dom";
 
 function TabContainer(props) {
   return (
@@ -45,7 +50,6 @@ function TabContainer(props) {
     </Typography>
   );
 }
-
 const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
@@ -89,6 +93,17 @@ const cashAvailability = [
     label: "No"
   }
 ];
+
+const payNowOptions = [
+  {
+    value: "Yes",
+    label: "Yes"
+  },
+  {
+    value: "No",
+    label: "No"
+  }
+];
 class FarmerDetails extends React.Component {
   constructor(props) {
     super(props);
@@ -118,10 +133,10 @@ class FarmerDetails extends React.Component {
       advanceBalance: "",
       cashAvailabletoday: "",
       coffeeType: "",
+      weight: "",
       pricePerKg: "",
       todayValueSale: "",
       valueOfSaleLiability: "",
-      weight: "",
 
       // Procurement edit
       procurementData: []
@@ -216,7 +231,17 @@ class FarmerDetails extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({
+      open: false,
+
+      advanceBalance: "",
+      cashAvailabletoday: "",
+      coffeeType: "",
+      weight: "",
+      pricePerKg: "",
+      todayValueSale: "",
+      valueOfSaleLiability: ""
+    });
   };
 
   onChange = e => {
@@ -228,40 +253,17 @@ class FarmerDetails extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-
-    // get our form data out of state
-    const procurement = {
-      advanceBalance: this.state.advanceBalance,
-      cashAvailabletoday: this.state.cashAvailabletoday,
-      coffeeType: this.state.coffeeType,
-      pricePerKg: this.state.pricePerKg,
-      todayValueSale: this.state.todayValueSale,
-      valueOfSaleLiability: this.state.valueOfSaleLiability,
-      weight: this.state.weight
-    };
-
-    //Save farmer module
-    const procurementRef = firebase
-      .database()
-      //.ref("procurement/-LbT3BAlIMK18oBJSnZl");
-      .ref(`procurement/${this.state.id}`);
-
-    procurementRef.push(procurement);
+  handleChangeTodayValueSale = () => {
     this.setState({
-      advanceBalance: "",
-      cashAvailabletoday: "",
-      coffeeType: "",
-      pricePerKg: "",
-      todayValueSale: "",
-      valueOfSaleLiability: "",
-      weight: ""
+      todayValueSale: this.state.pricePerKg * this.state.weight
     });
   };
+
+  handleSubmit = event => {};
+
   render() {
     const { classes } = this.props;
-    const { value, procurementData } = this.state;
+    const { value } = this.state;
 
     return (
       <React.Fragment>
@@ -426,6 +428,23 @@ class FarmerDetails extends React.Component {
               </Tabs>
               {value === 0 && (
                 <TabContainer>
+                  <Link
+                    to={`/farmer/${this.state.id}/procurement`}
+                    style={{
+                      color: "darkblue",
+                      textDecoration: "none"
+                    }}
+                  >
+                    <Fab
+                      color="primary"
+                      aria-label="Add"
+                      className={classes.fab}
+                      onClick={this.handleOpen.bind(this, this.state.id)}
+                    >
+                      <AddIcon />
+                    </Fab>
+                  </Link>
+
                   <Fab
                     color="primary"
                     variant="extended"
@@ -439,9 +458,7 @@ class FarmerDetails extends React.Component {
                   <br />
                   <br />
                   <br />
-
                   {/* Procurement details for farmer*/}
-
                   <Grid container spacing={24}>
                     {this.state.procurementData.map((p, index) => (
                       <Grid item xs={6} sm={6}>
@@ -582,138 +599,7 @@ class FarmerDetails extends React.Component {
             </Typography>
           </DialogTitle>
           <DialogContent>
-            {/* Create Procurement */}
-            <form onSubmit={this.handleSubmit}>
-              <br />
-              <br />
-
-              <Grid container spacing={24}>
-                <Grid item xs={12} sm={12}>
-                  <TextField
-                    required
-                    id="advanceBalance"
-                    name="advanceBalance"
-                    value={this.state.advanceBalance}
-                    onChange={this.onChange}
-                    label="Advance Balance"
-                    type="number"
-                    fullWidth
-                    autoComplete="off"
-                  />
-                </Grid>
-
-                <Grid item xs={6} sm={6}>
-                  <TextField
-                    id="cashAvailabletoday"
-                    select
-                    name="cashAvailabletoday"
-                    value={this.state.cashAvailabletoday}
-                    onChange={this.onChange}
-                    label="Cash available today?*"
-                    fullWidth
-                    helperText="Please select option"
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                  >
-                    {cashAvailability.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-
-                <Grid item xs={6} sm={6}>
-                  <TextField
-                    id="coffeeType"
-                    select
-                    name="coffeeType"
-                    value={this.state.coffeeType}
-                    onChange={this.onChange}
-                    label="Coffee type*"
-                    fullWidth
-                    helperText="Please select coffee type"
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                  >
-                    {coffeeTypes.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-
-                <Grid item xs={6} sm={6}>
-                  <TextField
-                    required
-                    id="pricePerKg"
-                    name="pricePerKg"
-                    value={this.state.pricePerKg}
-                    onChange={this.onChange}
-                    label="Price Per Kg"
-                    type="number"
-                    fullWidth
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={6} sm={6}>
-                  <TextField
-                    required
-                    id="todayValueSale"
-                    name="todayValueSale"
-                    value={this.state.todayValueSale}
-                    onChange={this.onChange}
-                    label="Today Value Sale"
-                    type="number"
-                    fullWidth
-                    autoComplete="off"
-                  />
-                </Grid>
-
-                <Grid item xs={6} sm={6}>
-                  <TextField
-                    required
-                    id="valueOfSaleLiability"
-                    name="valueOfSaleLiability"
-                    value={this.state.valueOfSaleLiability}
-                    onChange={this.onChange}
-                    label="Value of sale liability"
-                    type="number"
-                    fullWidth
-                    autoComplete="off"
-                  />
-                </Grid>
-
-                <Grid item xs={6} sm={6}>
-                  <TextField
-                    required
-                    id="weight"
-                    name="weight"
-                    value={this.state.weight}
-                    onChange={this.onChange}
-                    label="Weight"
-                    type="number"
-                    fullWidth
-                    autoComplete="off"
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    color="primary"
-                  >
-                    Add Procurement
-                  </Button>
-                </Grid>
-              </Grid>
-            </form>
-            {/* Create Procurement */}
+            <CreateProcurement id={this.state.id} />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
