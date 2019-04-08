@@ -428,23 +428,6 @@ class FarmerDetails extends React.Component {
               </Tabs>
               {value === 0 && (
                 <TabContainer>
-                  <Link
-                    to={`/farmer/${this.state.id}/procurement`}
-                    style={{
-                      color: "darkblue",
-                      textDecoration: "none"
-                    }}
-                  >
-                    <Fab
-                      color="primary"
-                      aria-label="Add"
-                      className={classes.fab}
-                      onClick={this.handleOpen.bind(this, this.state.id)}
-                    >
-                      <AddIcon />
-                    </Fab>
-                  </Link>
-
                   <Fab
                     color="primary"
                     variant="extended"
