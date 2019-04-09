@@ -2,16 +2,10 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-
-import Paper from "@material-ui/core/Paper";
-import PersonIcon from "@material-ui/icons/Person";
 
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
-
-import Fab from "@material-ui/core/Fab";
 
 import firebase from "../common/firebase";
 
@@ -25,7 +19,56 @@ const styles = theme => ({
 class AdvancesSummary extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      received: 0,
+      value: 0,
+      weight: 0
+    };
+  }
+
+  componentDidMount() {
+    // Get count of farmers who have received advances
+    const farmersRef = firebase.database().ref("advances");
+    farmersRef.on("value", snapshot => {
+      console.log(snapshot);
+      const farmerCount = snapshot.numChildren();
+      this.setState({
+        received: farmerCount
+      });
+    });
+
+    // Get value of advances provided
+    const query = firebase
+      .database()
+      .ref("advances")
+      .orderByKey();
+    query.on("value", snapshot => {
+      let valueCounter = 0;
+      let weightCounter = 0;
+
+      snapshot.forEach(childSnapshot => {
+        // Get values
+
+        childSnapshot.forEach(grandChildSnapshot => {
+          //console.log(grandChildSnapshot.child("advanceAmount").val());
+          console.log(grandChildSnapshot.child("totalCoffeeWeight").val());
+
+          // Advance Value counter; convert string to int
+          valueCounter =
+            valueCounter +
+            parseInt(grandChildSnapshot.child("advanceAmount").val());
+
+          // Total coffee weight counter; convert string to int
+          weightCounter =
+            weightCounter +
+            parseInt(grandChildSnapshot.child("totalCoffeeWeight").val());
+        });
+      });
+      this.setState({
+        value: valueCounter,
+        weight: weightCounter
+      });
+    });
   }
   render() {
     const { classes } = this.props;
@@ -44,6 +87,7 @@ class AdvancesSummary extends React.Component {
                 className={classes.bigAvatar}
               />
               <br />
+
               <br />
               <Grid container spacing={24}>
                 <Grid item xs={4} sm={4}>
@@ -56,20 +100,7 @@ class AdvancesSummary extends React.Component {
                     align="center"
                     color="Primary"
                   >
-                    342
-                  </Typography>
-                </Grid>
-                <Grid item xs={4} sm={4}>
-                  <Typography variant="title" gutterBottom align="center">
-                    Mode
-                  </Typography>
-                  <Typography
-                    variant="headline"
-                    gutterBottom
-                    align="center"
-                    color="Primary"
-                  >
-                    342
+                    {this.state.received}
                   </Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>
@@ -82,7 +113,20 @@ class AdvancesSummary extends React.Component {
                     align="center"
                     color="Primary"
                   >
-                    213
+                    {this.state.value}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4} sm={4}>
+                  <Typography variant="title" gutterBottom align="center">
+                    Weight
+                  </Typography>
+                  <Typography
+                    variant="headline"
+                    gutterBottom
+                    align="center"
+                    color="Primary"
+                  >
+                    {this.state.weight}
                   </Typography>
                 </Grid>
               </Grid>

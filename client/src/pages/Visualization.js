@@ -44,13 +44,13 @@ class Visualization extends React.Component {
           <Grid item xs={3}>
             <FarmHistoryStatus />
           </Grid>
-          {/*<Grid item xs={3}>
+          <Grid item xs={3}>
             <AdvancesSummary />
           </Grid>
-          <Grid item xs={3}>
+          {/*<Grid item xs={3}>
             <ProcurementSummary />
-          </Grid>
-           <Grid item xs={4}>
+          </Grid>*/}
+          <Grid item xs={4}>
             <Paper className={classes.paper}>
               <PieChart />
             </Paper>
@@ -64,7 +64,7 @@ class Visualization extends React.Component {
             <Paper className={classes.paper}>
               <BarChart />
             </Paper>
-          </Grid> */}
+          </Grid>
         </Grid>
         <br />
 

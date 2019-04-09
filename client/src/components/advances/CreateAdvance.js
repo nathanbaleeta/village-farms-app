@@ -101,6 +101,10 @@ class CreateAdvances extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  isEmpty(value) {
+    return value == null || value.length === 0;
+  }
+
   handleSubmit = event => {
     // target ID retrieved from another component using onClick event listener
     const key = this.props.id;
@@ -109,7 +113,10 @@ class CreateAdvances extends React.Component {
     // get our form data out of state
     const advance = {
       advanceType: this.state.advanceType,
-      advanceAmount: this.state.advanceAmount,
+      advanceAmount: this.isEmpty(this.state.advanceAmount)
+        ? 0
+        : this.state.advanceAmount,
+      //advanceAmount: this.state.advanceAmount,
       commodityAdvanced: this.state.commodityAdvanced,
       paymentMode: this.state.paymentMode,
       pricePerKg: this.state.pricePerKg,

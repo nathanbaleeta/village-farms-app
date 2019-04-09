@@ -581,11 +581,11 @@ class FarmerDetails extends React.Component {
                       <TableHead>
                         <TableRow>
                           <TableCell>Advance type</TableCell>
-                          <TableCell align="right">Advance amount</TableCell>
-                          <TableCell align="right">Commodity</TableCell>
-                          <TableCell align="right">Mode of payment</TableCell>
-                          <TableCell align="right">Price per kg</TableCell>
-                          <TableCell align="right">
+                          <TableCell align="left">Advance amount</TableCell>
+                          <TableCell align="left">Commodity</TableCell>
+                          <TableCell align="left">Mode of payment</TableCell>
+                          <TableCell align="left">Price per kg</TableCell>
+                          <TableCell align="left">
                             Total Coffee Weight
                           </TableCell>
                         </TableRow>
@@ -596,19 +596,17 @@ class FarmerDetails extends React.Component {
                             <TableCell component="th" scope="row">
                               {row.advanceType}
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell align="left">
                               {row.advanceAmount}
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell align="left">
                               {row.commodityAdvanced}
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell align="left">
                               {row.paymentMode}
                             </TableCell>
-                            <TableCell align="right">
-                              {row.pricePerKg}
-                            </TableCell>
-                            <TableCell align="right">
+                            <TableCell align="left">{row.pricePerKg}</TableCell>
+                            <TableCell align="left">
                               {row.totalCoffeeWeight}
                             </TableCell>
                           </TableRow>
