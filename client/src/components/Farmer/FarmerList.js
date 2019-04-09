@@ -485,7 +485,7 @@ class FarmerList extends React.Component {
                     name="lastname"
                     value={this.state.lastname}
                     onChange={this.onChange}
-                    label="lastname"
+                    label="Lastname"
                     fullWidth
                     autoComplete="off"
                     InputLabelProps={{

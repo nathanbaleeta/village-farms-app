@@ -13,17 +13,12 @@ import { withStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
-import PollIcon from "@material-ui/icons/Poll";
-import PersonIcon from "@material-ui/icons/Person";
-import HomeIcon from "@material-ui/icons/Home";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import Tooltip from "@material-ui/core/Tooltip";
-import LockIcon from "@material-ui/icons/Lock";
 
 import Button from "@material-ui/core/Button";
 
@@ -157,9 +152,7 @@ class Header extends React.Component {
           gutterBottom
           style={{ fontSize: "13px", color: "#D23E56" }}
           align="center"
-        >
-          <Link to="/logon">Following</Link>
-        </Typography>
+        />
       </Menu>
     );
 
@@ -237,7 +230,7 @@ class Header extends React.Component {
                     </Button>
                   </Link>
 
-                  <Link to="/procurement" className={classes.link}>
+                  {/* <Link to="/procurement" className={classes.link}>
                     <Button color="inherit" className={classes.menuButton}>
                       Procurement
                     </Button>
@@ -247,11 +240,11 @@ class Header extends React.Component {
                     <Button color="inherit" className={classes.menuButton}>
                       Advances
                     </Button>
-                  </Link>
+                  </Link> */}
 
                   <Avatar
                     alt="Remy Sharp"
-                    src="/static/images/avatar/1.jpg"
+                    src="/static/images/avatar/1.png"
                     className={classes.avatar}
                   />
                 </Grid>

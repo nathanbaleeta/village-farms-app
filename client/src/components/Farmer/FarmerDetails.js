@@ -3,11 +3,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import IconButton from "@material-ui/core/IconButton";
-
-import MenuItem from "@material-ui/core/MenuItem";
 import { Link } from "react-router-dom";
 
 import firebase from "../common/firebase";
@@ -39,9 +34,13 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import Snackbar from "./Snackbar";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
 
-import { Switch, Route } from "react-router-dom";
+import CreateAdvance from "../advances/CreateAdvance";
 
 function TabContainer(props) {
   return (
@@ -65,45 +64,18 @@ const styles = theme => ({
   },
   fab: {
     margin: theme.spacing.unit
+  },
+
+  tableRoot: {
+    width: "100%",
+    marginTop: theme.spacing.unit * 3,
+    overflowX: "auto"
+  },
+  table: {
+    minWidth: 700
   }
 });
 
-const coffeeTypes = [
-  {
-    value: "Cherry",
-    label: "Cherry"
-  },
-  {
-    value: "Parchment",
-    label: "Parchment"
-  },
-  {
-    value: "Mbuni",
-    label: "Mbuni"
-  }
-];
-
-const cashAvailability = [
-  {
-    value: "Yes",
-    label: "Yes"
-  },
-  {
-    value: "No",
-    label: "No"
-  }
-];
-
-const payNowOptions = [
-  {
-    value: "Yes",
-    label: "Yes"
-  },
-  {
-    value: "No",
-    label: "No"
-  }
-];
 class FarmerDetails extends React.Component {
   constructor(props) {
     super(props);
@@ -125,6 +97,7 @@ class FarmerDetails extends React.Component {
       immatureTrees: "",
       hectarage: "",
 
+      // Dashboard registration summary
       value: 0,
       males: 0,
       females: 0,
@@ -138,8 +111,14 @@ class FarmerDetails extends React.Component {
       todayValueSale: "",
       valueOfSaleLiability: "",
 
-      // Procurement edit
-      procurementData: []
+      // Procurement edit & listing
+      procurementData: [],
+
+      // Advances edit & listing
+      advancesData: [],
+
+      // Advance dialog settings
+      isVisible: false
     };
   }
 
@@ -154,8 +133,10 @@ class FarmerDetails extends React.Component {
       snapshot.forEach(function(childSnapshot) {
         // handle read data.
         var p = childSnapshot.val();
+        //console.log(childSnapshot.key);
 
         procurementInfo = {
+          id: childSnapshot.key,
           advanceBalance: p.advanceBalance,
           cashAvailabletoday: p.cashAvailabletoday,
           coffeeType: p.coffeeType,
@@ -171,7 +152,36 @@ class FarmerDetails extends React.Component {
         procurementData: newState
       });
 
-      console.log(this.state.procurementData);
+      //console.log(this.state.procurementData);
+    });
+
+    // Farmer advances data.
+    const advancesRef = firebase.database().ref(`advances/${key}`);
+    advancesRef.on("value", snapshot => {
+      let advanceInfo = {};
+      let newState = [];
+      snapshot.forEach(function(childSnapshot) {
+        // handle read data.
+        var a = childSnapshot.val();
+        //console.log(childSnapshot.key);
+
+        advanceInfo = {
+          advanceID: childSnapshot.key,
+          advanceType: a.advanceType,
+          advanceAmount: a.advanceAmount,
+          commodityAdvanced: a.commodityAdvanced,
+          paymentMode: a.paymentMode,
+          pricePerKg: a.pricePerKg,
+          totalCoffeeWeight: a.totalCoffeeWeight
+        };
+        // Add advance object to array
+        newState.push(advanceInfo);
+      });
+      this.setState({
+        advancesData: newState
+      });
+
+      console.log(this.state.advancesData);
     });
 
     // Farmer registration data.
@@ -225,11 +235,17 @@ class FarmerDetails extends React.Component {
     this.setState({ value });
   };
 
-  handleOpen = id => {
+  handleOpen = () => {
     this.setState({ open: true });
-    //console.log(id);
   };
 
+  handleVisible = () => {
+    this.setState({ isVisible: true });
+  };
+
+  handleInVisible = () => {
+    this.setState({ isVisible: false });
+  };
   handleClose = () => {
     this.setState({
       open: false,
@@ -433,7 +449,7 @@ class FarmerDetails extends React.Component {
                     variant="extended"
                     aria-label="Add"
                     className={classes.fab}
-                    onClick={this.handleOpen.bind(this, this.state.id)}
+                    onClick={this.handleOpen.bind(this)}
                   >
                     <AddIcon className={classes.extendedIcon} />
                     Create Procurement
@@ -547,7 +563,61 @@ class FarmerDetails extends React.Component {
               )}
               {value === 1 && (
                 <TabContainer>
-                  <Advances />
+                  <Fab
+                    color="primary"
+                    variant="extended"
+                    aria-label="Add"
+                    className={classes.fab}
+                    onClick={this.handleVisible.bind(this)}
+                  >
+                    <AddIcon className={classes.extendedIcon} />
+                    Create Advance
+                  </Fab>
+                  <br />
+
+                  {/* Farmer Advances listings */}
+                  <Paper className={classes.tableRoot}>
+                    <Table className={classes.table}>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Advance type</TableCell>
+                          <TableCell align="right">Advance amount</TableCell>
+                          <TableCell align="right">Commodity</TableCell>
+                          <TableCell align="right">Mode of payment</TableCell>
+                          <TableCell align="right">Price per kg</TableCell>
+                          <TableCell align="right">
+                            Total Coffee Weight
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {this.state.advancesData.map(row => (
+                          <TableRow key={row.id}>
+                            <TableCell component="th" scope="row">
+                              {row.advanceType}
+                            </TableCell>
+                            <TableCell align="right">
+                              {row.advanceAmount}
+                            </TableCell>
+                            <TableCell align="right">
+                              {row.commodityAdvanced}
+                            </TableCell>
+                            <TableCell align="right">
+                              {row.paymentMode}
+                            </TableCell>
+                            <TableCell align="right">
+                              {row.pricePerKg}
+                            </TableCell>
+                            <TableCell align="right">
+                              {row.totalCoffeeWeight}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </Paper>
+                  {/* Farmer Advances listings*/}
+                  <br />
                 </TabContainer>
               )}
               {value === 2 && (
@@ -586,6 +656,38 @@ class FarmerDetails extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          id="advanceDialog"
+          open={this.state.isVisible}
+          aria-labelledby="form-dialog-title"
+          onClose={this.handleInVisible}
+        >
+          <DialogTitle
+            id="simple-dialog-title1"
+            color="default"
+            style={{
+              backgroundColor: "navy"
+            }}
+          >
+            <Typography
+              component="h1"
+              variant="display1"
+              align="center"
+              style={{ color: "white" }}
+            >
+              Create Advance
+            </Typography>
+          </DialogTitle>
+          <DialogContent>
+            <CreateAdvance id={this.state.id} />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleInVisible} color="primary">
               Cancel
             </Button>
           </DialogActions>

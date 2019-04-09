@@ -4,10 +4,8 @@ import { Typography } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import EditIcon from "@material-ui/icons/Edit";
+
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -20,8 +18,6 @@ import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-
-import firebase from "../common/firebase";
 
 const styles = {
   avatar: {
