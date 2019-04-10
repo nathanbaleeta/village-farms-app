@@ -1,19 +1,16 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import MUIDataTable from "mui-datatables";
-import CustomToolbar from "../mui-datatables/CustomToolbar";
+import { Link } from "react-router-dom";
 import firebase from "../common/firebase";
 
+import Avatar from "@material-ui/core/Avatar";
+import deepOrange from "@material-ui/core/colors/deepOrange";
+
 const columns = [
+  "",
   {
-    name: "Lastname",
-    options: {
-      filter: true,
-      sort: true
-    }
-  },
-  {
-    name: "Firstname",
+    name: "Fullname",
     options: {
       filter: true,
       sort: true
@@ -63,7 +60,21 @@ const columns = [
   }
 ];
 
-const styles = {};
+const styles = {
+  avatar: {
+    margin: 10
+  },
+  orangeAvatar: {
+    margin: 10,
+    color: "#fff",
+    backgroundColor: deepOrange[500]
+  },
+  purpleAvatar: {
+    margin: 10,
+    color: "#fff",
+    backgroundColor: "#327F24"
+  }
+};
 
 class AdvancesList extends React.Component {
   constructor(props) {
@@ -95,7 +106,6 @@ class AdvancesList extends React.Component {
 
           childSnapshot.forEach(grandChildSnapshot => {
             var a = grandChildSnapshot.val();
-            //console.log(a);
 
             advanceInfo = {
               advanceID: childSnapshot.key,
@@ -121,8 +131,13 @@ class AdvancesList extends React.Component {
     });
   }
 
+  CapitalizeInitial(str) {
+    return str.charAt(0).toUpperCase();
+  }
+
   render() {
     const { advancesData } = this.state;
+    const { classes } = this.props;
 
     const options = {
       filter: true,
@@ -139,8 +154,21 @@ class AdvancesList extends React.Component {
           title={"Advances' list"}
           data={advancesData.map((row, index) => {
             return [
-              row.lastname,
-              row.firstname,
+              <Avatar className={classes.purpleAvatar}>
+                {this.CapitalizeInitial(row.firstname) +
+                  this.CapitalizeInitial(row.lastname)}
+              </Avatar>,
+              <Link
+                to={`/show/${row.advanceID}`}
+                style={{
+                  color: "darkblue",
+                  textDecoration: "none"
+                }}
+              >
+                {row.firstname + " " + row.lastname}
+              </Link>,
+              //row.lastname,
+              //row.firstname,
               row.advanceType,
               row.advanceAmount,
               row.commodityAdvanced,
