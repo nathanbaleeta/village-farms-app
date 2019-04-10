@@ -101,6 +101,7 @@ class CreateAdvances extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  // Check for empty fields
   isEmpty(value) {
     return value == null || value.length === 0;
   }

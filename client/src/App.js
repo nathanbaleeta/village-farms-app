@@ -9,7 +9,8 @@ import FarmerList from "./components/Farmer/FarmerList";
 import FarmerDetails from "./components/Farmer/FarmerDetails";
 import EditFarmer from "./components/Farmer/EditFarmer";
 import ProcurementList from "./components/procurement/ProcurementList";
-import CreateAdvance from "./components/advances/CreateAdvance";
+//import CreateAdvance from "./components/advances/CreateAdvance";
+import AdvancesList from "./components/advances/AdvancesList";
 
 const styles = theme => ({
   main: {
@@ -36,7 +37,7 @@ const App = ({ classes }) => (
         <Route path="/show/:id" component={FarmerDetails} />
         <Route path="/farmers/edit" component={EditFarmer} />
         <Route path="/procurement" component={ProcurementList} />
-        <Route path="/advances" component={CreateAdvance} />
+        <Route path="/advances" component={AdvancesList} />
 
         <Route path="/reports" />
         <Route path="/settings" />

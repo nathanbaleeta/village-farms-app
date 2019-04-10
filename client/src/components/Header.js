@@ -235,12 +235,12 @@ class Header extends React.Component {
                       Procurement
                     </Button>
                   </Link>
-
+                  */}
                   <Link to="/advances" className={classes.link}>
                     <Button color="inherit" className={classes.menuButton}>
                       Advances
                     </Button>
-                  </Link> */}
+                  </Link>
 
                   <Avatar
                     alt="Remy Sharp"

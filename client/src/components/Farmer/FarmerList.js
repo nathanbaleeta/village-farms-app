@@ -76,7 +76,13 @@ const columns = [
       sort: true
     }
   },
-  "Actions"
+  {
+    name: "Actions",
+    options: {
+      filter: false,
+      sort: false
+    }
+  }
 ];
 
 const styles = {
