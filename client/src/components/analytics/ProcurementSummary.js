@@ -8,7 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 
-import firebase from "../common/firebase";
+//import firebase from "../common/firebase";
 
 const styles = theme => ({
   bigAvatar: {

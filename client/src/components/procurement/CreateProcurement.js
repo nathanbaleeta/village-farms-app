@@ -60,13 +60,30 @@ class CreateProcurement extends React.Component {
       pricePerKg: "",
       todayValueSale: "",
       valueOfSaleLiability: "",
-      weight: ""
+      weight: "",
+
+      // Price per kg readOnly property
+      readOnly: true
     };
   }
 
   componentWillMount() {
-    // targetID retrieved from another component using onCLick event listener
-    console.log(this.props.id);
+    // Global procurement price setting.
+    const priceRef = firebase
+      .database()
+      .ref("settings")
+      .orderByKey();
+    priceRef.on("value", snapshot => {
+      let priceConfig = "";
+      snapshot.forEach(function(childSnapshot) {
+        //console.log(childSnapshot.child("pricePerKg").val());
+        priceConfig = childSnapshot.child("pricePerKg").val();
+      });
+      this.setState({
+        pricePerKg: priceConfig
+      });
+      console.log(this.state.pricePerKg);
+    });
   }
 
   onChange = e => {
@@ -207,6 +224,10 @@ class CreateProcurement extends React.Component {
                 onChange={this.onChange}
                 label="Price Per Kg"
                 type="number"
+                inputProps={{
+                  readOnly: Boolean(this.state.readOnly),
+                  disabled: Boolean(this.state.readOnly)
+                }}
                 fullWidth
                 autoComplete="off"
               />

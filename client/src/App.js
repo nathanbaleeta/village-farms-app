@@ -9,8 +9,10 @@ import FarmerList from "./components/Farmer/FarmerList";
 import FarmerDetails from "./components/Farmer/FarmerDetails";
 import EditFarmer from "./components/Farmer/EditFarmer";
 import ProcurementList from "./components/procurement/ProcurementList";
-//import CreateAdvance from "./components/advances/CreateAdvance";
+
 import AdvancesList from "./components/advances/AdvancesList";
+
+import GeneralSettings from "./components/settings/GeneralSettings";
 
 const styles = theme => ({
   main: {
@@ -40,7 +42,7 @@ const App = ({ classes }) => (
         <Route path="/advances" component={AdvancesList} />
 
         <Route path="/reports" />
-        <Route path="/settings" />
+        <Route path="/settings" component={GeneralSettings} />
       </Switch>
     </main>
   </React.Fragment>

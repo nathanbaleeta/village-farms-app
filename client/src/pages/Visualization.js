@@ -12,7 +12,7 @@ import BarChart from "../components/analytics/BarChart";
 import RegistrationSummary from "../components/analytics/RegistrationSummary";
 import FarmHistoryStatus from "../components/analytics/FarmHistoryStatus";
 import AdvancesSummary from "../components/analytics/AdvancesSummary";
-import ProcurementSummary from "../components/analytics/ProcurementSummary";
+//import ProcurementSummary from "../components/analytics/ProcurementSummary";
 
 const styles = theme => ({
   root: {

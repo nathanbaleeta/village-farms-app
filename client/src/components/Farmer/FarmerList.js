@@ -364,7 +364,7 @@ class FarmerList extends React.Component {
   }
 
   render() {
-    const { data, open } = this.state;
+    const { data } = this.state;
     const { classes } = this.props;
 
     const options = {

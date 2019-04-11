@@ -149,8 +149,8 @@ class EditFarmer extends React.Component {
   };
 
   render() {
-    const { data } = this.state;
-    const { classes } = this.props;
+    //const { data } = this.state;
+    //const { classes } = this.props;
     return (
       <div>
         <main>

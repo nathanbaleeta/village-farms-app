@@ -143,7 +143,9 @@ class Header extends React.Component {
         onClose={this.handleMenuClose}
       >
         <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>Settings</MenuItem>
+        <Link to="/settings" className={classes.link}>
+          <MenuItem>Settings</MenuItem>
+        </Link>
         <Link to="/logout" className={classes.link}>
           <MenuItem onClick={this.handleMenuClose}>Logout</MenuItem>
         </Link>
@@ -230,15 +232,15 @@ class Header extends React.Component {
                     </Button>
                   </Link>
 
-                  {/* <Link to="/procurement" className={classes.link}>
-                    <Button color="inherit" className={classes.menuButton}>
-                      Procurement
-                    </Button>
-                  </Link>
-                  */}
                   <Link to="/advances" className={classes.link}>
                     <Button color="inherit" className={classes.menuButton}>
                       Advances
+                    </Button>
+                  </Link>
+
+                  <Link to="/procurement" className={classes.link}>
+                    <Button color="inherit" className={classes.menuButton}>
+                      Procurement
                     </Button>
                   </Link>
 
