@@ -62,6 +62,10 @@ class CreateProcurement extends React.Component {
       valueOfSaleLiability: "",
       weight: "",
 
+      payNow: "",
+      amountPaid: "",
+      outstandingBalance: "",
+
       // Price per kg readOnly property
       readOnly: true
     };
@@ -82,7 +86,27 @@ class CreateProcurement extends React.Component {
       this.setState({
         pricePerKg: priceConfig
       });
-      console.log(this.state.pricePerKg);
+      //console.log(this.state.pricePerKg);
+    });
+
+    //Retrieve advance balance
+    const key = this.props.id;
+    const advanceRef = firebase
+      .database()
+      .ref(`advances/${key}`)
+      .orderByKey();
+    advanceRef.on("value", snapshot => {
+      //let advanceConfig = "";
+      let advanceCounter = 0;
+      snapshot.forEach(function(childSnapshot) {
+        // Mature trees counter; convert string to int
+        advanceCounter =
+          advanceCounter + parseInt(childSnapshot.child("advanceAmount").val());
+      });
+      this.setState({
+        advanceBalance: advanceCounter
+      });
+      console.log(this.state.advanceBalance);
     });
   }
 
@@ -93,6 +117,13 @@ class CreateProcurement extends React.Component {
           super easy to update the state
         */
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleChangeValueSaleLiability = () => {
+    this.setState({
+      valueOfSaleLiability:
+        this.state.todayValueSale - this.state.advanceBalance
+    });
   };
 
   handleChangeTodayValueSale = () => {
@@ -114,7 +145,11 @@ class CreateProcurement extends React.Component {
       pricePerKg: this.state.pricePerKg,
       todayValueSale: this.state.todayValueSale,
       valueOfSaleLiability: this.state.valueOfSaleLiability,
-      weight: this.state.weight
+      weight: this.state.weight,
+
+      payNow: this.state.payNow,
+      amountPaid: this.state.amountPaid,
+      outstandingBalance: this.state.outstandingBalance
     };
 
     const procurementRef = firebase.database().ref(`procurement/${key}`);
@@ -127,7 +162,11 @@ class CreateProcurement extends React.Component {
       pricePerKg: "",
       todayValueSale: "",
       valueOfSaleLiability: "",
-      weight: ""
+      weight: "",
+
+      payNow: "",
+      amountPaid: "",
+      outstandingBalance: ""
     });
   };
 
@@ -154,31 +193,13 @@ class CreateProcurement extends React.Component {
                 onChange={this.onChange}
                 label="Advance Balance"
                 type="number"
+                inputProps={{
+                  readOnly: Boolean(this.state.readOnly),
+                  disabled: Boolean(this.state.readOnly)
+                }}
                 fullWidth
                 autoComplete="off"
               />
-            </Grid>
-
-            <Grid item xs={6} sm={6}>
-              <TextField
-                id="cashAvailabletoday"
-                select
-                name="cashAvailabletoday"
-                value={this.state.cashAvailabletoday}
-                onChange={this.onChange}
-                label="Cash available today?*"
-                fullWidth
-                helperText="Please select option"
-                InputLabelProps={{
-                  shrink: true
-                }}
-              >
-                {cashAvailability.map(option => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
             </Grid>
 
             <Grid item xs={6} sm={6}>
@@ -253,12 +274,33 @@ class CreateProcurement extends React.Component {
                 id="valueOfSaleLiability"
                 name="valueOfSaleLiability"
                 value={this.state.valueOfSaleLiability}
-                onChange={this.onChange}
+                onClick={this.handleChangeValueSaleLiability}
                 label="Value of sale liability"
                 type="number"
                 fullWidth
                 autoComplete="off"
               />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <TextField
+                id="cashAvailabletoday"
+                select
+                name="cashAvailabletoday"
+                value={this.state.cashAvailabletoday}
+                onChange={this.onChange}
+                label="Cash available today?*"
+                fullWidth
+                helperText="Please select option"
+                InputLabelProps={{
+                  shrink: true
+                }}
+              >
+                {cashAvailability.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
 
             <Grid item xs={12} sm={12}>
@@ -266,26 +308,15 @@ class CreateProcurement extends React.Component {
                 Payment of Farmer
               </Typography>
             </Grid>
+
             <Grid item xs={6} sm={6}>
               <TextField
-                //required
-                id="creditCash"
-                name="creditCash"
-                //value={this.state.creditCash}
-                //onChange={this.onChange}
-                label="Credit cash "
-                type="number"
-                fullWidth
-                autoComplete="off"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6}>
-              <TextField
+                required
                 id="payNow"
                 select
                 name="payNow"
-                //value={this.state.payNow}
-                //onChange={this.onChange}
+                value={this.state.payNow}
+                onChange={this.onChange}
                 label="Pay now?*"
                 fullWidth
                 helperText="Please select option"
@@ -302,24 +333,24 @@ class CreateProcurement extends React.Component {
             </Grid>
             <Grid item xs={6} sm={6}>
               <TextField
-                //required
+                required
                 id="amountPaid"
                 name="amountPaid"
-                //value={this.state.amountPaid}
-                //onChange={this.onChange}
+                value={this.state.amountPaid}
+                onChange={this.onChange}
                 label="Amount paid"
                 type="number"
                 fullWidth
                 autoComplete="off"
               />
             </Grid>
-            <Grid item xs={6} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
-                //required
+                required
                 id="outstandingBalance"
                 name="outstandingBalance"
-                //value={this.state.outstandingBalance}
-                //onChange={this.onChange}
+                value={this.state.outstandingBalance}
+                onChange={this.onChange}
                 label="Outstanding balance"
                 type="number"
                 fullWidth

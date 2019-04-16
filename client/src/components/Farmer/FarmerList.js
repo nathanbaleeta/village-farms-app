@@ -56,13 +56,6 @@ const columns = [
     }
   },
   {
-    name: "Village",
-    options: {
-      filter: true,
-      sort: true
-    }
-  },
-  {
     name: "Traditional Authority",
     options: {
       filter: true,
@@ -222,7 +215,6 @@ class FarmerList extends React.Component {
       phone: "",
       mmRegistered: "",
       mmPayment: "",
-      village: "",
       traditionalAuthority: "",
       district: "",
 
@@ -327,17 +319,16 @@ class FarmerList extends React.Component {
 
     // get our form data out of state
     const farmer = {
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
+      firstname: this.capitalize(this.state.firstname),
+      lastname: this.capitalize(this.state.lastname),
       title: this.state.title,
       sex: this.state.sex,
       maritalStatus: this.state.maritalStatus,
       phone: this.state.phone,
       mmRegistered: this.state.mmRegistered,
       mmPayment: this.state.mmPayment,
-      district: this.state.district,
-      traditionalAuthority: this.state.traditionalAuthority,
-      village: this.state.village,
+      district: this.capitalize(this.state.district),
+      traditionalAuthority: this.capitalize(this.state.traditionalAuthority),
 
       yearOpened: this.state.yearOpened,
       matureTrees: this.state.matureTrees,
@@ -347,7 +338,6 @@ class FarmerList extends React.Component {
 
     //Update farmer module
     const key = this.state.key;
-    console.log(this.state.key);
     const farmersRef = firebase.database().ref(`farmers/${key}`);
     farmersRef
       .update(farmer)
@@ -358,6 +348,10 @@ class FarmerList extends React.Component {
         console.log("Synchronization failed");
       });
   };
+
+  capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
   CapitalizeInitial(str) {
     return str.charAt(0).toUpperCase();
@@ -390,12 +384,25 @@ class FarmerList extends React.Component {
         const id = this.state.data[row]["id"];
         console.log(id);
 
-        // Perform deletion using Firebase native remove method
+        // Perform farmer deletion and all related objects(advances & procurments)
         firebase
           .database()
           .ref("farmers")
           .child(id)
           .remove();
+
+        firebase
+          .database()
+          .ref("advances")
+          .child(id)
+          .remove();
+
+        firebase
+          .database()
+          .ref("procurement")
+          .child(id)
+          .remove();
+        // Perform farmer deletion and all related objects(advances & procurments)
       }
     };
 
@@ -421,7 +428,6 @@ class FarmerList extends React.Component {
               farmer.title,
               farmer.sex,
               farmer.maritalStatus,
-              farmer.village,
               farmer.traditionalAuthority,
               farmer.district,
 
@@ -658,22 +664,6 @@ class FarmerList extends React.Component {
                     value={this.state.traditionalAuthority}
                     onChange={this.onChange}
                     label="Traditional Authority"
-                    fullWidth
-                    autoComplete="off"
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={12}>
-                  <TextField
-                    required
-                    id="village"
-                    name="village"
-                    value={this.state.village}
-                    onChange={this.onChange}
-                    label="Village"
                     fullWidth
                     autoComplete="off"
                     InputLabelProps={{

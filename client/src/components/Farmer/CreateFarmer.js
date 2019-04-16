@@ -132,12 +132,15 @@ class CreateFarmer extends React.Component {
       mmPayment: "",
       district: "",
       traditionalAuthority: "",
-      village: "",
       yearOpened: "",
       matureTrees: "",
       immatureTrees: "",
       hectarage: ""
     };
+  }
+
+  capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   onChange = e => {
@@ -154,8 +157,8 @@ class CreateFarmer extends React.Component {
 
     // get our form data out of state
     const farmer = {
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
+      firstname: this.capitalize(this.state.firstname),
+      lastname: this.capitalize(this.state.lastname),
       title: this.state.title,
       sex: this.state.sex,
       maritalStatus: this.state.maritalStatus,
@@ -163,8 +166,7 @@ class CreateFarmer extends React.Component {
       mmRegistered: this.state.mmRegistered,
       mmPayment: this.state.mmPayment,
       district: this.state.district,
-      traditionalAuthority: this.state.traditionalAuthority,
-      village: this.state.village,
+      traditionalAuthority: this.capitalize(this.state.traditionalAuthority),
       yearOpened: this.state.yearOpened,
       matureTrees: this.state.matureTrees,
       immatureTrees: this.state.immatureTrees,
@@ -186,7 +188,7 @@ class CreateFarmer extends React.Component {
       mmPayment: "",
       district: "",
       traditionalAuthority: "",
-      village: "",
+
       yearOpened: "",
       matureTrees: "",
       immatureTrees: "",
@@ -205,7 +207,6 @@ class CreateFarmer extends React.Component {
       //mmRegistered,
       //district,
       traditionalAuthority,
-      village,
       yearOpened,
       matureTrees,
       immatureTrees,
@@ -241,7 +242,7 @@ class CreateFarmer extends React.Component {
                 name="lastname"
                 value={lastname}
                 onChange={this.onChange}
-                label="lastname"
+                label="Lastname"
                 fullWidth
                 autoComplete="off"
               />
@@ -407,18 +408,6 @@ class CreateFarmer extends React.Component {
               />
             </Grid>
 
-            <Grid item xs={12} sm={12}>
-              <TextField
-                required
-                id="village"
-                name="village"
-                value={village}
-                onChange={this.onChange}
-                label="Village"
-                fullWidth
-                autoComplete="off"
-              />
-            </Grid>
             <Grid item xs={12} sm={12}>
               <Typography variant="headline" align="left" color="inherit">
                 Farm History and Status

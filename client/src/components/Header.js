@@ -198,10 +198,10 @@ class Header extends React.Component {
           <Toolbar>
             <Typography
               className={classes.title}
-              variant="h6"
+              variant="h5"
               color="inherit"
               noWrap
-              style={{ fontWeight: "bold" }}
+              //style={{ fontWeight: "bold" }}
             >
               Village Farms App
             </Typography>
@@ -238,11 +238,11 @@ class Header extends React.Component {
                     </Button>
                   </Link>
 
-                  <Link to="/procurement" className={classes.link}>
+                  {/*  <Link to="/procurement" className={classes.link}>
                     <Button color="inherit" className={classes.menuButton}>
                       Procurement
                     </Button>
-                  </Link>
+                  </Link>*/}
 
                   <Avatar
                     alt="Remy Sharp"

@@ -90,7 +90,6 @@ class FarmerDetails extends React.Component {
       mmRegistered: "",
       mmPayment: "",
       traditionalAuthority: "",
-      village: "",
       district: "",
       yearOpened: "",
       matureTrees: "",
@@ -198,7 +197,6 @@ class FarmerDetails extends React.Component {
       const mmRegistered = snapshot.child("mmRegistered").val();
       const mmPayment = snapshot.child("mmPayment").val();
 
-      const village = snapshot.child("village").val();
       const traditionalAuthority = snapshot.child("traditionalAuthority").val();
       const district = snapshot.child("district").val();
 
@@ -217,7 +215,6 @@ class FarmerDetails extends React.Component {
         phone: phone,
         mmRegistered: mmRegistered,
         mmPayment: mmPayment,
-        village: village,
         traditionalAuthority: traditionalAuthority,
         district: district,
         yearOpened: yearOpened,
@@ -324,8 +321,8 @@ class FarmerDetails extends React.Component {
                   {this.state.firstname + " " + this.state.lastname}
                 </Typography>
                 <Typography variant="body1" gutterBottom align="center">
-                  Lives in {this.state.village},{" "}
-                  {this.state.traditionalAuthority}, {this.state.district}
+                  Lives in {this.state.traditionalAuthority},{" "}
+                  {this.state.district}
                 </Typography>
                 <Typography variant="body1" gutterBottom align="center">
                   Farm opened in <b>{this.state.yearOpened}</b>

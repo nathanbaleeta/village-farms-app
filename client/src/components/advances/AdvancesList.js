@@ -4,11 +4,9 @@ import MUIDataTable from "mui-datatables";
 import { Link } from "react-router-dom";
 import firebase from "../common/firebase";
 
-import Avatar from "@material-ui/core/Avatar";
 import deepOrange from "@material-ui/core/colors/deepOrange";
 
 const columns = [
-  "",
   {
     name: "Fullname",
     options: {
@@ -137,7 +135,6 @@ class AdvancesList extends React.Component {
 
   render() {
     const { advancesData } = this.state;
-    const { classes } = this.props;
 
     const options = {
       filter: true,
@@ -154,10 +151,6 @@ class AdvancesList extends React.Component {
           title={"Advances' list"}
           data={advancesData.map((row, index) => {
             return [
-              <Avatar className={classes.purpleAvatar}>
-                {this.CapitalizeInitial(row.firstname) +
-                  this.CapitalizeInitial(row.lastname)}
-              </Avatar>,
               <Link
                 to={`/show/${row.advanceID}`}
                 style={{

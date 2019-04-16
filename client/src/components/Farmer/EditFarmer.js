@@ -129,7 +129,6 @@ class EditFarmer extends React.Component {
       phone: "",
       mmRegistered: "",
       mmPayment: "",
-      village: "",
       traditionalAuthority: "",
       district: ""
     };
@@ -352,22 +351,6 @@ class EditFarmer extends React.Component {
                   value={this.state.traditionalAuthority}
                   onChange={this.onChange}
                   label="Traditional Authority"
-                  fullWidth
-                  autoComplete="off"
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={12}>
-                <TextField
-                  required
-                  id="village"
-                  name="village"
-                  value={this.state.village}
-                  onChange={this.onChange}
-                  label="Village"
                   fullWidth
                   autoComplete="off"
                   InputLabelProps={{
