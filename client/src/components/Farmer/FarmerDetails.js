@@ -142,7 +142,10 @@ class FarmerDetails extends React.Component {
           pricePerKg: p.pricePerKg,
           todayValueSale: p.todayValueSale,
           valueOfSaleLiability: p.valueOfSaleLiability,
-          weight: p.weight
+          weight: p.weight,
+          payNow: p.payNow,
+          amountPaid: p.amountPaid,
+          outstandingBalance: p.outstandingBalance
         };
         // Add procurement objecet to array
         newState.push(procurementInfo);
@@ -180,7 +183,7 @@ class FarmerDetails extends React.Component {
         advancesData: newState
       });
 
-      console.log(this.state.advancesData);
+      //console.log(this.state.advancesData);
     });
 
     // Farmer registration data.
@@ -504,6 +507,27 @@ class FarmerDetails extends React.Component {
                                 >
                                   Weight:
                                 </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  Pay now?:
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  Amount paid:
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  Outstanding balance:
+                                </Typography>
                               </Grid>
                               <Grid item xs={7} sm={7}>
                                 <Typography
@@ -547,6 +571,27 @@ class FarmerDetails extends React.Component {
                                   align="left"
                                 >
                                   {p.weight}
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  {p.payNow}
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  {p.amountPaid}
+                                </Typography>
+                                <Typography
+                                  variant="body1"
+                                  gutterBottom
+                                  align="left"
+                                >
+                                  {p.outstandingBalance}
                                 </Typography>
                               </Grid>
                             </Grid>
@@ -615,11 +660,7 @@ class FarmerDetails extends React.Component {
                   <br />
                 </TabContainer>
               )}
-              {value === 2 && (
-                <TabContainer>
-                  <Advances />
-                </TabContainer>
-              )}
+              {value === 2 && <TabContainer />}
             </Paper>
           </Grid>
         </Grid>

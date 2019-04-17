@@ -119,16 +119,23 @@ class CreateProcurement extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleChangeValueSaleLiability = () => {
+  handleCalculateValueSaleLiability = () => {
     this.setState({
       valueOfSaleLiability:
         this.state.todayValueSale - this.state.advanceBalance
     });
   };
 
-  handleChangeTodayValueSale = () => {
+  handleCalculateTodayValueSale = () => {
     this.setState({
       todayValueSale: this.state.pricePerKg * this.state.weight
+    });
+  };
+
+  handleCalculateOutstandingBalance = () => {
+    this.setState({
+      outstandingBalance:
+        this.state.valueOfSaleLiability - this.state.amountPaid
     });
   };
 
@@ -259,7 +266,7 @@ class CreateProcurement extends React.Component {
                 id="todayValueSale"
                 name="todayValueSale"
                 value={this.state.todayValueSale}
-                onClick={this.handleChangeTodayValueSale}
+                onClick={this.handleCalculateTodayValueSale}
                 helperText="Click to display Today Value sale"
                 label="Today Value Sale"
                 type="number"
@@ -274,7 +281,7 @@ class CreateProcurement extends React.Component {
                 id="valueOfSaleLiability"
                 name="valueOfSaleLiability"
                 value={this.state.valueOfSaleLiability}
-                onClick={this.handleChangeValueSaleLiability}
+                onClick={this.handleCalculateValueSaleLiability}
                 label="Value of sale liability"
                 type="number"
                 fullWidth
@@ -350,7 +357,8 @@ class CreateProcurement extends React.Component {
                 id="outstandingBalance"
                 name="outstandingBalance"
                 value={this.state.outstandingBalance}
-                onChange={this.onChange}
+                onClick={this.handleCalculateOutstandingBalance}
+                //onChange={this.onChange}
                 label="Outstanding balance"
                 type="number"
                 fullWidth
