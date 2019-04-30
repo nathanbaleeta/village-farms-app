@@ -68,15 +68,11 @@ class CustomToolbar extends React.Component {
               align="center"
               style={{ color: "white" }}
             >
-              Register Farmer
+              Add Sale
             </Typography>
           </DialogTitle>
           <DialogContent>
-            <Switch>
-              <Route path="/farmers" component={CreateFarmer} />
-              <Route path="/procurement" component={CreateProcurement} />
-              <Route path="/sales" component={CreateSale} />
-            </Switch>
+            <Route path="/sales" component={CreateSale} />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">

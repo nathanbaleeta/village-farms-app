@@ -458,148 +458,50 @@ class FarmerDetails extends React.Component {
                   <br />
                   <br />
                   {/* Procurement details for farmer*/}
-                  <Grid container spacing={24}>
-                    {this.state.procurementData.map((p, index) => (
-                      <Grid item xs={6} sm={6}>
-                        <Card className={classes.card}>
-                          <CardContent>
-                            <Grid container spacing={24}>
-                              <Grid item xs={5} sm={5}>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  Advance balance:
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  Cash available today:
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  Coffee type:
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  Price per kg:
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  Total value sale:
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  Weight:
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  Pay now?:
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  Amount paid:
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  Outstanding balance:
-                                </Typography>
-                              </Grid>
-                              <Grid item xs={7} sm={7}>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  {p.advanceBalance}
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  {p.cashAvailabletoday}
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  {p.coffeeType}
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  {p.todayValueSale}
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  {p.valueOfSaleLiability}
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  {p.weight}
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  {p.payNow}
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  {p.amountPaid}
-                                </Typography>
-                                <Typography
-                                  variant="body1"
-                                  gutterBottom
-                                  align="left"
-                                >
-                                  {p.outstandingBalance}
-                                </Typography>
-                              </Grid>
-                            </Grid>
-                          </CardContent>
-                        </Card>
-                      </Grid>
-                    ))}
-                  </Grid>
+                  <Paper className={classes.tableRoot}>
+                    <Table className={classes.table}>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Advance balance</TableCell>
+                          <TableCell align="left">
+                            Cash available today
+                          </TableCell>
+                          <TableCell align="left">Coffee type</TableCell>
+                          <TableCell align="left">Price per Kg</TableCell>
+                          <TableCell align="left">Total value sale</TableCell>
+                          <TableCell align="left">Pay now</TableCell>
+                          <TableCell align="left">Amount paid</TableCell>
+                          <TableCell align="left">
+                            Outstanding balance
+                          </TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {this.state.procurementData.map(row => (
+                          <TableRow key={row.id}>
+                            <TableCell component="th" scope="row">
+                              {row.advanceBalance}
+                            </TableCell>
+                            <TableCell align="left">
+                              {row.cashAvailabletoday}
+                            </TableCell>
+
+                            <TableCell align="left">{row.coffeeType}</TableCell>
+                            <TableCell align="left">{row.pricePerKg}</TableCell>
+                            <TableCell align="left">
+                              {row.totalValueSale}
+                            </TableCell>
+                            <TableCell align="left">{row.payNow}</TableCell>
+                            <TableCell align="left">{row.amountPaid}</TableCell>
+                            <TableCell align="left">
+                              {row.outstandingBalance}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </Paper>
+
                   {/* Procurement details for farmer*/}
                 </TabContainer>
               )}

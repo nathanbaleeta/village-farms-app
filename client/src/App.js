@@ -12,6 +12,8 @@ import ProcurementList from "./components/procurement/ProcurementList";
 
 import AdvancesList from "./components/advances/AdvancesList";
 
+import SalesList from "./components/sales/SalesList";
+
 import GeneralSettings from "./components/settings/GeneralSettings";
 
 const styles = theme => ({
@@ -40,6 +42,7 @@ const App = ({ classes }) => (
         <Route path="/farmers/edit" component={EditFarmer} />
         <Route path="/procurement" component={ProcurementList} />
         <Route path="/advances" component={AdvancesList} />
+        <Route path="/sales" component={SalesList} />
 
         <Route path="/reports" />
         <Route path="/settings" component={GeneralSettings} />
