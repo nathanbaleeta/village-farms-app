@@ -4,11 +4,9 @@ import MUIDataTable from "mui-datatables";
 import { Link } from "react-router-dom";
 import firebase from "../common/firebase";
 
-import Avatar from "@material-ui/core/Avatar";
 import deepOrange from "@material-ui/core/colors/deepOrange";
 
 const columns = [
-  "",
   {
     name: "Fullname",
     options: {
@@ -17,28 +15,14 @@ const columns = [
     }
   },
   {
-    name: "Advances Type",
+    name: "Advance Balance",
     options: {
       filter: true,
       sort: true
     }
   },
   {
-    name: "Advances Amount",
-    options: {
-      filter: true,
-      sort: true
-    }
-  },
-  {
-    name: "Commodity Advanced",
-    options: {
-      filter: true,
-      sort: true
-    }
-  },
-  {
-    name: "Payment mode",
+    name: "Coffee type",
     options: {
       filter: true,
       sort: true
@@ -52,7 +36,21 @@ const columns = [
     }
   },
   {
-    name: "Total coffee weight",
+    name: "Today value sale",
+    options: {
+      filter: true,
+      sort: true
+    }
+  },
+  {
+    name: "Value of sale liability",
+    options: {
+      filter: true,
+      sort: true
+    }
+  },
+  {
+    name: "Weight",
     options: {
       filter: true,
       sort: true
@@ -76,11 +74,12 @@ const styles = {
   }
 };
 
-class AdvancesList extends React.Component {
+class ProcurementList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      advancesData: []
+      procurementData: [],
+      advanceBalance: ""
     };
   }
 
@@ -88,10 +87,10 @@ class AdvancesList extends React.Component {
     // Get listings advances provided
     const query = firebase
       .database()
-      .ref("advances")
+      .ref("procurement")
       .orderByKey();
     query.on("value", snapshot => {
-      let advanceInfo = {};
+      let procureInfo = {};
       let newState = [];
 
       let firstname = "";
@@ -100,34 +99,60 @@ class AdvancesList extends React.Component {
         const key = childSnapshot.key;
         const farmersRef = firebase.database().ref(`farmers/${key}`);
 
+        /********************** Retrieve advance balance *********************/
+        const advanceRef = firebase
+          .database()
+          .ref(`advances/${key}`)
+          .orderByKey();
+        advanceRef.on("value", snapshot => {
+          let advanceCounter = 0;
+          snapshot.forEach(function(childSnapshot) {
+            // Mature trees counter; convert string to int
+            advanceCounter =
+              advanceCounter +
+              parseInt(childSnapshot.child("advanceAmount").val());
+          });
+          this.setState({
+            advanceBalance: advanceCounter
+          });
+          //console.log(this.state.advanceBalance);
+          console.log(advanceCounter);
+        });
+        /********************** Retrieve advance balance *********************/
+
         farmersRef.on("value", farmerSnapshot => {
           firstname = farmerSnapshot.child("firstname").val();
           lastname = farmerSnapshot.child("lastname").val();
 
           childSnapshot.forEach(grandChildSnapshot => {
-            var a = grandChildSnapshot.val();
+            var p = grandChildSnapshot.val();
 
-            advanceInfo = {
-              advanceID: childSnapshot.key,
-              advanceType: a.advanceType,
-              advanceAmount: a.advanceAmount,
-              commodityAdvanced: a.commodityAdvanced,
-              paymentMode: a.paymentMode,
-              pricePerKg: a.pricePerKg,
-              totalCoffeeWeight: a.totalCoffeeWeight,
+            procureInfo = {
+              procureID: childSnapshot.key,
+              advanceBalance: this.state.advanceBalance,
+              cashAvailabletoday: p.cashAvailabletoday,
+              coffeeType: p.coffeeType,
+              pricePerKg: p.pricePerKg,
+              todayValueSale: p.todayValueSale,
+              valueOfSaleLiability: p.valueOfSaleLiability,
+              weight: p.weight,
+              toPayNow: p.payNow,
+              amountPaid: p.amountPaid,
+              outstandingBalance: p.outstandingBalance,
+
               firstname: firstname,
               lastname: lastname
             };
 
             // Add advance object to array
-            newState.push(advanceInfo);
+            newState.push(procureInfo);
           });
         });
       });
       this.setState({
-        advancesData: newState
+        procurementData: newState
       });
-      console.log(this.state.advancesData);
+      console.log(this.state.procurementData);
     });
   }
 
@@ -136,8 +161,7 @@ class AdvancesList extends React.Component {
   }
 
   render() {
-    const { advancesData } = this.state;
-    const { classes } = this.props;
+    const { procurementData } = this.state;
 
     const options = {
       filter: true,
@@ -151,15 +175,11 @@ class AdvancesList extends React.Component {
     return (
       <React.Fragment>
         <MUIDataTable
-          title={"Advances' list"}
-          data={advancesData.map((row, index) => {
+          title={"Procurement list"}
+          data={procurementData.map((row, index) => {
             return [
-              <Avatar className={classes.purpleAvatar}>
-                {this.CapitalizeInitial(row.firstname) +
-                  this.CapitalizeInitial(row.lastname)}
-              </Avatar>,
               <Link
-                to={`/show/${row.advanceID}`}
+                to={`/show/${row.procureID}`}
                 style={{
                   color: "darkblue",
                   textDecoration: "none"
@@ -167,14 +187,12 @@ class AdvancesList extends React.Component {
               >
                 {row.firstname + " " + row.lastname}
               </Link>,
-              row.lastname,
-              row.firstname,
-              //row.advanceType,
-              //row.advanceAmount,
-              row.commodityAdvanced,
-              row.paymentMode,
+              row.advanceBalance,
+              row.coffeeType,
               row.pricePerKg,
-              row.totalCoffeeWeight
+              row.todayValueSale,
+              row.valueOfSaleLiability,
+              row.weight
             ];
           })}
           columns={columns}
@@ -185,4 +203,4 @@ class AdvancesList extends React.Component {
   }
 }
 
-export default withStyles(styles)(AdvancesList);
+export default withStyles(styles)(ProcurementList);

@@ -112,6 +112,7 @@ class FarmerDetails extends React.Component {
 
       // Procurement edit & listing
       procurementData: [],
+      advanceCounter: "",
 
       // Advances edit & listing
       advancesData: [],
@@ -123,12 +124,35 @@ class FarmerDetails extends React.Component {
 
   componentDidMount() {
     const key = this.props.match.params.id;
+    //console.log(key);
+    /********************** Retrieve advance balance *********************/
+    const advanceRef = firebase
+      .database()
+      .ref(`advances/${key}`)
+      .orderByKey();
+    advanceRef.on("value", snapshot => {
+      let advanceCounter = 0;
+      //console.log(advanceCounter);
+      snapshot.forEach(function(childSnapshot) {
+        // Mature trees counter; convert string to int
+        advanceCounter =
+          advanceCounter + parseInt(childSnapshot.child("advanceAmount").val());
+        //console.log(advanceCounter);
+      });
+      this.setState({
+        advanceCounter: advanceCounter
+      });
+
+      console.log(this.state.advanceCounter);
+    });
+    /********************** Retrieve advance balance *********************/
 
     // Farmer procurement data.
     const procurementRef = firebase.database().ref(`procurement/${key}`);
     procurementRef.on("value", snapshot => {
       let procurementInfo = {};
       let newState = [];
+      let advanceBalance = this.state.advanceCounter;
       snapshot.forEach(function(childSnapshot) {
         // handle read data.
         var p = childSnapshot.val();
@@ -136,7 +160,7 @@ class FarmerDetails extends React.Component {
 
         procurementInfo = {
           id: childSnapshot.key,
-          advanceBalance: p.advanceBalance,
+          advanceBalance: advanceBalance,
           cashAvailabletoday: p.cashAvailabletoday,
           coffeeType: p.coffeeType,
           pricePerKg: p.pricePerKg,
