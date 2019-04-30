@@ -121,7 +121,8 @@ class CreateAdvances extends React.Component {
       commodityAdvanced: this.state.commodityAdvanced,
       paymentMode: this.state.paymentMode,
       pricePerKg: this.state.pricePerKg,
-      totalCoffeeWeight: this.state.totalCoffeeWeight
+      totalCoffeeWeight: this.state.totalCoffeeWeight,
+      created: Date(Date.now())
     };
 
     const advanceRef = firebase.database().ref(`advances/${key}`);

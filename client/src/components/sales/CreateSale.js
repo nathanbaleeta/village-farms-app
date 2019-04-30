@@ -85,7 +85,8 @@ class CreateSale extends React.Component {
       phone: this.state.phone,
       unitPrice: this.state.unitPrice,
       quantity: this.state.quantity,
-      totalPrice: this.state.totalPrice
+      totalPrice: this.state.totalPrice,
+      created: Date(Date.now())
     };
 
     //Save sale record

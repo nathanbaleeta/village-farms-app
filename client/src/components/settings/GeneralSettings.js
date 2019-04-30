@@ -51,7 +51,6 @@ class GeneralSettings extends React.Component {
     priceRef.on("value", snapshot => {
       let priceConfig = "";
       snapshot.forEach(function(childSnapshot) {
-        //console.log(childSnapshot.child("pricePerKg").val());
         priceConfig = childSnapshot.child("pricePerKg").val();
       });
       this.setState({

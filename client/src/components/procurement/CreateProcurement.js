@@ -156,7 +156,8 @@ class CreateProcurement extends React.Component {
 
       payNow: this.state.payNow,
       amountPaid: this.state.amountPaid,
-      outstandingBalance: this.state.outstandingBalance
+      outstandingBalance: this.state.outstandingBalance,
+      created: Date(Date.now())
     };
 
     const procurementRef = firebase.database().ref(`procurement/${key}`);

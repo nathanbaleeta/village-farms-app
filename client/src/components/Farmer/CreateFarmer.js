@@ -170,7 +170,8 @@ class CreateFarmer extends React.Component {
       yearOpened: this.state.yearOpened,
       matureTrees: this.state.matureTrees,
       immatureTrees: this.state.immatureTrees,
-      hectarage: this.state.hectarage
+      hectarage: this.state.hectarage,
+      created: Date(Date.now())
     };
 
     //Save farmer module
