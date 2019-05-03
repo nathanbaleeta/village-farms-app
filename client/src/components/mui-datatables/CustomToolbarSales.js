@@ -11,10 +11,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { Typography } from "@material-ui/core";
 
-import { Switch, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 
-import CreateFarmer from "../Farmer/CreateFarmer";
-import CreateProcurement from "../procurement/CreateProcurement";
 import CreateSale from "../sales/CreateSale";
 
 const styles = theme => ({

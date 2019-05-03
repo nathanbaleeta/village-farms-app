@@ -25,7 +25,6 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import PollIcon from "@material-ui/icons/Poll";
 
-import Advances from "./Advances";
 import CreateProcurement from "../procurement/CreateProcurement";
 
 import Dialog from "@material-ui/core/Dialog";

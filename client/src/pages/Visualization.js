@@ -3,12 +3,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
-import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 
-import LineChart from "../components/analytics/LineChart";
-import PieChart from "../components/analytics/PieChart";
-import BarChart from "../components/analytics/BarChart";
 import RegistrationSummary from "../components/analytics/RegistrationSummary";
 import FarmHistoryStatus from "../components/analytics/FarmHistoryStatus";
 import AdvancesSummary from "../components/analytics/AdvancesSummary";
@@ -32,7 +28,7 @@ const styles = theme => ({
 
 class Visualization extends React.Component {
   render() {
-    const { classes } = this.props;
+    //const { classes } = this.props;
 
     return (
       <div>

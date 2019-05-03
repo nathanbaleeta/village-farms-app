@@ -157,7 +157,9 @@ class CreateProcurement extends React.Component {
       payNow: this.state.payNow,
       amountPaid: this.state.amountPaid,
       outstandingBalance: this.state.outstandingBalance,
-      created: Date(Date.now())
+      created: new Date().toLocaleString("en-GB", {
+        timeZone: "Africa/Maputo"
+      })
     };
 
     const procurementRef = firebase.database().ref(`procurement/${key}`);

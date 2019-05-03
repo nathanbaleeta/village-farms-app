@@ -76,7 +76,9 @@ class GeneralSettings extends React.Component {
     console.log(Date(Date.now()));
     const priceConfig = {
       pricePerKg: this.state.pricePerKg,
-      dateConfigured: Date(Date.now())
+      dateConfigured: new Date().toLocaleString("en-GB", {
+        timeZone: "Africa/Maputo"
+      })
     };
 
     const settingsRef = firebase.database().ref("settings");

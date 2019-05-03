@@ -122,7 +122,9 @@ class CreateAdvances extends React.Component {
       paymentMode: this.state.paymentMode,
       pricePerKg: this.state.pricePerKg,
       totalCoffeeWeight: this.state.totalCoffeeWeight,
-      created: Date(Date.now())
+      created: new Date().toLocaleString("en-GB", {
+        timeZone: "Africa/Maputo"
+      })
     };
 
     const advanceRef = firebase.database().ref(`advances/${key}`);

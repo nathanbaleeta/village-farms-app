@@ -171,7 +171,9 @@ class CreateFarmer extends React.Component {
       matureTrees: this.state.matureTrees,
       immatureTrees: this.state.immatureTrees,
       hectarage: this.state.hectarage,
-      created: Date(Date.now())
+      created: new Date().toLocaleString("en-GB", {
+        timeZone: "Africa/Maputo"
+      })
     };
 
     //Save farmer module
@@ -250,6 +252,7 @@ class CreateFarmer extends React.Component {
             </Grid>
             <Grid item xs={6} sm={6}>
               <TextField
+                required
                 id="title"
                 select
                 name="title"
@@ -271,6 +274,7 @@ class CreateFarmer extends React.Component {
             </Grid>
             <Grid item xs={6} sm={6}>
               <TextField
+                required
                 id="sex"
                 select
                 name="sex"
@@ -293,6 +297,7 @@ class CreateFarmer extends React.Component {
 
             <Grid item xs={6} sm={6}>
               <TextField
+                required
                 id="maritalStatus"
                 select
                 name="maritalStatus"
@@ -314,6 +319,7 @@ class CreateFarmer extends React.Component {
             </Grid>
             <Grid item xs={6} sm={6}>
               <InputMask
+                required
                 mask="(+265) 999 999 999"
                 value={phone}
                 onChange={this.onChange}
@@ -354,6 +360,7 @@ class CreateFarmer extends React.Component {
             </Grid>
             <Grid item xs={6} sm={6}>
               <TextField
+                required
                 id="mmPayment"
                 select
                 name="mmPayment"
@@ -376,6 +383,7 @@ class CreateFarmer extends React.Component {
 
             <Grid item xs={6} sm={6}>
               <TextField
+                required
                 id="district"
                 select
                 name="district"

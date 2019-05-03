@@ -86,7 +86,9 @@ class CreateSale extends React.Component {
       unitPrice: this.state.unitPrice,
       quantity: this.state.quantity,
       totalPrice: this.state.totalPrice,
-      created: Date(Date.now())
+      created: new Date().toLocaleString("en-GB", {
+        timeZone: "Africa/Maputo"
+      })
     };
 
     //Save sale record
