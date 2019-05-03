@@ -8,7 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import RegistrationSummary from "../components/analytics/RegistrationSummary";
 import FarmHistoryStatus from "../components/analytics/FarmHistoryStatus";
 import AdvancesSummary from "../components/analytics/AdvancesSummary";
-//import ProcurementSummary from "../components/analytics/ProcurementSummary";
+import ProcurementSummary from "../components/analytics/ProcurementSummary";
 
 const styles = theme => ({
   root: {
@@ -43,10 +43,10 @@ class Visualization extends React.Component {
           <Grid item xs={3}>
             <AdvancesSummary />
           </Grid>
-          {/*<Grid item xs={3}>
+          <Grid item xs={3}>
             <ProcurementSummary />
           </Grid>
-          <Grid item xs={4}>
+          {/* <Grid item xs={4}>
             <Paper className={classes.paper}>
               <PieChart />
             </Paper>

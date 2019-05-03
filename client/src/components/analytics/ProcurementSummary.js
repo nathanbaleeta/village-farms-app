@@ -8,7 +8,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 
-//import firebase from "../common/firebase";
+import firebase from "../common/firebase";
+import * as moment from "moment";
 
 const styles = theme => ({
   bigAvatar: {
@@ -20,8 +21,68 @@ const styles = theme => ({
 class ProcurementSummary extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      procuredToday: 0,
+      weeklyProcurement: 0,
+      cummulative: 0
+    };
   }
+
+  componentDidMount() {
+    // Get value of procurement provided
+    const query = firebase
+      .database()
+      .ref("procurement")
+      .orderByKey();
+    query.on("value", snapshot => {
+      let todayCounter = 0;
+      let weekCounter = 0;
+      let cummulativeCounter = 0;
+
+      snapshot.forEach(childSnapshot => {
+        // Get values for day, month and cummulative
+
+        childSnapshot.forEach(grandChildSnapshot => {
+          const created = grandChildSnapshot.child("created").val();
+          const isToday = moment(created, "DD/MM/YYYY").isSame(
+            Date.now(),
+            "day"
+          );
+          const isWeek = moment(created, "DD/MM/YYYY").isSame(
+            Date.now(),
+            "week"
+          );
+
+          isToday
+            ? (todayCounter =
+                todayCounter +
+                parseInt(grandChildSnapshot.child("todayValueSale").val()))
+            : (todayCounter = todayCounter + 0);
+
+          isWeek
+            ? (weekCounter =
+                weekCounter +
+                parseInt(grandChildSnapshot.child("todayValueSale").val()))
+            : (weekCounter = weekCounter + 0);
+
+          console.log(isToday);
+
+          //console.log(moment(created, "DD/MM/YYYY").fromNow());
+
+          // Cummulative counter
+          cummulativeCounter =
+            cummulativeCounter +
+            parseInt(grandChildSnapshot.child("todayValueSale").val());
+        });
+      });
+      this.setState({
+        procuredToday: todayCounter,
+        weeklyProcurement: weekCounter,
+        cummulative: cummulativeCounter
+      });
+    });
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -43,7 +104,7 @@ class ProcurementSummary extends React.Component {
               <Grid container spacing={24}>
                 <Grid item xs={4} sm={4}>
                   <Typography variant="title" gutterBottom align="center">
-                    Procured
+                    Today
                   </Typography>
                   <Typography
                     variant="headline"
@@ -51,12 +112,12 @@ class ProcurementSummary extends React.Component {
                     align="center"
                     color="Primary"
                   >
-                    342
+                    {this.state.procuredToday}
                   </Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>
                   <Typography variant="title" gutterBottom align="center">
-                    Paid
+                    Week
                   </Typography>
                   <Typography
                     variant="headline"
@@ -64,12 +125,12 @@ class ProcurementSummary extends React.Component {
                     align="center"
                     color="Primary"
                   >
-                    342
+                    {this.state.weeklyProcurement}
                   </Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>
                   <Typography variant="title" gutterBottom align="center">
-                    Farmers
+                    Cummulative
                   </Typography>
                   <Typography
                     variant="headline"
@@ -77,7 +138,7 @@ class ProcurementSummary extends React.Component {
                     align="center"
                     color="Primary"
                   >
-                    213
+                    {this.state.cummulative}
                   </Typography>
                 </Grid>
               </Grid>

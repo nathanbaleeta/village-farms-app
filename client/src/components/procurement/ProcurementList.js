@@ -14,13 +14,13 @@ const columns = [
       sort: true
     }
   },
-  {
+  /*{
     name: "Advance Balance",
     options: {
       filter: true,
       sort: true
     }
-  },
+  },*/
   {
     name: "Coffee type",
     options: {
@@ -78,8 +78,8 @@ class ProcurementList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      procurementData: [],
-      advanceBalance: ""
+      procurementData: []
+      //advanceBalance: ""
     };
   }
 
@@ -100,6 +100,7 @@ class ProcurementList extends React.Component {
         const farmersRef = firebase.database().ref(`farmers/${key}`);
 
         /********************** Retrieve advance balance *********************/
+        /*
         const advanceRef = firebase
           .database()
           .ref(`advances/${key}`)
@@ -118,6 +119,7 @@ class ProcurementList extends React.Component {
           //console.log(this.state.advanceBalance);
           console.log(advanceCounter);
         });
+        */
         /********************** Retrieve advance balance *********************/
 
         farmersRef.on("value", farmerSnapshot => {
@@ -129,7 +131,7 @@ class ProcurementList extends React.Component {
 
             procureInfo = {
               procureID: childSnapshot.key,
-              advanceBalance: this.state.advanceBalance,
+              //advanceBalance: this.state.advanceBalance,
               cashAvailabletoday: p.cashAvailabletoday,
               coffeeType: p.coffeeType,
               pricePerKg: p.pricePerKg,
@@ -187,7 +189,7 @@ class ProcurementList extends React.Component {
               >
                 {row.firstname + " " + row.lastname}
               </Link>,
-              row.advanceBalance,
+              //row.advanceBalance,
               row.coffeeType,
               row.pricePerKg,
               row.todayValueSale,
