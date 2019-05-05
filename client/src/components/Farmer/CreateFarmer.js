@@ -73,6 +73,28 @@ const maritalStatuses = [
   }
 ];
 
+const mmOptions = [
+  {
+    value: "Yes",
+    label: "Yes"
+  },
+  {
+    value: "No",
+    label: "No"
+  }
+];
+
+const mmPayments = [
+  {
+    value: "Yes",
+    label: "Yes"
+  },
+  {
+    value: "No",
+    label: "No"
+  }
+];
+
 const districts = [
   {
     value: "Chitipa",
@@ -96,27 +118,81 @@ const districts = [
   }
 ];
 
-const mmOptions = [
-  {
-    value: "Yes",
-    label: "Yes"
-  },
-  {
-    value: "No",
-    label: "No"
-  }
-];
-
-const mmPayments = [
-  {
-    value: "Yes",
-    label: "Yes"
-  },
-  {
-    value: "No",
-    label: "No"
-  }
-];
+const lookup = {
+  Chitipa: [
+    { id: "1", text: "Kameme" },
+    { id: "2", text: "Mwabulambya" },
+    { id: "3", text: "Mwenemisuku" },
+    { id: "4", text: "Mwenewenya" },
+    { id: "5", text: "Nthalire" }
+  ],
+  Mzimba: [
+    { id: "1", text: "Chasefu" },
+    { id: "2", text: "Chibanja" },
+    { id: "3", text: "Chindi" },
+    { id: "4", text: "Chiputula" },
+    { id: "5", text: "Jaravikuba Munthali" },
+    { id: "6", text: "Jombo" },
+    { id: "7", text: "Kampingo Sibande" },
+    { id: "8", text: "Kaning'ina" },
+    { id: "9", text: "Katawa" },
+    { id: "10", text: "Katoto" },
+    { id: "11", text: "Khosolo Gwaza Jere" },
+    { id: "12", text: "Lupaso" },
+    { id: "13", text: "M'Mbelwa" },
+    { id: "14", text: "Mabulabo" },
+    { id: "15", text: "Masasa" },
+    { id: "16", text: "Mchengautuwa" },
+    { id: "17", text: "Msongwe" },
+    { id: "18", text: "Mtwalo" },
+    { id: "19", text: "Mzilawaingwe" },
+    { id: "20", text: "Mzimba Boma" },
+    { id: "21", text: "Mzukuzuku" },
+    { id: "22", text: "Mzuzu City" },
+    { id: "23", text: "New Aiport Site" },
+    { id: "24", text: "Nkhorongo" },
+    { id: "25", text: "Viphya" },
+    { id: "26", text: "Vwaza Marsh" },
+    { id: "27", text: "Zolozolo" }
+  ],
+  Nkhatabay: [
+    { id: "1", text: "Boghoyo" },
+    { id: "2", text: "Fukamalaza" },
+    { id: "3", text: "Fukamapiri" },
+    { id: "4", text: "Kabuduli" },
+    { id: "5", text: "Malanda" },
+    { id: "6", text: "Malenga Mzoma" },
+    { id: "7", text: "Mankhambira" },
+    { id: "8", text: "Mkondowe" },
+    { id: "9", text: "Mkumbira" },
+    { id: "10", text: "Musisya" },
+    { id: "11", text: "Nkhatabay Boma" },
+    { id: "12", text: "Nyaluwanga" },
+    { id: "13", text: "Timbiri" },
+    { id: "14", text: "Zilakoma" }
+  ],
+  Rumphi: [
+    { id: "1", text: "Chikulamayembe" },
+    { id: "2", text: "Chipinduka" },
+    { id: "3", text: "Kachulu" },
+    { id: "4", text: "Mwahenga" },
+    { id: "5", text: "Mwalweni" },
+    { id: "6", text: "Mwamlowe" },
+    { id: "7", text: "Mwankhunikira" },
+    { id: "8", text: "Nyika National Park" },
+    { id: "9", text: "Rumphi Boma" },
+    { id: "10", text: "Vwaza Game Reserve" },
+    { id: "11", text: "Zolokere" }
+  ],
+  Ntchisi: [
+    { id: "1", text: "Chikho" },
+    { id: "2", text: "Chilooko" },
+    { id: "3", text: "Kalumo" },
+    { id: "4", text: "Kasakula" },
+    { id: "5", text: "Ntchisi Boma" },
+    { id: "6", text: "Nthondo" }
+  ]
+};
 
 class CreateFarmer extends React.Component {
   constructor() {
@@ -135,13 +211,24 @@ class CreateFarmer extends React.Component {
       yearOpened: "",
       matureTrees: "",
       immatureTrees: "",
-      hectarage: ""
+      hectarage: "",
+
+      dataValue: "Chitipa"
     };
   }
 
   capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
+
+  onChangeDistrict = e => {
+    this.setState({
+      dataValue: e.target.value,
+      district: e.target.value,
+      traditionalAuthority: ""
+    });
+    console.log(e.target.value);
+  };
 
   onChange = e => {
     /*
@@ -166,7 +253,7 @@ class CreateFarmer extends React.Component {
       mmRegistered: this.state.mmRegistered,
       mmPayment: this.state.mmPayment,
       district: this.state.district,
-      traditionalAuthority: this.capitalize(this.state.traditionalAuthority),
+      traditionalAuthority: this.state.traditionalAuthority,
       yearOpened: this.state.yearOpened,
       matureTrees: this.state.matureTrees,
       immatureTrees: this.state.immatureTrees,
@@ -175,6 +262,8 @@ class CreateFarmer extends React.Component {
         timeZone: "Africa/Maputo"
       })
     };
+
+    console.log(farmer);
 
     //Save farmer module
     const farmersRef = firebase.database().ref("farmers");
@@ -209,12 +298,15 @@ class CreateFarmer extends React.Component {
       phone,
       //mmRegistered,
       //district,
-      traditionalAuthority,
+      //traditionalAuthority,
       yearOpened,
       matureTrees,
       immatureTrees,
       hectarage
     } = this.state;
+
+    const { dataValue } = this.state;
+    const options = lookup[dataValue];
 
     return (
       <div>
@@ -380,7 +472,6 @@ class CreateFarmer extends React.Component {
                 ))}
               </TextField>
             </Grid>
-
             <Grid item xs={6} sm={6}>
               <TextField
                 required
@@ -388,8 +479,8 @@ class CreateFarmer extends React.Component {
                 select
                 name="district"
                 value={this.state.district}
-                onChange={this.onChange}
-                label="District*"
+                onChange={this.onChangeDistrict}
+                label="District"
                 fullWidth
                 helperText="Please select district"
                 InputLabelProps={{
@@ -403,20 +494,28 @@ class CreateFarmer extends React.Component {
                 ))}
               </TextField>
             </Grid>
-
             <Grid item xs={6} sm={6}>
               <TextField
                 required
                 id="traditionalAuthority"
+                select
                 name="traditionalAuthority"
-                value={traditionalAuthority}
+                value={this.state.traditionalAuthority}
                 onChange={this.onChange}
                 label="Traditional Authority"
                 fullWidth
-                autoComplete="off"
-              />
+                helperText="Please select Traditional Authority"
+                InputLabelProps={{
+                  shrink: true
+                }}
+              >
+                {options.map(option => (
+                  <MenuItem key={option.id} value={option.text}>
+                    {option.text}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
-
             <Grid item xs={12} sm={12}>
               <Typography variant="headline" align="left" color="inherit">
                 Farm History and Status
