@@ -31,6 +31,9 @@ class ByMode extends React.Component {
     this.state = {
       chartOptions: {
         xAxis: {
+          title: {
+            text: "Commodities"
+          },
           categories: [
             "Money",
             "Seedlings",
@@ -41,6 +44,12 @@ class ByMode extends React.Component {
         },
         chart: {
           type: "column"
+        },
+
+        yAxis: {
+          title: {
+            text: "Totals"
+          }
         },
         title: {
           text: "Mode of Advances"
