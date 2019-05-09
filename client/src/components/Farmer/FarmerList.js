@@ -180,77 +180,78 @@ const districts = [
 
 const lookup = {
   Chitipa: [
-    { id: "1", text: "Kameme" },
-    { id: "2", text: "Mwabulambya" },
-    { id: "3", text: "Mwenemisuku" },
-    { id: "4", text: "Mwenewenya" },
-    { id: "5", text: "Nthalire" }
+    { id: "1", value: "Kameme", label: "Kameme" },
+    { id: "2", value: "Mwabulambya", label: "Mwabulambya" },
+    { id: "3", value: "Mwenemisuku", label: "Mwenemisuku" },
+    { id: "4", value: "Mwenewenya", label: "Mwenewenya" },
+    { id: "5", value: "Nthalire", label: "Nthalire" }
   ],
   Mzimba: [
-    { id: "1", text: "Chasefu" },
-    { id: "2", text: "Chibanja" },
-    { id: "3", text: "Chindi" },
-    { id: "4", text: "Chiputula" },
-    { id: "5", text: "Jaravikuba Munthali" },
-    { id: "6", text: "Jombo" },
-    { id: "7", text: "Kampingo Sibande" },
-    { id: "8", text: "Kaning'ina" },
-    { id: "9", text: "Katawa" },
-    { id: "10", text: "Katoto" },
-    { id: "11", text: "Khosolo Gwaza Jere" },
-    { id: "12", text: "Lupaso" },
-    { id: "13", text: "M'Mbelwa" },
-    { id: "14", text: "Mabulabo" },
-    { id: "15", text: "Masasa" },
-    { id: "16", text: "Mchengautuwa" },
-    { id: "17", text: "Msongwe" },
-    { id: "18", text: "Mtwalo" },
-    { id: "19", text: "Mzilawaingwe" },
-    { id: "20", text: "Mzimba Boma" },
-    { id: "21", text: "Mzukuzuku" },
-    { id: "22", text: "Mzuzu City" },
-    { id: "23", text: "New Aiport Site" },
-    { id: "24", text: "Nkhorongo" },
-    { id: "25", text: "Viphya" },
-    { id: "26", text: "Vwaza Marsh" },
-    { id: "27", text: "Zolozolo" }
-  ],
-  Nkhatabay: [
-    { id: "1", text: "Boghoyo" },
-    { id: "2", text: "Fukamalaza" },
-    { id: "3", text: "Fukamapiri" },
-    { id: "4", text: "Kabuduli" },
-    { id: "5", text: "Malanda" },
-    { id: "6", text: "Malenga Mzoma" },
-    { id: "7", text: "Mankhambira" },
-    { id: "8", text: "Mkondowe" },
-    { id: "9", text: "Mkumbira" },
-    { id: "10", text: "Musisya" },
-    { id: "11", text: "Nkhatabay Boma" },
-    { id: "12", text: "Nyaluwanga" },
-    { id: "13", text: "Timbiri" },
-    { id: "14", text: "Zilakoma" }
-  ],
-  Rumphi: [
-    { id: "1", text: "Chikulamayembe" },
-    { id: "2", text: "Chipinduka" },
-    { id: "3", text: "Kachulu" },
-    { id: "4", text: "Mwahenga" },
-    { id: "5", text: "Mwalweni" },
-    { id: "6", text: "Mwamlowe" },
-    { id: "7", text: "Mwankhunikira" },
-    { id: "8", text: "Nyika National Park" },
-    { id: "9", text: "Rumphi Boma" },
-    { id: "10", text: "Vwaza Game Reserve" },
-    { id: "11", text: "Zolokere" }
+    { id: "1", value: "Chasefu", label: "Chasefu" },
+    { id: "2", value: "Chibanja", label: "Chibanja" },
+    { id: "3", value: "Chindi", label: "Chindi" },
+    { id: "4", value: "Chiputula", label: "Chiputula" },
+    { id: "5", value: "Jaravikuba Munthali", label: "Jaravikuba Munthali" },
+    { id: "6", value: "Jombo", label: "Jombo" },
+    { id: "7", value: "Kampingo Sibande", label: "Kampingo Sibande" },
+    { id: "8", value: "Kaning'ina", label: "Kaning'ina" },
+    { id: "9", value: "Katawa", label: "Katawa" },
+    { id: "10", value: "Katoto", label: "Katoto" },
+    { id: "11", value: "Khosolo Gwaza Jere", label: "Khosolo Gwaza Jere" },
+    { id: "12", value: "Lupaso", label: "Lupaso" },
+    { id: "13", value: "M'Mbelwa", label: "M'Mbelwa" },
+    { id: "14", value: "Mabulabo", label: "Mabulabo" },
+    { id: "15", value: "Masasa", label: "Masasa" },
+    { id: "16", value: "Mchengautuwa", label: "Mchengautuwa" },
+    { id: "17", value: "Msongwe", label: "Msongwe" },
+    { id: "18", value: "Mtwalo", label: "Mtwalo" },
+    { id: "19", value: "Mzilawaingwe", label: "Mzilawaingwe" },
+    { id: "20", value: "Mzimba Boma", label: "Mzimba Boma" },
+    { id: "21", value: "Mzukuzuku", label: "Mzukuzuku" },
+    { id: "22", value: "Mzuzu City", label: "Mzuzu City" },
+    { id: "23", value: "New Aiport Site", label: "New Aiport Site" },
+    { id: "24", value: "Nkhorongo", label: "Nkhorongo" },
+    { id: "25", value: "Viphya", label: "Viphya" },
+    { id: "26", value: "Vwaza Marsh", label: "Vwaza Marsh" },
+    { id: "27", value: "Zolozolo", label: "Zolozolo" }
   ],
   Ntchisi: [
-    { id: "1", text: "Chikho" },
-    { id: "2", text: "Chilooko" },
-    { id: "3", text: "Kalumo" },
-    { id: "4", text: "Kasakula" },
-    { id: "5", text: "Ntchisi Boma" },
-    { id: "6", text: "Nthondo" }
+    { id: "1", value: "Chikho", label: "Chikho" },
+    { id: "2", value: "Chilooko", label: "Chilooko" },
+    { id: "3", value: "Kalumo", label: "Kalumo" },
+    { id: "4", value: "Kasakula", label: "Kasakula" },
+    { id: "5", value: "Ntchisi Boma", label: "Ntchisi Boma" },
+    { id: "6", value: "Nthondo", label: "Nthondo" }
+  ],
+  Nkhatabay: [
+    { id: "1", value: "Boghoyo", label: "Boghoyo" },
+    { id: "2", value: "Fukamalaza", label: "Fukamalaza" },
+    { id: "3", value: "Fukamapiri", label: "Fukamapiri" },
+    { id: "4", value: "Kabuduli", label: "Kabuduli" },
+    { id: "5", value: "Malanda", label: "Malanda" },
+    { id: "6", value: "Malenga Mzoma", label: "Malenga Mzoma" },
+    { id: "7", value: "Mankhambira", label: "Mankhambira" },
+    { id: "8", value: "Mkondowe", label: "Mkondowe" },
+    { id: "9", value: "Mkumbira", label: "Mkumbira" },
+    { id: "10", value: "Musisya", label: "Musisya" },
+    { id: "11", value: "Nkhatabay Boma", label: "Nkhatabay Boma" },
+    { id: "12", value: "Nyaluwanga", label: "Nyaluwanga" },
+    { id: "13", value: "Timbiri", label: "Timbiri" },
+    { id: "14", value: "Zilakoma", label: "Zilakoma" }
+  ],
+
+  Rumphi: [
+    { id: "1", value: "Chikulamayembe", label: "Chikulamayembe" },
+    { id: "2", value: "Chipinduka", label: "Chipinduka" },
+    { id: "3", value: "Kachulu", label: "Kachulu" },
+    { id: "4", value: "Mwahenga", label: "Mwahenga" },
+    { id: "5", value: "Mwalweni", label: "Mwalweni" },
+    { id: "6", value: "Mwamlowe", label: "Mwamlowe" },
+    { id: "7", value: "Mwankhunikira", label: "Mwankhunikira" },
+    { id: "8", value: "Nyika National Park", label: "Nyika National Park" },
+    { id: "9", value: "Rumphi Boma", label: "Rumphi Boma" },
+    { id: "10", value: "Vwaza Game Reserve", label: "Vwaza Game Reserve" },
+    { id: "11", value: "Zolokere", label: "Zolokere" }
   ]
 };
 
@@ -328,7 +329,6 @@ class FarmerList extends React.Component {
           mmRegistered: items[item].mmRegistered,
           mmPayment: items[item].mmPayment,
           phone: items[item].phone,
-          village: items[item].village,
           traditionalAuthority: items[item].traditionalAuthority,
           district: items[item].district,
 
@@ -343,12 +343,13 @@ class FarmerList extends React.Component {
       this.setState({
         data: newState
       });
+      //console.log(this.state.data);
     });
   }
 
   updateFarmer(id) {
     //const recordToEdit = this.state.data.find(item => item.id === id);
-    //console.log(id);
+    //console.log(recordToEdit);
     this.handleOpen();
 
     const key = id;
@@ -356,7 +357,8 @@ class FarmerList extends React.Component {
     farmersRef.on("value", snapshot => {
       // handle read data.
       //let data = snapshot.val();
-      //this.setState(data);
+      //traditionalAuthority: snapshot.child("traditionalAuthority").val(),
+      //console.log(snapshot.child("traditionalAuthority").val());
 
       this.setState({
         key: snapshot.key,
@@ -368,7 +370,6 @@ class FarmerList extends React.Component {
         phone: snapshot.child("phone").val(),
         mmRegistered: snapshot.child("mmRegistered").val(),
         mmPayment: snapshot.child("mmPayment").val(),
-        village: snapshot.child("village").val(),
         traditionalAuthority: snapshot.child("traditionalAuthority").val(),
         district: snapshot.child("district").val(),
 
@@ -405,8 +406,8 @@ class FarmerList extends React.Component {
       phone: this.state.phone,
       mmRegistered: this.state.mmRegistered,
       mmPayment: this.state.mmPayment,
-      district: this.capitalize(this.state.district),
-      traditionalAuthority: this.capitalize(this.state.traditionalAuthority),
+      district: this.state.district,
+      traditionalAuthority: this.state.traditionalAuthority,
 
       yearOpened: this.state.yearOpened,
       matureTrees: this.state.matureTrees,
@@ -559,7 +560,6 @@ class FarmerList extends React.Component {
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
               <br />
-
               <Typography variant="headline" align="left" color="inherit">
                 Autobiography
               </Typography>
@@ -750,9 +750,9 @@ class FarmerList extends React.Component {
                   <TextField
                     required
                     id="traditionalAuthority"
-                    select
                     name="traditionalAuthority"
                     value={this.state.traditionalAuthority}
+                    select
                     onChange={this.onChange}
                     label="Traditional Authority"
                     fullWidth
@@ -761,9 +761,9 @@ class FarmerList extends React.Component {
                       shrink: true
                     }}
                   >
-                    {tradAuthorities.map(option => (
-                      <MenuItem key={option.id} value={option.text}>
-                        {option.text}
+                    {tradAuthorities.map(ta => (
+                      <MenuItem key={ta.id} value={ta.value}>
+                        {ta.label}
                       </MenuItem>
                     ))}
                   </TextField>
