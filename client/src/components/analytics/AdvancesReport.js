@@ -26,7 +26,7 @@ const styles = theme => ({
   }
 });
 
-class ByMode extends React.Component {
+class AdvancesReport extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -144,8 +144,8 @@ class ByMode extends React.Component {
   }
 }
 
-ByMode.propTypes = {
+AdvancesReport.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ByMode);
+export default withStyles(styles)(AdvancesReport);

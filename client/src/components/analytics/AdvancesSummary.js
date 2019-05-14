@@ -11,8 +11,8 @@ import firebase from "../common/firebase";
 
 const styles = theme => ({
   bigAvatar: {
-    width: 100,
-    height: 100
+    width: 200,
+    height: 200
   }
 });
 
@@ -77,7 +77,7 @@ class AdvancesSummary extends React.Component {
         <Grid item xs={12} sm={12}>
           <Card className={classes.card}>
             <CardContent align="center">
-              <Typography variant="headline" align="center" color="Primary">
+              <Typography variant="headline" align="center" color="default">
                 Advances Summary
               </Typography>
               <br />

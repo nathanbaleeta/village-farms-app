@@ -35,22 +35,26 @@ class Visualization extends React.Component {
 
     return (
       <div>
+        <Typography variant="headline" align="center">
+          Analytics
+        </Typography>
         <br />
         <Grid container spacing={24}>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <RegistrationSummary />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <FarmHistoryStatus />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <AdvancesSummary />
           </Grid>
+          {/*
           <Grid item xs={3}>
             <ProcurementSummary />
           </Grid>
 
-          {/* <Grid item xs={4}>
+          <Grid item xs={4}>
             <Paper className={classes.paper}>
               <PieChart />
             </Paper>
@@ -73,14 +77,31 @@ class Visualization extends React.Component {
         </Typography>
         <br />
         <Grid container spacing={24}>
-          <Grid item xs={3}>
+          <Grid item xs={6}>
             <AdvancesReport />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6}>
             <AdvancesMode />
           </Grid>
-          <Grid item xs={3} />
-          <Grid item xs={3} />
+          <br />
+
+          <br />
+        </Grid>
+
+        <br />
+        <Typography variant="headline" align="center">
+          Procurement
+        </Typography>
+        <br />
+        <Grid container spacing={24}>
+          <Grid item xs={6}>
+            <ProcurementSummary />
+          </Grid>
+          <Grid item xs={6} />
+
+          <br />
+
+          <br />
         </Grid>
       </div>
     );
