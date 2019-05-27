@@ -22,6 +22,8 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 import Button from "@material-ui/core/Button";
 
+import firebase from "firebase";
+
 const styles = theme => ({
   root: {
     width: "100%"
@@ -111,6 +113,10 @@ class Header extends React.Component {
     mobileMoreAnchorEl: null
   };
 
+  logOutUser = () => {
+    firebase.auth().signOut();
+  };
+
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -146,8 +152,11 @@ class Header extends React.Component {
         <Link to="/settings" className={classes.link}>
           <MenuItem>Settings</MenuItem>
         </Link>
-        <Link to="/logout" className={classes.link}>
-          <MenuItem onClick={this.handleMenuClose}>Logout</MenuItem>
+        <Link to="/users" className={classes.link}>
+          <MenuItem>Users</MenuItem>
+        </Link>
+        <Link to="/login" className={classes.link}>
+          <MenuItem onClick={this.logOutUser}>Logout</MenuItem>
         </Link>
         <Typography
           variant="title"
@@ -198,7 +207,7 @@ class Header extends React.Component {
           <Toolbar>
             <Typography
               className={classes.title}
-              variant="h5"
+              variant="h4"
               color="inherit"
               noWrap
               //style={{ fontWeight: "bold" }}

@@ -835,10 +835,12 @@ class FarmerList extends React.Component {
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
+                  <br />
                   <Button
                     type="submit"
                     variant="contained"
                     size="large"
+                    fullWidth
                     color="secondary"
                   >
                     Update Farmer

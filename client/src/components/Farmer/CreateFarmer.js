@@ -386,7 +386,6 @@ class CreateFarmer extends React.Component {
                 ))}
               </TextField>
             </Grid>
-
             <Grid item xs={6} sm={6}>
               <TextField
                 required
@@ -428,7 +427,6 @@ class CreateFarmer extends React.Component {
                 )}
               </InputMask>
             </Grid>
-
             <Grid item xs={6} sm={6}>
               <TextField
                 id="mmRegistered"
@@ -521,7 +519,6 @@ class CreateFarmer extends React.Component {
                 Farm History and Status
               </Typography>
             </Grid>
-
             <Grid item xs={6} sm={6}>
               <TextField
                 required
@@ -565,7 +562,6 @@ class CreateFarmer extends React.Component {
                 autoComplete="off"
               />
             </Grid>
-
             <Grid item xs={6} sm={6}>
               <TextField
                 required
@@ -582,11 +578,13 @@ class CreateFarmer extends React.Component {
             </Grid>
 
             <Grid item xs={12} sm={12}>
+              <br />
               <Button
                 type="submit"
                 variant="contained"
                 size="large"
-                color="secondary"
+                fullWidth
+                color="primary"
               >
                 Save Farmer
               </Button>
