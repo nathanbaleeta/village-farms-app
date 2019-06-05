@@ -77,13 +77,13 @@ class AdvancesSummary extends React.Component {
         <Grid item xs={12} sm={12}>
           <Card className={classes.card}>
             <CardContent align="center">
-              <Typography variant="headline" align="center" color="default">
+              <Typography variant="headline" align="center" color="primary">
                 Advances Summary
               </Typography>
               <br />
               <Avatar
                 alt="Remy Sharp"
-                src="/static/images/avatar/advances.png"
+                src="/static/images/avatar/advance.png"
                 className={classes.bigAvatar}
               />
               <br />

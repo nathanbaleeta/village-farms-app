@@ -600,7 +600,7 @@ class FarmerDetails extends React.Component {
             id="simple-dialog-title"
             color="default"
             style={{
-              backgroundColor: "navy"
+              backgroundColor: "#483D8B"
             }}
           >
             <Typography
@@ -632,7 +632,7 @@ class FarmerDetails extends React.Component {
             id="simple-dialog-title1"
             color="default"
             style={{
-              backgroundColor: "navy"
+              backgroundColor: "#483D8B"
             }}
           >
             <Typography

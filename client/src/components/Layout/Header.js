@@ -4,13 +4,13 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
+//import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
-import SearchIcon from "@material-ui/icons/Search";
+//import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -34,6 +34,7 @@ const styles = theme => ({
   menuButton: {
     textTransform: "capitalize",
     fontWeight: "bold",
+    fontSize: "19px",
     marginLeft: -12,
     marginRight: 20
   },
@@ -203,7 +204,7 @@ class Header extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="fixed" style={{ background: "navy" }}>
+        <AppBar position="fixed" style={{ background: "#483D8B" }}>
           <Toolbar>
             <Typography
               className={classes.title}
@@ -212,9 +213,10 @@ class Header extends React.Component {
               noWrap
               //style={{ fontWeight: "bold" }}
             >
-              Village Farms App
+              Village Farms Manager
             </Typography>
-            <div className={classes.search}>
+
+            {/*  <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
@@ -225,7 +227,8 @@ class Header extends React.Component {
                   input: classes.inputInput
                 }}
               />
-            </div>
+            </div> */}
+
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <div>

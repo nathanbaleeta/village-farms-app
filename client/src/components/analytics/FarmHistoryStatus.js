@@ -64,7 +64,7 @@ class FarmHistoryStatus extends React.Component {
         <Grid item xs={12} sm={12}>
           <Card className={classes.card}>
             <CardContent align="center">
-              <Typography variant="headline" align="center" color="default">
+              <Typography variant="headline" align="center" color="primary">
                 Farm History & Status
               </Typography>
               <br />

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import Avatar from "@material-ui/core/Avatar";
+//import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import FormControl from "@material-ui/core/FormControl";
@@ -41,6 +41,11 @@ const styles = theme => ({
     margin: 10,
     width: 60,
     height: 60
+  },
+  logo: {
+    //margin: 10,
+    width: 120,
+    height: 90
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -91,16 +96,17 @@ class SignIn extends Component {
         <main className={classes.main}>
           <CssBaseline />
           <Paper className={classes.paper}>
-            <Avatar
+            <img
               alt="Remy Sharp"
               src="/static/images/logo.png"
-              className={classes.bigAvatar}
+              className={classes.logo}
             />
             {error ? (
               <Typography component="h1" variant="h5" color="secondary">
                 {error.message}
               </Typography>
             ) : null}
+            <br />
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>

@@ -97,7 +97,7 @@ const styles = {
   purpleAvatar: {
     margin: 10,
     color: "#fff",
-    backgroundColor: "#327F24"
+    backgroundColor: "#FFA500"
   }
 };
 
@@ -349,7 +349,7 @@ class SalesList extends React.Component {
           <DialogTitle
             id="simple-dialog-title"
             color="default"
-            style={{ backgroundColor: "navy" }}
+            style={{ backgroundColor: "#483D8B" }}
           >
             <Typography
               component="h1"

@@ -5,7 +5,8 @@ import { Route, Switch } from "react-router-dom";
 import Login from "../Authentication/Login";
 
 import Header from "../Layout/Header";
-import Dashboard from "../Dashboard/Dashboard";
+
+import Analytics from "../analytics/Analytics";
 
 import FarmerList from "../Farmer/FarmerList";
 import FarmerDetails from "../Farmer/FarmerDetails";
@@ -49,7 +50,7 @@ class Navigation extends Component {
         <br />
         <main className={classes.main}>
           <Switch>
-            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/" component={Analytics} />
             <Route path="/farmers" component={FarmerList} />
             <Route path="/show/:id" component={FarmerDetails} />
             <Route path="/farmers/edit" component={EditFarmer} />

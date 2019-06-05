@@ -4,7 +4,7 @@ import { Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
-import Avatar from "@material-ui/core/Avatar";
+//import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 
 import firebase from "../common/firebase";
@@ -12,7 +12,7 @@ import firebase from "../common/firebase";
 const styles = theme => ({
   bigAvatar: {
     width: 200,
-    height: 200
+    height: 214
   }
 });
 
@@ -68,13 +68,13 @@ class RegistrationSummary extends React.Component {
         <Grid item xs={12} sm={12}>
           <Card className={classes.card}>
             <CardContent align="center">
-              <Typography variant="headline" align="center" color="default">
+              <Typography variant="headline" align="center" color="primary">
                 Registered Farmers
               </Typography>
               <br />
-              <Avatar
+              <img
                 alt="Remy Sharp"
-                src="/static/images/avatar/farmers.jpeg"
+                src="/static/images/avatar/farmers.png"
                 className={classes.bigAvatar}
               />
               <br />
