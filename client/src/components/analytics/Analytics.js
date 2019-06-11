@@ -15,6 +15,7 @@ import FarmHistoryStatus from "../analytics/FarmHistoryStatus";
 import AdvancesReport from "../analytics/AdvancesReport";
 import SalesReport from "../analytics/SalesReport";
 import AdvancesMode from "../analytics/AdvancesMode";
+import FarmerRegistrationReport from "../analytics/FarmerRegistrationReport";
 
 const styles = theme => ({
   root: {
@@ -79,6 +80,9 @@ class Analytics extends React.Component {
           </Grid>
           <Grid item xs={3}>
             <SalesReport />
+          </Grid>
+          <Grid item xs={3}>
+            <FarmerRegistrationReport />
           </Grid>
 
           <br />
