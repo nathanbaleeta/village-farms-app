@@ -48,13 +48,13 @@ class Analytics extends React.Component {
         </Typography>
         <br />
         <Grid container spacing={24}>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <RegistrationSummary />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <FarmHistoryStatus />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <AdvancesSummary />
           </Grid>
         </Grid>
@@ -69,19 +69,19 @@ class Analytics extends React.Component {
         </Typography>
         <br />
         <Grid container spacing={24}>
-          <Grid item xs={3}>
+          <Grid item lg={3} sm={6} xs={12}>
             <ProcurementSummary />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3} sm={6} xs={12}>
             <AdvancesReport />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3} sm={6} xs={12}>
             <AdvancesMode />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3} sm={6} xs={12}>
             <SalesReport />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item lg={3} sm={6} xs={12}>
             <FarmerRegistrationReport />
           </Grid>
 

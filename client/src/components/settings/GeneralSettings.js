@@ -12,6 +12,8 @@ import Typography from "@material-ui/core/Typography";
 
 import PriceSettings from "../settings/PriceSettings";
 
+import DistrictSettings from "./District/DistrictSettings";
+
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -70,7 +72,12 @@ class GeneralSettings extends React.Component {
               <PriceSettings />
             </TabContainer>
           )}
-          {value === 1 && <TabContainer />}
+          {value === 1 && (
+            <TabContainer>
+              <br /> <br />
+              <DistrictSettings />
+            </TabContainer>
+          )}
           {value === 2 && <TabContainer />}
         </Paper>
       </div>
