@@ -8,6 +8,8 @@ import Button from "@material-ui/core/Button";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 
+import NumberFormat from "react-number-format";
+
 import firebase from "../common/firebase";
 
 const styles = theme => ({});
@@ -536,42 +538,48 @@ class CreateFarmer extends React.Component {
               />
             </Grid>
             <Grid item xs={6} sm={6}>
-              <TextField
-                required
-                id="matureTrees"
-                name="matureTrees"
+              <NumberFormat
                 value={matureTrees}
-                onChange={this.onChange}
+                thousandSeparator={true}
+                onValueChange={values => {
+                  const { formattedValue } = values;
+
+                  this.setState({ matureTrees: formattedValue });
+                }}
+                customInput={TextField}
                 label="Number of mature trees"
-                type="number"
                 fullWidth
                 autoComplete="off"
               />
             </Grid>
             <Grid item xs={6} sm={6}>
-              <TextField
-                required
-                id="immatureTrees"
-                name="immatureTrees"
+              <NumberFormat
                 value={immatureTrees}
-                onChange={this.onChange}
+                thousandSeparator={true}
+                onValueChange={values => {
+                  const { formattedValue } = values;
+
+                  this.setState({ immatureTrees: formattedValue });
+                }}
+                customInput={TextField}
                 label="Number of immature trees"
                 helperText="(below 3 years)"
-                type="number"
                 fullWidth
                 autoComplete="off"
               />
             </Grid>
             <Grid item xs={6} sm={6}>
-              <TextField
-                required
-                id="hectarage"
-                name="hectarage"
+              <NumberFormat
                 value={hectarage}
-                onChange={this.onChange}
+                thousandSeparator={true}
+                onValueChange={values => {
+                  const { formattedValue } = values;
+
+                  this.setState({ hectarage: formattedValue });
+                }}
+                customInput={TextField}
                 label="Hectarage under cultivation"
                 helperText="(Enter in Acres)"
-                type="number"
                 fullWidth
                 autoComplete="off"
               />

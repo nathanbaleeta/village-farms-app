@@ -65,10 +65,13 @@ class Analytics extends React.Component {
           align="center"
           style={{ color: "black" }}
         >
-          Summary Statistics
+          Summary Reports
         </Typography>
         <br />
         <Grid container spacing={24}>
+          <Grid item lg={3} sm={6} xs={12}>
+            <FarmerRegistrationReport />
+          </Grid>
           <Grid item lg={3} sm={6} xs={12}>
             <ProcurementSummary />
           </Grid>
@@ -76,13 +79,26 @@ class Analytics extends React.Component {
             <AdvancesReport />
           </Grid>
           <Grid item lg={3} sm={6} xs={12}>
-            <AdvancesMode />
-          </Grid>
-          <Grid item lg={3} sm={6} xs={12}>
             <SalesReport />
           </Grid>
+
+          <br />
+        </Grid>
+        <br />
+        <br />
+        <br />
+        <Typography
+          variant="display1"
+          align="center"
+          style={{ color: "black" }}
+        >
+          Summary Statistics
+        </Typography>
+        <br />
+        <br />
+        <Grid container spacing={24}>
           <Grid item lg={3} sm={6} xs={12}>
-            <FarmerRegistrationReport />
+            <AdvancesMode />
           </Grid>
 
           <br />

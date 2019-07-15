@@ -9,6 +9,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import InputMask from "react-input-mask";
+import NumberFormat from "react-number-format";
 
 import Avatar from "@material-ui/core/Avatar";
 import deepOrange from "@material-ui/core/colors/deepOrange";
@@ -792,43 +793,49 @@ class FarmerList extends React.Component {
                   />
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                  <TextField
-                    required
-                    id="matureTrees"
-                    name="matureTrees"
+                  <NumberFormat
                     value={this.state.matureTrees}
-                    onChange={this.onChange}
+                    thousandSeparator={true}
+                    onValueChange={values => {
+                      const { formattedValue } = values;
+
+                      this.setState({ matureTrees: formattedValue });
+                    }}
+                    customInput={TextField}
                     label="Number of mature trees"
-                    type="number"
                     fullWidth
                     autoComplete="off"
                   />
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                  <TextField
-                    required
-                    id="immatureTrees"
-                    name="immatureTrees"
+                  <NumberFormat
                     value={this.state.immatureTrees}
-                    onChange={this.onChange}
+                    thousandSeparator={true}
+                    onValueChange={values => {
+                      const { formattedValue } = values;
+
+                      this.setState({ immatureTrees: formattedValue });
+                    }}
+                    customInput={TextField}
                     label="Number of immature trees"
                     helperText="(below 3 years)"
-                    type="number"
                     fullWidth
                     autoComplete="off"
                   />
                 </Grid>
 
                 <Grid item xs={6} sm={6}>
-                  <TextField
-                    required
-                    id="hectarage"
-                    name="hectarage"
+                  <NumberFormat
                     value={this.state.hectarage}
-                    onChange={this.onChange}
+                    thousandSeparator={true}
+                    onValueChange={values => {
+                      const { formattedValue } = values;
+
+                      this.setState({ hectarage: formattedValue });
+                    }}
+                    customInput={TextField}
                     label="Hectarage under cultivation"
                     helperText="(Enter in Acres)"
-                    type="number"
                     fullWidth
                     autoComplete="off"
                   />
