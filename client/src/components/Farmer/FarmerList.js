@@ -546,8 +546,8 @@ class FarmerList extends React.Component {
         >
           <DialogTitle
             id="simple-dialog-title"
-            color="default"
-            style={{ backgroundColor: "#483D8B" }}
+            color="inherit"
+            style={{ backgroundColor: "#0000CD" }}
           >
             <Typography
               component="h1"

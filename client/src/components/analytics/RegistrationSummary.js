@@ -68,7 +68,14 @@ class RegistrationSummary extends React.Component {
         <Grid item xs={12} sm={12}>
           <Card className={classes.card}>
             <CardContent align="center">
-              <Typography variant="headline" align="center" color="primary">
+              <Typography
+                variant="headline"
+                align="center"
+                //color="primary"
+                style={{
+                  color: "#0000CD"
+                }}
+              >
                 Registered Farmers
               </Typography>
               <br />

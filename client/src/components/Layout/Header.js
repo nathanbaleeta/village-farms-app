@@ -12,15 +12,14 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 //import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import GroupIcon from "@material-ui/icons/Group";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+
+import PollIcon from "@material-ui/icons/Poll";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-
-import Button from "@material-ui/core/Button";
 
 import firebase from "firebase";
 
@@ -204,7 +203,7 @@ class Header extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="fixed" style={{ background: "#483D8B" }}>
+        <AppBar position="fixed" style={{ background: "#0000CD" }}>
           <Toolbar>
             <Typography
               className={classes.title}
@@ -216,67 +215,106 @@ class Header extends React.Component {
               Village Farms Manager
             </Typography>
 
-            {/*  <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-              />
-            </div> */}
-
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <div>
                 <Grid container justify="center" alignItems="center">
-                  <Link to="/" className={classes.link}>
-                    <Button color="inherit" className={classes.menuButton}>
-                      Dashboard
-                    </Button>
-                  </Link>
-                  <Link to="/farmers" className={classes.link}>
-                    <Button color="inherit" className={classes.menuButton}>
-                      Farmers
-                    </Button>
-                  </Link>
+                  <div style={{ paddingRight: 20 }}>
+                    <Link to="/" className={classes.link}>
+                      <IconButton color="inherit">
+                        <PollIcon />
+                      </IconButton>
 
-                  <Link to="/advances" className={classes.link}>
-                    <Button color="inherit" className={classes.menuButton}>
-                      Advances
-                    </Button>
-                  </Link>
+                      <Typography
+                        variant="body2"
+                        color="inherit"
+                        noWrap
+                        style={{ fontWeight: "bold" }}
+                      >
+                        Analytics
+                      </Typography>
+                    </Link>
+                  </div>
+                  <div style={{ paddingRight: 20 }}>
+                    <Link to="/farmers" className={classes.link}>
+                      <IconButton color="inherit">
+                        <GroupIcon />
+                      </IconButton>
 
-                  <Link to="/procurement" className={classes.link}>
-                    <Button color="inherit" className={classes.menuButton}>
-                      Procurement
-                    </Button>
-                  </Link>
+                      <Typography
+                        variant="body2"
+                        color="inherit"
+                        noWrap
+                        style={{ fontWeight: "bold" }}
+                      >
+                        Farmers
+                      </Typography>
+                    </Link>
+                  </div>
 
-                  <Link to="/sales" className={classes.link}>
-                    <Button color="inherit" className={classes.menuButton}>
-                      Sales
-                    </Button>
-                  </Link>
+                  <div style={{ paddingRight: 20 }}>
+                    <Link to="/advances" className={classes.link}>
+                      <IconButton color="inherit">
+                        <GroupIcon />
+                      </IconButton>
 
-                  <Avatar
-                    alt="Remy Sharp"
-                    src="/static/images/avatar/1.png"
-                    className={classes.avatar}
-                  />
+                      <Typography
+                        variant="body2"
+                        color="inherit"
+                        noWrap
+                        style={{ fontWeight: "bold" }}
+                      >
+                        Advance
+                      </Typography>
+                    </Link>
+                  </div>
+
+                  <div style={{ paddingRight: 20 }}>
+                    <Link to="/procurement" className={classes.link}>
+                      <IconButton color="inherit">
+                        <GroupIcon />
+                      </IconButton>
+
+                      <Typography
+                        variant="body2"
+                        color="inherit"
+                        noWrap
+                        style={{ fontWeight: "bold" }}
+                      >
+                        Procure
+                      </Typography>
+                    </Link>
+                  </div>
+
+                  <div style={{ paddingRight: 20 }}>
+                    <Link to="/sales" className={classes.link}>
+                      <IconButton color="inherit">
+                        <GroupIcon />
+                      </IconButton>
+
+                      <Typography
+                        variant="body2"
+                        color="inherit"
+                        noWrap
+                        style={{ fontWeight: "bold" }}
+                      >
+                        Sales
+                      </Typography>
+                    </Link>
+                  </div>
                 </Grid>
               </div>
 
-              <IconButton
+              {/*  <IconButton
                 aria-owns={isMenuOpen ? "material-appbar" : undefined}
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
                 <ArrowDropDownIcon />
+              </IconButton> */}
+              <IconButton color="inherit" onClick={this.handleProfileMenuOpen}>
+                <AccountCircle style={{ height: 50, width: 50 }} />
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>
