@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import MUIDataTable from "mui-datatables";
 import { Link } from "react-router-dom";
@@ -74,7 +74,7 @@ const styles = {
   }
 };
 
-class AdvancesList extends React.Component {
+class AdvancesList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -146,7 +146,7 @@ class AdvancesList extends React.Component {
     };
 
     return (
-      <React.Fragment>
+      <Fragment>
         <MUIDataTable
           title={"Advances' list"}
           data={advancesData.map((row, index) => {
@@ -155,25 +155,62 @@ class AdvancesList extends React.Component {
                 to={`/show/${row.advanceID}`}
                 style={{
                   color: "darkblue",
-                  textDecoration: "none"
+                  textDecoration: "none",
+                  fontSize: 16
                 }}
               >
                 {row.firstname + " " + row.lastname}
               </Link>,
               //row.lastname,
               //row.firstname,
-              row.advanceType,
-              row.advanceAmount,
-              row.commodityAdvanced,
-              row.paymentMode,
-              row.pricePerKg,
-              row.totalCoffeeWeight
+              <div
+                style={{
+                  fontSize: 16
+                }}
+              >
+                {row.advanceType}
+              </div>,
+              <div
+                style={{
+                  fontSize: 16
+                }}
+              >
+                {row.advanceAmount}
+              </div>,
+              <div
+                style={{
+                  fontSize: 16
+                }}
+              >
+                {row.commodityAdvanced}
+              </div>,
+              <div
+                style={{
+                  fontSize: 16
+                }}
+              >
+                {row.paymentMode}
+              </div>,
+              <div
+                style={{
+                  fontSize: 16
+                }}
+              >
+                {row.pricePerKg}
+              </div>,
+              <div
+                style={{
+                  fontSize: 16
+                }}
+              >
+                {row.totalCoffeeWeight}
+              </div>
             ];
           })}
           columns={columns}
           options={options}
         />
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

@@ -10,7 +10,12 @@ import Grid from "@material-ui/core/Grid";
 
 import firebase from "../common/firebase";
 
-const styles = theme => ({});
+const styles = theme => ({
+  saveSalesButton: {
+    //background: "mediumblue"
+    background: "orange"
+  }
+});
 
 const goods = [
   {
@@ -108,6 +113,7 @@ class CreateSale extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     const {
       firstname,
       lastname,
@@ -245,13 +251,15 @@ class CreateSale extends React.Component {
                 autoComplete="off"
               />
             </Grid>
-
+            <br />
             <Grid item xs={12} sm={12}>
               <Button
                 type="submit"
                 variant="contained"
                 size="large"
+                fullWidth
                 color="secondary"
+                className={classes.saveSalesButton}
               >
                 Create Sale
               </Button>

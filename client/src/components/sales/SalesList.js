@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
@@ -98,6 +98,10 @@ const styles = {
     margin: 10,
     color: "#fff",
     backgroundColor: "#FFA500"
+  },
+  saveSalesButton: {
+    //background: "mediumblue"
+    background: "orange"
   }
 };
 
@@ -128,7 +132,7 @@ const goods = [
   }
 ];
 
-class SalesList extends React.Component {
+class SalesList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -299,7 +303,7 @@ class SalesList extends React.Component {
     };
 
     return (
-      <React.Fragment>
+      <Fragment>
         <MUIDataTable
           title={"Sales list"}
           data={data.map((sale, index) => {
@@ -313,17 +317,54 @@ class SalesList extends React.Component {
                 to={"#"}
                 style={{
                   color: "darkblue",
-                  textDecoration: "none"
+                  textDecoration: "none",
+                  fontSize: 18
                 }}
               >
                 {sale.firstname + " " + sale.lastname}
               </Link>,
-              sale.address,
-              sale.goodsPurchased,
-              sale.phone,
-              sale.unitPrice,
-              sale.quantity,
-              sale.totalPrice,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {sale.address}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {sale.goodsPurchased}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {sale.phone}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {sale.unitPrice}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {sale.quantity}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {sale.totalPrice}
+              </div>,
 
               <IconButton
                 color="primary"
@@ -331,7 +372,7 @@ class SalesList extends React.Component {
                 // The bind method also works
                 onClick={this.updateSale.bind(this, sale.id)}
               >
-                <EditIcon color="primary" />
+                <EditIcon style={{ color: "#0000CD" }} />
               </IconButton>
             ];
           })}
@@ -349,7 +390,7 @@ class SalesList extends React.Component {
           <DialogTitle
             id="simple-dialog-title"
             color="default"
-            style={{ backgroundColor: "#483D8B" }}
+            style={{ background: "#0000CD" }}
           >
             <Typography
               component="h1"
@@ -493,7 +534,9 @@ class SalesList extends React.Component {
                     type="submit"
                     variant="contained"
                     size="large"
+                    fullWidth
                     color="secondary"
+                    className={classes.saveSalesButton}
                   >
                     Update Sale
                   </Button>
@@ -507,7 +550,7 @@ class SalesList extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

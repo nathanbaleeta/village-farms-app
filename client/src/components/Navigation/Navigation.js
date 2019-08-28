@@ -14,6 +14,7 @@ import EditFarmer from "../Farmer/EditFarmer";
 import ProcurementList from "../procurement/ProcurementList";
 import AdvancesList from "../advances/AdvancesList";
 import SalesList from "../sales/SalesList";
+import Nathan from "../sales/Nathan";
 
 import GeneralSettings from "../settings/GeneralSettings";
 
@@ -51,6 +52,7 @@ class Navigation extends Component {
         <main className={classes.main}>
           <Switch>
             <Route exact path="/" component={Analytics} />
+            <Route exact path="/nathan" component={Nathan} />
             <Route path="/farmers" component={FarmerList} />
             <Route path="/show/:id" component={FarmerDetails} />
             <Route path="/farmers/edit" component={EditFarmer} />

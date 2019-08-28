@@ -13,6 +13,10 @@ import { withStyles } from "@material-ui/core/styles";
 //import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import GroupIcon from "@material-ui/icons/Group";
+import ListAltIcon from "@material-ui/icons/ListAlt";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+//import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
@@ -255,7 +259,7 @@ class Header extends React.Component {
                   <div style={{ paddingRight: 20 }}>
                     <Link to="/advances" className={classes.link}>
                       <IconButton color="inherit">
-                        <GroupIcon />
+                        <ListAltIcon />
                       </IconButton>
 
                       <Typography
@@ -272,7 +276,7 @@ class Header extends React.Component {
                   <div style={{ paddingRight: 20 }}>
                     <Link to="/procurement" className={classes.link}>
                       <IconButton color="inherit">
-                        <GroupIcon />
+                        <AttachMoneyIcon />
                       </IconButton>
 
                       <Typography
@@ -289,7 +293,7 @@ class Header extends React.Component {
                   <div style={{ paddingRight: 20 }}>
                     <Link to="/sales" className={classes.link}>
                       <IconButton color="inherit">
-                        <GroupIcon />
+                        <ShoppingCartIcon />
                       </IconButton>
 
                       <Typography

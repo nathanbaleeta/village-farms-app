@@ -346,11 +346,11 @@ class FarmerDetails extends React.Component {
                   {this.state.title}.{" "}
                   {this.state.firstname + " " + this.state.lastname}
                 </Typography>
-                <Typography variant="body1" gutterBottom align="center">
+                <Typography variant="subtitle1" gutterBottom align="center">
                   Lives in {this.state.traditionalAuthority},{" "}
                   {this.state.district}
                 </Typography>
-                <Typography variant="body1" gutterBottom align="center">
+                <Typography variant="subtitle1" gutterBottom align="center">
                   Farm opened in <b>{this.state.yearOpened}</b>
                 </Typography>
                 <br />
@@ -412,36 +412,61 @@ class FarmerDetails extends React.Component {
               <br />
               <Grid container spacing={24}>
                 <Grid item xs={5} sm={5}>
-                  <Typography variant="body1" gutterBottom align="left">
+                  <Typography
+                    variant="subtitle1"
+                    gutterBottom
+                    align="left"
+                    style={{ fontWeight: "bold" }}
+                  >
                     Gender:
                   </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
+                  <Typography
+                    variant="subtitle1"
+                    gutterBottom
+                    align="left"
+                    style={{ fontWeight: "bold" }}
+                  >
                     Marital status:
                   </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
+                  <Typography
+                    variant="subtitle1"
+                    gutterBottom
+                    align="left"
+                    style={{ fontWeight: "bold" }}
+                  >
                     Mobile:
                   </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
+                  <Typography
+                    variant="subtitle1"
+                    gutterBottom
+                    align="left"
+                    style={{ fontWeight: "bold" }}
+                  >
                     MM Registered?:
                   </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
+                  <Typography
+                    variant="subtitle1"
+                    gutterBottom
+                    align="left"
+                    style={{ fontWeight: "bold" }}
+                  >
                     Payments via MM?:
                   </Typography>
                 </Grid>
                 <Grid item xs={7} sm={7}>
-                  <Typography variant="body1" gutterBottom align="left">
+                  <Typography variant="subtitle1" gutterBottom align="left">
                     {this.state.sex}
                   </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
+                  <Typography variant="subtitle1" gutterBottom align="left">
                     {this.state.maritalStatus}
                   </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
+                  <Typography variant="subtitle1" gutterBottom align="left">
                     {this.state.phone}
                   </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
+                  <Typography variant="subtitle1" gutterBottom align="left">
                     {this.state.mmRegistered}
                   </Typography>
-                  <Typography variant="body1" gutterBottom align="left">
+                  <Typography variant="subtitle1" gutterBottom align="left">
                     {this.state.mmPayment}
                   </Typography>
                 </Grid>
@@ -600,7 +625,7 @@ class FarmerDetails extends React.Component {
             id="simple-dialog-title"
             color="default"
             style={{
-              backgroundColor: "#483D8B"
+              backgroundColor: "mediumblue"
             }}
           >
             <Typography
@@ -632,12 +657,13 @@ class FarmerDetails extends React.Component {
             id="simple-dialog-title1"
             color="default"
             style={{
-              backgroundColor: "#483D8B"
+              backgroundColor: "mediumblue"
             }}
           >
             <Typography
               component="h1"
               variant="display1"
+              fullWidth
               align="center"
               style={{ color: "white" }}
             >

@@ -262,12 +262,14 @@ class CreateAdvances extends React.Component {
               />
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <Button
                 type="submit"
                 variant="contained"
                 size="large"
+                fullWidth
                 color="primary"
+                style={{ background: "mediumblue" }}
               >
                 Save Advance
               </Button>

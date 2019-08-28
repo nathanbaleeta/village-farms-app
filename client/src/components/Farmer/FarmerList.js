@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
@@ -25,6 +25,14 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+
+import { titles } from "../common/titleList";
+import { genders } from "../common/genderList";
+import { maritalStatuses } from "../common/maritalStatusList";
+import { mmOptions } from "../common/mobileMoneyOptions";
+import { mmPayments } from "../common/mobileMoneyPayments";
+import { districts } from "../common/districtList";
+import { lookup } from "../common/traditionalAuthorityList";
 
 const columns = [
   "",
@@ -92,192 +100,14 @@ const styles = {
     margin: 10,
     color: "#fff",
     backgroundColor: "#FFA500"
+  },
+  updateFarmerButton: {
+    //background: "mediumblue"
+    background: "orange"
   }
 };
 
-const titles = [
-  {
-    value: "Prof",
-    label: "Prof"
-  },
-  {
-    value: "Dr",
-    label: "Dr"
-  },
-  {
-    value: "Mr",
-    label: "Mr"
-  },
-  {
-    value: "Ms",
-    label: "Ms"
-  },
-  {
-    value: "Mrs",
-    label: "Mrs"
-  },
-  {
-    value: "Col",
-    label: "Col"
-  },
-  {
-    value: "Capt",
-    label: "Capt"
-  }
-];
-
-const genders = [
-  {
-    value: "Male",
-    label: "Male"
-  },
-  {
-    value: "Female",
-    label: "Female"
-  }
-];
-
-const maritalStatuses = [
-  {
-    value: "Married",
-    label: "Married"
-  },
-  {
-    value: "Single",
-    label: "Single"
-  },
-  {
-    value: "Widowed",
-    label: "Widowed"
-  },
-  {
-    value: "Separated",
-    label: "Separated"
-  }
-];
-
-const districts = [
-  {
-    value: "Chitipa",
-    label: "Chitipa"
-  },
-  {
-    value: "Rumphi",
-    label: "Rumphi"
-  },
-  {
-    value: "Nkhatabay",
-    label: "Nkhatabay"
-  },
-  {
-    value: "Mzimba",
-    label: "Mzimba"
-  },
-  {
-    value: "Ntchisi",
-    label: "Ntchisi"
-  }
-];
-
-const lookup = {
-  Chitipa: [
-    { id: "1", value: "Kameme", label: "Kameme" },
-    { id: "2", value: "Mwabulambya", label: "Mwabulambya" },
-    { id: "3", value: "Mwenemisuku", label: "Mwenemisuku" },
-    { id: "4", value: "Mwenewenya", label: "Mwenewenya" },
-    { id: "5", value: "Nthalire", label: "Nthalire" }
-  ],
-  Mzimba: [
-    { id: "1", value: "Chasefu", label: "Chasefu" },
-    { id: "2", value: "Chibanja", label: "Chibanja" },
-    { id: "3", value: "Chindi", label: "Chindi" },
-    { id: "4", value: "Chiputula", label: "Chiputula" },
-    { id: "5", value: "Jaravikuba Munthali", label: "Jaravikuba Munthali" },
-    { id: "6", value: "Jombo", label: "Jombo" },
-    { id: "7", value: "Kampingo Sibande", label: "Kampingo Sibande" },
-    { id: "8", value: "Kaning'ina", label: "Kaning'ina" },
-    { id: "9", value: "Katawa", label: "Katawa" },
-    { id: "10", value: "Katoto", label: "Katoto" },
-    { id: "11", value: "Khosolo Gwaza Jere", label: "Khosolo Gwaza Jere" },
-    { id: "12", value: "Lupaso", label: "Lupaso" },
-    { id: "13", value: "M'Mbelwa", label: "M'Mbelwa" },
-    { id: "14", value: "Mabulabo", label: "Mabulabo" },
-    { id: "15", value: "Masasa", label: "Masasa" },
-    { id: "16", value: "Mchengautuwa", label: "Mchengautuwa" },
-    { id: "17", value: "Msongwe", label: "Msongwe" },
-    { id: "18", value: "Mtwalo", label: "Mtwalo" },
-    { id: "19", value: "Mzilawaingwe", label: "Mzilawaingwe" },
-    { id: "20", value: "Mzimba Boma", label: "Mzimba Boma" },
-    { id: "21", value: "Mzukuzuku", label: "Mzukuzuku" },
-    { id: "22", value: "Mzuzu City", label: "Mzuzu City" },
-    { id: "23", value: "New Aiport Site", label: "New Aiport Site" },
-    { id: "24", value: "Nkhorongo", label: "Nkhorongo" },
-    { id: "25", value: "Viphya", label: "Viphya" },
-    { id: "26", value: "Vwaza Marsh", label: "Vwaza Marsh" },
-    { id: "27", value: "Zolozolo", label: "Zolozolo" }
-  ],
-  Ntchisi: [
-    { id: "1", value: "Chikho", label: "Chikho" },
-    { id: "2", value: "Chilooko", label: "Chilooko" },
-    { id: "3", value: "Kalumo", label: "Kalumo" },
-    { id: "4", value: "Kasakula", label: "Kasakula" },
-    { id: "5", value: "Ntchisi Boma", label: "Ntchisi Boma" },
-    { id: "6", value: "Nthondo", label: "Nthondo" }
-  ],
-  Nkhatabay: [
-    { id: "1", value: "Boghoyo", label: "Boghoyo" },
-    { id: "2", value: "Fukamalaza", label: "Fukamalaza" },
-    { id: "3", value: "Fukamapiri", label: "Fukamapiri" },
-    { id: "4", value: "Kabuduli", label: "Kabuduli" },
-    { id: "5", value: "Malanda", label: "Malanda" },
-    { id: "6", value: "Malenga Mzoma", label: "Malenga Mzoma" },
-    { id: "7", value: "Mankhambira", label: "Mankhambira" },
-    { id: "8", value: "Mkondowe", label: "Mkondowe" },
-    { id: "9", value: "Mkumbira", label: "Mkumbira" },
-    { id: "10", value: "Musisya", label: "Musisya" },
-    { id: "11", value: "Nkhatabay Boma", label: "Nkhatabay Boma" },
-    { id: "12", value: "Nyaluwanga", label: "Nyaluwanga" },
-    { id: "13", value: "Timbiri", label: "Timbiri" },
-    { id: "14", value: "Zilakoma", label: "Zilakoma" }
-  ],
-
-  Rumphi: [
-    { id: "1", value: "Chikulamayembe", label: "Chikulamayembe" },
-    { id: "2", value: "Chipinduka", label: "Chipinduka" },
-    { id: "3", value: "Kachulu", label: "Kachulu" },
-    { id: "4", value: "Mwahenga", label: "Mwahenga" },
-    { id: "5", value: "Mwalweni", label: "Mwalweni" },
-    { id: "6", value: "Mwamlowe", label: "Mwamlowe" },
-    { id: "7", value: "Mwankhunikira", label: "Mwankhunikira" },
-    { id: "8", value: "Nyika National Park", label: "Nyika National Park" },
-    { id: "9", value: "Rumphi Boma", label: "Rumphi Boma" },
-    { id: "10", value: "Vwaza Game Reserve", label: "Vwaza Game Reserve" },
-    { id: "11", value: "Zolokere", label: "Zolokere" }
-  ]
-};
-
-const mmOptions = [
-  {
-    value: "Yes",
-    label: "Yes"
-  },
-  {
-    value: "No",
-    label: "No"
-  }
-];
-
-const mmPayments = [
-  {
-    value: "Yes",
-    label: "Yes"
-  },
-  {
-    value: "No",
-    label: "No"
-  }
-];
-class FarmerList extends React.Component {
+class FarmerList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -499,7 +329,7 @@ class FarmerList extends React.Component {
     };
 
     return (
-      <React.Fragment>
+      <Fragment>
         <MUIDataTable
           title={"Farmers' list"}
           data={data.map((farmer, index) => {
@@ -512,16 +342,47 @@ class FarmerList extends React.Component {
                 to={`/show/${farmer.id}`}
                 style={{
                   color: "darkblue",
-                  textDecoration: "none"
+                  textDecoration: "none",
+                  fontSize: 18
                 }}
               >
                 {farmer.firstname + " " + farmer.lastname}
               </Link>,
-              farmer.title,
-              farmer.sex,
-              farmer.maritalStatus,
-              farmer.traditionalAuthority,
-              farmer.district,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {farmer.title}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {farmer.sex}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {farmer.maritalStatus}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {farmer.traditionalAuthority}
+              </div>,
+              <div
+                style={{
+                  fontSize: 18
+                }}
+              >
+                {farmer.district}
+              </div>,
 
               <IconButton
                 color="primary"
@@ -763,8 +624,8 @@ class FarmerList extends React.Component {
                     }}
                   >
                     {tradAuthorities.map(ta => (
-                      <MenuItem key={ta.id} value={ta.value}>
-                        {ta.label}
+                      <MenuItem key={ta.id} value={ta.text}>
+                        {ta.text}
                       </MenuItem>
                     ))}
                   </TextField>
@@ -849,6 +710,7 @@ class FarmerList extends React.Component {
                     size="large"
                     fullWidth
                     color="secondary"
+                    className={classes.updateFarmerButton}
                   >
                     Update Farmer
                   </Button>
@@ -862,7 +724,7 @@ class FarmerList extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

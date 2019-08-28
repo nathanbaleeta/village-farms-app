@@ -15,32 +15,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+import { districts } from "../common/districtList";
 import firebase from "../common/firebase";
 
 const styles = theme => ({});
-
-const districts = [
-  {
-    value: "Chitipa",
-    label: "Chitipa"
-  },
-  {
-    value: "Rumphi",
-    label: "Rumphi"
-  },
-  {
-    value: "Nkhatabay",
-    label: "Nkhatabay"
-  },
-  {
-    value: "Mzimba",
-    label: "Mzimba"
-  },
-  {
-    value: "Ntchisi",
-    label: "Ntchisi"
-  }
-];
 
 class CreateFarmer extends React.Component {
   constructor() {
@@ -116,7 +94,7 @@ class CreateFarmer extends React.Component {
               id="simple-dialog-title"
               color="default"
               style={{
-                backgroundColor: "navy"
+                backgroundColor: "mediumblue"
               }}
             >
               <Typography
@@ -181,7 +159,11 @@ class CreateFarmer extends React.Component {
                       variant="contained"
                       size="large"
                       fullWidth
-                      color="primary"
+                      //color="default"
+                      style={{
+                        backgroundColor: "mediumblue",
+                        color: "white"
+                      }}
                     >
                       Save
                     </Button>

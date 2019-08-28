@@ -11,8 +11,8 @@ import firebase from "../common/firebase";
 
 const styles = theme => ({
   bigAvatar: {
-    width: 200,
-    height: 200
+    width: 170,
+    height: 170
   }
 });
 

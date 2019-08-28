@@ -10,191 +10,21 @@ import Grid from "@material-ui/core/Grid";
 
 import NumberFormat from "react-number-format";
 
+import { districts } from "../common/districtList";
+import { titles } from "../common/titleList";
+import { genders } from "../common/genderList";
+import { maritalStatuses } from "../common/maritalStatusList";
+import { mmOptions } from "../common/mobileMoneyOptions";
+import { mmPayments } from "../common/mobileMoneyPayments";
+import { lookup } from "../common/traditionalAuthorityList";
 import firebase from "../common/firebase";
 
-const styles = theme => ({});
-
-const titles = [
-  {
-    value: "Prof",
-    label: "Prof"
-  },
-  {
-    value: "Dr",
-    label: "Dr"
-  },
-  {
-    value: "Mr",
-    label: "Mr"
-  },
-  {
-    value: "Ms",
-    label: "Ms"
-  },
-  {
-    value: "Mrs",
-    label: "Mrs"
-  },
-  {
-    value: "Col",
-    label: "Col"
-  },
-  {
-    value: "Capt",
-    label: "Capt"
+const styles = theme => ({
+  saveFarmerButton: {
+    //background: "mediumblue"
+    background: "orange"
   }
-];
-
-const genders = [
-  {
-    value: "Male",
-    label: "Male"
-  },
-  {
-    value: "Female",
-    label: "Female"
-  }
-];
-
-const maritalStatuses = [
-  {
-    value: "Married",
-    label: "Married"
-  },
-  {
-    value: "Single",
-    label: "Single"
-  },
-  {
-    value: "Widowed",
-    label: "Widowed"
-  },
-  {
-    value: "Separated",
-    label: "Separated"
-  }
-];
-
-const mmOptions = [
-  {
-    value: "Yes",
-    label: "Yes"
-  },
-  {
-    value: "No",
-    label: "No"
-  }
-];
-
-const mmPayments = [
-  {
-    value: "Yes",
-    label: "Yes"
-  },
-  {
-    value: "No",
-    label: "No"
-  }
-];
-
-const districts = [
-  {
-    value: "Chitipa",
-    label: "Chitipa"
-  },
-  {
-    value: "Rumphi",
-    label: "Rumphi"
-  },
-  {
-    value: "Nkhatabay",
-    label: "Nkhatabay"
-  },
-  {
-    value: "Mzimba",
-    label: "Mzimba"
-  },
-  {
-    value: "Ntchisi",
-    label: "Ntchisi"
-  }
-];
-
-const lookup = {
-  Chitipa: [
-    { id: "1", text: "Kameme" },
-    { id: "2", text: "Mwabulambya" },
-    { id: "3", text: "Mwenemisuku" },
-    { id: "4", text: "Mwenewenya" },
-    { id: "5", text: "Nthalire" }
-  ],
-  Mzimba: [
-    { id: "1", text: "Chasefu" },
-    { id: "2", text: "Chibanja" },
-    { id: "3", text: "Chindi" },
-    { id: "4", text: "Chiputula" },
-    { id: "5", text: "Jaravikuba Munthali" },
-    { id: "6", text: "Jombo" },
-    { id: "7", text: "Kampingo Sibande" },
-    { id: "8", text: "Kaning'ina" },
-    { id: "9", text: "Katawa" },
-    { id: "10", text: "Katoto" },
-    { id: "11", text: "Khosolo Gwaza Jere" },
-    { id: "12", text: "Lupaso" },
-    { id: "13", text: "M'Mbelwa" },
-    { id: "14", text: "Mabulabo" },
-    { id: "15", text: "Masasa" },
-    { id: "16", text: "Mchengautuwa" },
-    { id: "17", text: "Msongwe" },
-    { id: "18", text: "Mtwalo" },
-    { id: "19", text: "Mzilawaingwe" },
-    { id: "20", text: "Mzimba Boma" },
-    { id: "21", text: "Mzukuzuku" },
-    { id: "22", text: "Mzuzu City" },
-    { id: "23", text: "New Aiport Site" },
-    { id: "24", text: "Nkhorongo" },
-    { id: "25", text: "Viphya" },
-    { id: "26", text: "Vwaza Marsh" },
-    { id: "27", text: "Zolozolo" }
-  ],
-  Nkhatabay: [
-    { id: "1", text: "Boghoyo" },
-    { id: "2", text: "Fukamalaza" },
-    { id: "3", text: "Fukamapiri" },
-    { id: "4", text: "Kabuduli" },
-    { id: "5", text: "Malanda" },
-    { id: "6", text: "Malenga Mzoma" },
-    { id: "7", text: "Mankhambira" },
-    { id: "8", text: "Mkondowe" },
-    { id: "9", text: "Mkumbira" },
-    { id: "10", text: "Musisya" },
-    { id: "11", text: "Nkhatabay Boma" },
-    { id: "12", text: "Nyaluwanga" },
-    { id: "13", text: "Timbiri" },
-    { id: "14", text: "Zilakoma" }
-  ],
-  Rumphi: [
-    { id: "1", text: "Chikulamayembe" },
-    { id: "2", text: "Chipinduka" },
-    { id: "3", text: "Kachulu" },
-    { id: "4", text: "Mwahenga" },
-    { id: "5", text: "Mwalweni" },
-    { id: "6", text: "Mwamlowe" },
-    { id: "7", text: "Mwankhunikira" },
-    { id: "8", text: "Nyika National Park" },
-    { id: "9", text: "Rumphi Boma" },
-    { id: "10", text: "Vwaza Game Reserve" },
-    { id: "11", text: "Zolokere" }
-  ],
-  Ntchisi: [
-    { id: "1", text: "Chikho" },
-    { id: "2", text: "Chilooko" },
-    { id: "3", text: "Kalumo" },
-    { id: "4", text: "Kasakula" },
-    { id: "5", text: "Ntchisi Boma" },
-    { id: "6", text: "Nthondo" }
-  ]
-};
+});
 
 class CreateFarmer extends React.Component {
   constructor() {
@@ -291,6 +121,7 @@ class CreateFarmer extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     const {
       firstname,
       lastname,
@@ -593,6 +424,7 @@ class CreateFarmer extends React.Component {
                 size="large"
                 fullWidth
                 color="primary"
+                className={classes.saveFarmerButton}
               >
                 Save Farmer
               </Button>

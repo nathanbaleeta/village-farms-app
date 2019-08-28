@@ -11,8 +11,8 @@ import firebase from "../common/firebase";
 
 const styles = theme => ({
   bigAvatar: {
-    width: 200,
-    height: 214
+    width: 180,
+    height: 180
   }
 });
 
@@ -81,7 +81,7 @@ class RegistrationSummary extends React.Component {
               <br />
               <img
                 alt="Remy Sharp"
-                src="/static/images/avatar/farmers.png"
+                src="/static/images/avatar/group.png"
                 className={classes.bigAvatar}
               />
               <br />

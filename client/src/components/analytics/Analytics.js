@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import RegistrationSummary from "../analytics/RegistrationSummary";
 import ProcurementSummary from "../analytics/ProcurementSummary";
 import AdvancesSummary from "../analytics/AdvancesSummary";
+import SalesSummary from "../analytics/SalesSummary";
 
 import FarmHistoryStatus from "../analytics/FarmHistoryStatus";
 
@@ -48,14 +49,17 @@ class Analytics extends React.Component {
         </Typography>
         <br />
         <Grid container spacing={24}>
-          <Grid item lg={4} sm={6} xs={12}>
+          <Grid item lg={3} sm={6} xs={12}>
             <RegistrationSummary />
           </Grid>
-          <Grid item lg={4} sm={6} xs={12}>
+          <Grid item lg={3} sm={6} xs={12}>
             <FarmHistoryStatus />
           </Grid>
-          <Grid item lg={4} sm={6} xs={12}>
+          <Grid item lg={3} sm={6} xs={12}>
             <AdvancesSummary />
+          </Grid>
+          <Grid item lg={3} sm={6} xs={12}>
+            <SalesSummary />
           </Grid>
         </Grid>
         <br />
