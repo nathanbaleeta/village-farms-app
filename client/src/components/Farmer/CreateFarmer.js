@@ -87,9 +87,9 @@ class CreateFarmer extends React.Component {
       district: this.state.district,
       traditionalAuthority: this.state.traditionalAuthority,
       yearOpened: this.state.yearOpened,
-      matureTrees: this.state.matureTrees,
-      immatureTrees: this.state.immatureTrees,
-      hectarage: this.state.hectarage,
+      matureTrees: parseInt(this.state.matureTrees),
+      immatureTrees: parseInt(this.state.immatureTrees),
+      hectarage: parseInt(this.state.hectarage),
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Maputo"
       })

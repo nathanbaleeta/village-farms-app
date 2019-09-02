@@ -119,10 +119,6 @@ const goods = [
     label: "Vegetables"
   },
   {
-    value: "Vegetables",
-    label: "Vegetables"
-  },
-  {
     value: "Pigs",
     label: "Pigs"
   },
@@ -240,9 +236,9 @@ class SalesList extends Component {
       goodsPurchased: this.state.goodsPurchased,
       address: this.state.address,
       phone: this.state.phone,
-      unitPrice: this.state.unitPrice,
-      quantity: this.state.quantity,
-      totalPrice: this.state.totalPrice
+      unitPrice: parseInt(this.state.unitPrice),
+      quantity: parseInt(this.state.quantity),
+      totalPrice: parseInt(this.state.totalPrice)
     };
 
     //Update farmer module

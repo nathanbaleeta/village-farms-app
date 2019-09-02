@@ -31,10 +31,6 @@ const goods = [
     label: "Vegetables"
   },
   {
-    value: "Vegetables",
-    label: "Vegetables"
-  },
-  {
     value: "Pigs",
     label: "Pigs"
   },
@@ -88,9 +84,9 @@ class CreateSale extends React.Component {
       address: this.state.address,
       goodsPurchased: this.state.goodsPurchased,
       phone: this.state.phone,
-      unitPrice: this.state.unitPrice,
-      quantity: this.state.quantity,
-      totalPrice: this.state.totalPrice,
+      unitPrice: parseInt(this.state.unitPrice),
+      quantity: parseInt(this.state.quantity),
+      totalPrice: parseInt(this.state.totalPrice),
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Maputo"
       })
