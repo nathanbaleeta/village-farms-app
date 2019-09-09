@@ -1,13 +1,5 @@
 export const titles = [
   {
-    value: "Prof",
-    label: "Prof"
-  },
-  {
-    value: "Dr",
-    label: "Dr"
-  },
-  {
     value: "Mr",
     label: "Mr"
   },
@@ -18,13 +10,5 @@ export const titles = [
   {
     value: "Mrs",
     label: "Mrs"
-  },
-  {
-    value: "Col",
-    label: "Col"
-  },
-  {
-    value: "Capt",
-    label: "Capt"
   }
 ];
