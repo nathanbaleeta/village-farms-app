@@ -78,9 +78,9 @@ class AdvancesSummary extends React.Component {
           <Card className={classes.card}>
             <CardContent align="center">
               <Typography
-                variant="headline"
+                variant="h5"
                 align="center"
-                //color="primary"
+                gutterBottom
                 style={{
                   color: "#0000CD"
                 }}
@@ -98,40 +98,40 @@ class AdvancesSummary extends React.Component {
               <br />
               <Grid container spacing={24}>
                 <Grid item xs={4} sm={4}>
-                  <Typography variant="title" gutterBottom align="center">
+                  <Typography variant="h5" align="center" gutterBottom>
                     Received
                   </Typography>
                   <Typography
-                    variant="headline"
-                    gutterBottom
+                    variant="h5"
                     align="center"
                     color="Primary"
+                    gutterBottom
                   >
                     {this.state.received}
                   </Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>
-                  <Typography variant="title" gutterBottom align="center">
+                  <Typography variant="h5" align="center" gutterBottom>
                     Value
                   </Typography>
                   <Typography
-                    variant="headline"
-                    gutterBottom
+                    variant="h5"
                     align="center"
                     color="Primary"
+                    gutterBottom
                   >
                     {this.state.value}
                   </Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>
-                  <Typography variant="title" gutterBottom align="center">
+                  <Typography variant="h5" align="center" gutterBottom>
                     Weight
                   </Typography>
                   <Typography
-                    variant="headline"
-                    gutterBottom
+                    variant="h5"
                     align="center"
                     color="Primary"
+                    gutterBottom
                   >
                     {this.state.weight}
                   </Typography>

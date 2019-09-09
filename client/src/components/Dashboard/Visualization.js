@@ -38,6 +38,7 @@ class Visualization extends React.Component {
         <Typography variant="headline" align="center">
           Analytics
         </Typography>
+
         <br />
         <Grid container spacing={24}>
           <Grid item xs={4}>

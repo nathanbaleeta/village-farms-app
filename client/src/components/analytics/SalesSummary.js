@@ -61,9 +61,9 @@ class FarmHistoryStatus extends Component {
             <Card className={classes.card}>
               <CardContent align="center">
                 <Typography
-                  variant="headline"
+                  variant="h5"
                   align="center"
-                  //color="primary"
+                  gutterBottom
                   style={{
                     color: "#0000CD"
                   }}
@@ -81,27 +81,27 @@ class FarmHistoryStatus extends Component {
                 <br />
                 <Grid container spacing={24}>
                   <Grid item xs={6} sm={6}>
-                    <Typography variant="title" gutterBottom align="center">
+                    <Typography variant="h5" align="center" gutterBottom>
                       Sales
                     </Typography>
                     <Typography
-                      variant="headline"
-                      gutterBottom
+                      variant="h5"
                       align="center"
                       color="Primary"
+                      gutterBottom
                     >
                       {this.state.numOfSales}
                     </Typography>
                   </Grid>
                   <Grid item xs={6} sm={6}>
-                    <Typography variant="title" gutterBottom align="center">
+                    <Typography variant="h5" align="center" gutterBottom>
                       Total Price
                     </Typography>
                     <Typography
-                      variant="headline"
-                      gutterBottom
+                      variant="h5"
                       align="center"
                       color="Primary"
+                      gutterBottom
                     >
                       {this.state.totalPrice}
                     </Typography>

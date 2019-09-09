@@ -10,6 +10,12 @@ import Grid from "@material-ui/core/Grid";
 
 import NumberFormat from "react-number-format";
 
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+
 import { districts } from "../common/districtList";
 import { titles } from "../common/titleList";
 import { genders } from "../common/genderList";
@@ -367,6 +373,37 @@ class CreateFarmer extends React.Component {
                   shrink: true
                 }}
               />
+
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container justify="space-around">
+                  <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    id="date-picker-inline"
+                    label="Date picker inline"
+                    name="yearOpened"
+                    value={yearOpened}
+                    onChange={this.onChange}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date"
+                    }}
+                  />
+                  <KeyboardDatePicker
+                    margin="normal"
+                    id="date-picker-dialog"
+                    label="Date picker dialog"
+                    format="MM/dd/yyyy"
+                    name="yearOpened"
+                    value={yearOpened}
+                    onChange={this.onChange}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date"
+                    }}
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
             </Grid>
             <Grid item xs={6} sm={6}>
               <NumberFormat

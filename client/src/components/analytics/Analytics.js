@@ -2,7 +2,8 @@ import React from "react";
 
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+// import { Typography } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 
 import Grid from "@material-ui/core/Grid";
 
@@ -40,15 +41,11 @@ class Analytics extends React.Component {
 
     return (
       <div>
-        <Typography
-          variant="display1"
-          align="center"
-          style={{ color: "black" }}
-        >
+        <Typography variant="h4" align="center" gutterBottom>
           Data Analytics
         </Typography>
         <br />
-        <Grid container spacing={24}>
+        <Grid container spacing={4}>
           <Grid item lg={3} sm={6} xs={12}>
             <RegistrationSummary />
           </Grid>
@@ -63,16 +60,11 @@ class Analytics extends React.Component {
           </Grid>
         </Grid>
         <br />
-
-        <Typography
-          variant="display1"
-          align="center"
-          style={{ color: "black" }}
-        >
+        <Typography variant="h4" align="center" gutterBottom>
           Summary Reports
         </Typography>
         <br />
-        <Grid container spacing={24}>
+        <Grid container spacing={4}>
           <Grid item lg={3} sm={6} xs={12}>
             <FarmerRegistrationReport />
           </Grid>
@@ -91,16 +83,12 @@ class Analytics extends React.Component {
         <br />
         <br />
         <br />
-        <Typography
-          variant="display1"
-          align="center"
-          style={{ color: "black" }}
-        >
+        <Typography variant="h4" align="center" gutterBottom>
           Summary Statistics
         </Typography>
         <br />
         <br />
-        <Grid container spacing={24}>
+        <Grid container spacing={4}>
           <Grid item lg={3} sm={6} xs={12}>
             <AdvancesMode />
           </Grid>

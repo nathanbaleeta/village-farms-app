@@ -65,9 +65,9 @@ class FarmHistoryStatus extends React.Component {
           <Card className={classes.card}>
             <CardContent align="center">
               <Typography
-                variant="headline"
+                variant="h5"
                 align="center"
-                //color="primary"
+                gutterBottom
                 style={{
                   color: "#0000CD"
                 }}
@@ -85,40 +85,40 @@ class FarmHistoryStatus extends React.Component {
               <br />
               <Grid container spacing={24}>
                 <Grid item xs={4} sm={4}>
-                  <Typography variant="title" gutterBottom align="center">
+                  <Typography variant="h5" align="center" gutterBottom>
                     Hectarage
                   </Typography>
                   <Typography
-                    variant="headline"
-                    gutterBottom
+                    variant="h5"
                     align="center"
                     color="Primary"
+                    gutterBottom
                   >
                     {this.state.hectarage}
                   </Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>
-                  <Typography variant="title" gutterBottom align="center">
+                  <Typography variant="h5" align="center" gutterBottom>
                     Mature
                   </Typography>
                   <Typography
-                    variant="headline"
-                    gutterBottom
+                    variant="h5"
                     align="center"
                     color="Primary"
+                    gutterBottom
                   >
                     {this.state.mature}
                   </Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>
-                  <Typography variant="title" gutterBottom align="center">
+                  <Typography variant="h5" align="center" gutterBottom>
                     Immature
                   </Typography>
                   <Typography
-                    variant="headline"
-                    gutterBottom
+                    variant="h5"
                     align="center"
                     color="Primary"
+                    gutterBottom
                   >
                     {this.state.immature}
                   </Typography>

@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+//import { Typography } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
@@ -69,9 +70,9 @@ class RegistrationSummary extends React.Component {
           <Card className={classes.card}>
             <CardContent align="center">
               <Typography
-                variant="headline"
+                variant="h5"
                 align="center"
-                //color="primary"
+                gutterBottom
                 style={{
                   color: "#0000CD"
                 }}
@@ -88,40 +89,40 @@ class RegistrationSummary extends React.Component {
               <br />
               <Grid container spacing={24}>
                 <Grid item xs={4} sm={4}>
-                  <Typography variant="title" gutterBottom align="center">
+                  <Typography variant="h5" align="center" gutterBottom>
                     Farmers
                   </Typography>
                   <Typography
-                    variant="headline"
-                    gutterBottom
+                    variant="h5"
                     align="center"
                     color="Primary"
+                    gutterBottom
                   >
                     {this.state.numOfFarmers}
                   </Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>
-                  <Typography variant="title" gutterBottom align="center">
+                  <Typography variant="h5" align="center" gutterBottom>
                     Male
                   </Typography>
                   <Typography
-                    variant="headline"
-                    gutterBottom
+                    variant="h5"
                     align="center"
                     color="Primary"
+                    gutterBottom
                   >
                     {this.state.males}
                   </Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>
-                  <Typography variant="title" gutterBottom align="center">
+                  <Typography variant="h5" align="center" gutterBottom>
                     Female
                   </Typography>
                   <Typography
-                    variant="headline"
-                    gutterBottom
+                    variant="h5"
                     align="center"
                     color="Primary"
+                    gutterBottom
                   >
                     {this.state.females}
                   </Typography>
