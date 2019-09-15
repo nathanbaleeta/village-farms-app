@@ -151,12 +151,11 @@ class CreateFarmer extends React.Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <br />
-
-          <Typography variant="headline" align="left" color="inherit">
+          <Typography variant="h5" gutterBottom>
             Autobiography
           </Typography>
 
-          <Grid container spacing={24}>
+          <Grid container spacing={2}>
             <Grid item xs={6} sm={6}>
               <TextField
                 required
@@ -354,9 +353,11 @@ class CreateFarmer extends React.Component {
               </TextField>
             </Grid>
             <Grid item xs={12} sm={12}>
-              <Typography variant="headline" align="left" color="inherit">
+              <br />
+              <Typography variant="h5" gutterBottom>
                 Farm History and Status
               </Typography>
+              <br />
             </Grid>
             <Grid item xs={6} sm={6}>
               <TextField

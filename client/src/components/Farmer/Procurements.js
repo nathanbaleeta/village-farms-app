@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -35,7 +35,7 @@ const styles = theme => ({
   }
 });
 
-class Procurements extends React.Component {
+class Procurements extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,7 +64,7 @@ class Procurements extends React.Component {
     const { classes } = this.props;
 
     return (
-      <React.Fragment>
+      <Fragment>
         <br />
 
         <Fab
@@ -161,9 +161,9 @@ class Procurements extends React.Component {
             }}
           >
             <Typography
-              component="h1"
-              variant="display1"
+              variant="h4"
               align="center"
+              gutterBottom
               style={{ color: "white" }}
             >
               Add Procurement
@@ -178,7 +178,7 @@ class Procurements extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

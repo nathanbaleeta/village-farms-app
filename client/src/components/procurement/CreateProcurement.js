@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Typography } from "@material-ui/core";
@@ -49,7 +49,7 @@ const payNowOptions = [
     label: "No"
   }
 ];
-class CreateProcurement extends React.Component {
+class CreateProcurement extends Component {
   constructor() {
     super();
     this.state = {
@@ -182,14 +182,14 @@ class CreateProcurement extends React.Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <form onSubmit={this.handleSubmit}>
           <br />
 
-          <Grid container spacing={24}>
+          <Grid container spacing={2}>
             <Snackbar />
             <Grid item xs={12} sm={12}>
-              <Typography variant="headline" align="left" color="inherit">
+              <Typography variant="h5" gutterBottom>
                 Procurement
               </Typography>
             </Grid>
@@ -314,7 +314,7 @@ class CreateProcurement extends React.Component {
             </Grid>
 
             <Grid item xs={12} sm={12}>
-              <Typography variant="headline" align="left" color="inherit">
+              <Typography variant="h5" gutterBottom>
                 Payment of Farmer
               </Typography>
             </Grid>
@@ -384,7 +384,7 @@ class CreateProcurement extends React.Component {
             </Grid>
           </Grid>
         </form>
-      </div>
+      </Fragment>
     );
   }
 }

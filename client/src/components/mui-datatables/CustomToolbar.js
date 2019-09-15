@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -22,7 +22,7 @@ const styles = theme => ({
   dialogPaper: {}
 });
 
-class CustomToolbar extends React.Component {
+class CustomToolbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,7 +42,7 @@ class CustomToolbar extends React.Component {
     const { classes } = this.props;
 
     return (
-      <React.Fragment>
+      <Fragment>
         <Tooltip title={"Register Farmer"}>
           <IconButton className={classes.iconButton} onClick={this.handleOpen}>
             <PersonAddIcon color="default" className={classes.addIcon} />
@@ -63,9 +63,9 @@ class CustomToolbar extends React.Component {
             }}
           >
             <Typography
-              component="h1"
-              variant="display1"
+              variant="h4"
               align="center"
+              gutterBottom
               style={{ color: "white" }}
             >
               Register Farmer
@@ -84,7 +84,7 @@ class CustomToolbar extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

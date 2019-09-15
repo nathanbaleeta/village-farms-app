@@ -146,9 +146,9 @@ class CreateAdvances extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <br />
 
-          <Grid container spacing={24}>
+          <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
-              <Typography variant="headline" align="left" color="inherit">
+              <Typography variant="h5" gutterBottom>
                 Advances
               </Typography>
             </Grid>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
@@ -75,7 +75,7 @@ const styles = theme => ({
   }
 });
 
-class FarmerDetails extends React.Component {
+class FarmerDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -305,8 +305,8 @@ class FarmerDetails extends React.Component {
     const { value } = this.state;
 
     return (
-      <React.Fragment>
-        <Grid container spacing={24}>
+      <Fragment>
+        <Grid container spacing={2}>
           <Grid item xs={3} sm={3}>
             <Link to="/farmers" className={classes.link}>
               <Fab
@@ -321,13 +321,13 @@ class FarmerDetails extends React.Component {
             </Link>
           </Grid>
           <Grid item xs={3} sm={3}>
-            <Typography variant="display1" component="h4">
+            <Typography variant="h5" gutterBottom>
               Farmer Details
             </Typography>
           </Grid>
         </Grid>
 
-        <Grid container spacing={24}>
+        <Grid container spacing={2}>
           <Grid item xs={3} sm={3}>
             <Card className={classes.card}>
               <CardHeader />
@@ -356,40 +356,41 @@ class FarmerDetails extends React.Component {
                 <br />
                 <Grid container spacing={24}>
                   <Grid item xs={4} sm={4}>
-                    <Typography variant="title" gutterBottom align="center">
+                    <Typography variant="h5" gutterBottom>
                       Hectarage
                     </Typography>
+
                     <Typography
-                      variant="title"
-                      gutterBottom
+                      variant="h5"
                       align="center"
                       color="Primary"
+                      gutterBottom
                     >
                       {this.state.hectarage}
                     </Typography>
                   </Grid>
                   <Grid item xs={4} sm={4}>
-                    <Typography variant="title" gutterBottom align="center">
+                    <Typography variant="h5" gutterBottom>
                       Mature
                     </Typography>
                     <Typography
-                      variant="title"
-                      gutterBottom
+                      variant="h5"
                       align="center"
                       color="Primary"
+                      gutterBottom
                     >
                       {this.state.matureTrees}
                     </Typography>
                   </Grid>
                   <Grid item xs={4} sm={4}>
-                    <Typography variant="title" gutterBottom align="center">
+                    <Typography variant="h5" gutterBottom>
                       Immature
                     </Typography>
                     <Typography
-                      variant="title"
-                      gutterBottom
+                      variant="h5"
                       align="center"
                       color="Primary"
+                      gutterBottom
                     >
                       {this.state.immatureTrees}
                     </Typography>
@@ -478,7 +479,7 @@ class FarmerDetails extends React.Component {
             <br />
           </Grid>
           <Grid item xs={9} sm={9}>
-            <Paper square className={classes.root} elevation="0">
+            <Paper square className={classes.root} elevation="1">
               <Tabs
                 value={this.state.value}
                 onChange={this.handleChange}
@@ -629,9 +630,9 @@ class FarmerDetails extends React.Component {
             }}
           >
             <Typography
-              component="h1"
-              variant="display1"
+              variant="h4"
               align="center"
+              gutterBottom
               style={{ color: "white" }}
             >
               Add Procurement
@@ -661,10 +662,9 @@ class FarmerDetails extends React.Component {
             }}
           >
             <Typography
-              component="h1"
-              variant="display1"
-              fullWidth
+              variant="h4"
               align="center"
+              gutterBottom
               style={{ color: "white" }}
             >
               Create Advance
@@ -679,7 +679,7 @@ class FarmerDetails extends React.Component {
             </Button>
           </DialogActions>
         </Dialog>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

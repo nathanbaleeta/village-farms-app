@@ -411,9 +411,9 @@ class FarmerList extends Component {
             style={{ backgroundColor: "#0000CD" }}
           >
             <Typography
-              component="h1"
-              variant="display1"
+              variant="h4"
               align="center"
+              gutterBottom
               style={{ color: "white" }}
             >
               Edit Farmer
@@ -422,11 +422,11 @@ class FarmerList extends Component {
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
               <br />
-              <Typography variant="headline" align="left" color="inherit">
+              <Typography variant="h5" gutterBottom>
                 Autobiography
               </Typography>
               <br />
-              <Grid container spacing={24}>
+              <Grid container spacing={2}>
                 <Grid item xs={6} sm={6}>
                   <TextField
                     required
@@ -632,7 +632,7 @@ class FarmerList extends Component {
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
-                  <Typography variant="headline" align="left" color="inherit">
+                  <Typography variant="h5" gutterBottom>
                     Farm History and Status
                   </Typography>
                 </Grid>

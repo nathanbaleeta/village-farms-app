@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
@@ -40,7 +40,7 @@ const goods = [
   }
 ];
 
-class CreateSale extends React.Component {
+class CreateSale extends Component {
   constructor() {
     super();
     this.state = {
@@ -122,15 +122,14 @@ class CreateSale extends React.Component {
     } = this.state;
 
     return (
-      <div>
+      <Fragment>
         <form onSubmit={this.handleSubmit}>
           <br />
-
-          <Typography variant="headline" align="left" color="inherit">
-            Sales Record
+          <Typography variant="h5" gutterBottom>
+            Sales record
           </Typography>
 
-          <Grid container spacing={24}>
+          <Grid container spacing={2}>
             <Grid item xs={6} sm={6}>
               <TextField
                 required
@@ -248,6 +247,7 @@ class CreateSale extends React.Component {
               />
             </Grid>
             <br />
+            <br />
             <Grid item xs={12} sm={12}>
               <Button
                 type="submit"
@@ -262,7 +262,7 @@ class CreateSale extends React.Component {
             </Grid>
           </Grid>
         </form>
-      </div>
+      </Fragment>
     );
   }
 }

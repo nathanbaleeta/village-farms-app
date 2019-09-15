@@ -389,9 +389,9 @@ class SalesList extends Component {
             style={{ background: "#0000CD" }}
           >
             <Typography
-              component="h1"
-              variant="display1"
+              variant="h4"
               align="center"
+              gutterBottom
               style={{ color: "white" }}
             >
               Edit Sale
@@ -401,13 +401,13 @@ class SalesList extends Component {
             <form onSubmit={this.handleSubmit}>
               <br />
 
-              <Typography variant="headline" align="left" color="inherit">
+              <Typography variant="h5" gutterBottom>
                 Sales Record
               </Typography>
               <br />
               <br />
 
-              <Grid container spacing={24}>
+              <Grid container spacing={2}>
                 <Grid item xs={6} sm={6}>
                   <TextField
                     required

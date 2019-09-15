@@ -59,9 +59,9 @@ class CustomToolbar extends React.Component {
             style={{ background: "#0000CD" }}
           >
             <Typography
-              component="h1"
-              variant="display1"
+              variant="h4"
               align="center"
+              gutterBottom
               style={{ color: "white" }}
             >
               Add Sale
