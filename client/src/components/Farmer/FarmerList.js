@@ -269,7 +269,8 @@ class FarmerList extends Component {
   };
 
   capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    var lower = str.toLowerCase();
+    return lower.charAt(0).toUpperCase() + lower.slice(1);
   }
 
   CapitalizeInitial(str) {

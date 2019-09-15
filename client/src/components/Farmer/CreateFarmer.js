@@ -56,7 +56,8 @@ class CreateFarmer extends React.Component {
   }
 
   capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    let lower = str.toLowerCase();
+    return lower.charAt(0).toUpperCase() + lower.slice(1);
   }
 
   onChangeDistrict = e => {
