@@ -46,6 +46,7 @@ class CreateFarmer extends React.Component {
       mmPayment: "",
       district: "",
       traditionalAuthority: "",
+      selectedDate: "",
       yearOpened: "",
       matureTrees: "",
       immatureTrees: "",
@@ -67,6 +68,12 @@ class CreateFarmer extends React.Component {
       traditionalAuthority: ""
     });
     console.log(e.target.value);
+  };
+
+  handleDateChange = date => {
+    this.setState({
+      selectedDate: date
+    });
   };
 
   onChange = e => {
@@ -140,6 +147,7 @@ class CreateFarmer extends React.Component {
       //district,
       //traditionalAuthority,
       yearOpened,
+      selectedDate,
       matureTrees,
       immatureTrees,
       hectarage
@@ -379,29 +387,18 @@ class CreateFarmer extends React.Component {
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <Grid container justify="space-around">
                   <KeyboardDatePicker
-                    disableToolbar
-                    variant="inline"
-                    format="MM/dd/yyyy"
                     margin="normal"
-                    id="date-picker-inline"
-                    label="Date picker inline"
-                    name="yearOpened"
-                    value={yearOpened}
-                    onChange={this.onChange}
+                    id="date-picker-dialog"
+                    label="Date opened"
+                    format="MM/dd/yyyy"
+                    value={selectedDate}
+                    onChange={this.handleDateChange}
+                    autoComplete="off"
                     KeyboardButtonProps={{
                       "aria-label": "change date"
                     }}
-                  />
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    label="Date picker dialog"
-                    format="MM/dd/yyyy"
-                    name="yearOpened"
-                    value={yearOpened}
-                    onChange={this.onChange}
-                    KeyboardButtonProps={{
-                      "aria-label": "change date"
+                    InputLabelProps={{
+                      shrink: true
                     }}
                   />
                 </Grid>

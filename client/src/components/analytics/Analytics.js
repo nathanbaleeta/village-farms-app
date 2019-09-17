@@ -45,7 +45,7 @@ class Analytics extends React.Component {
           Data Analytics
         </Typography>
         <br />
-        <Grid container spacing={4}>
+        <Grid container spacing={3}>
           <Grid item lg={3} sm={6} xs={12}>
             <RegistrationSummary />
           </Grid>
