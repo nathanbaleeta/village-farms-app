@@ -100,7 +100,7 @@ class CreateFarmer extends React.Component {
       mmPayment: this.state.mmPayment,
       district: this.state.district,
       traditionalAuthority: this.state.traditionalAuthority,
-      yearOpened: this.state.yearOpened,
+      yearOpened: Date(this.state.yearOpened),
       matureTrees: parseInt(this.state.matureTrees),
       immatureTrees: parseInt(this.state.immatureTrees),
       hectarage: parseInt(this.state.hectarage),

@@ -244,8 +244,8 @@ class FarmerList extends Component {
 
     // get our form data out of state
     const farmer = {
-      firstname: this.capitalize(this.state.firstname),
-      lastname: this.capitalize(this.state.lastname),
+      firstname: this.toTitleCase(this.state.firstname),
+      lastname: this.toTitleCase(this.state.lastname),
       title: this.state.title,
       sex: this.state.sex,
       maritalStatus: this.state.maritalStatus,
@@ -288,6 +288,14 @@ class FarmerList extends Component {
     let lower = str.toLowerCase();
     return lower.charAt(0).toUpperCase() + lower.slice(1);
   }
+
+  toTitleCase = phrase => {
+    return phrase
+      .toLowerCase()
+      .split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   CapitalizeInitial(str) {
     return str.charAt(0).toUpperCase();
