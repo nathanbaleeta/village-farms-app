@@ -46,11 +46,11 @@ class CreateFarmer extends React.Component {
       mmPayment: "",
       district: "",
       traditionalAuthority: "",
-      selectedDate: new Date(Date.now() - 7776000000),
-      yearOpened: "",
+      yearOpened: new Date(Date.now() - 7776000000),
       matureTrees: "",
       immatureTrees: "",
       hectarage: "",
+      acreage: "",
 
       dataValue: "Chitipa"
     };
@@ -72,7 +72,7 @@ class CreateFarmer extends React.Component {
 
   handleDateChange = date => {
     this.setState({
-      selectedDate: date
+      yearOpened: date
     });
   };
 
@@ -104,6 +104,7 @@ class CreateFarmer extends React.Component {
       matureTrees: parseInt(this.state.matureTrees),
       immatureTrees: parseInt(this.state.immatureTrees),
       hectarage: parseInt(this.state.hectarage),
+      acreage: parseFloat(this.state.acreage),
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Maputo"
       })
@@ -130,7 +131,8 @@ class CreateFarmer extends React.Component {
       yearOpened: "",
       matureTrees: "",
       immatureTrees: "",
-      hectarage: ""
+      hectarage: "",
+      acreage: ""
     });
   };
 
@@ -147,10 +149,10 @@ class CreateFarmer extends React.Component {
       //district,
       //traditionalAuthority,
       yearOpened,
-      selectedDate,
       matureTrees,
       immatureTrees,
-      hectarage
+      hectarage,
+      acreage
     } = this.state;
 
     const { dataValue } = this.state;
@@ -366,40 +368,27 @@ class CreateFarmer extends React.Component {
               <Typography variant="h5" gutterBottom>
                 Farm History and Status
               </Typography>
-              <br />
             </Grid>
             <Grid item xs={6} sm={6}>
-              <TextField
-                required
-                id="yearOpened"
-                name="yearOpened"
-                value={yearOpened}
-                onChange={this.onChange}
-                label="Year farm opened"
-                type="date"
-                fullWidth
-                autoComplete="off"
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
-
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container justify="space-around">
-                  <KeyboardDatePicker
-                    margin="normal"
-                    id="date-picker-dialog"
-                    label="Date opened"
-                    format="dd/MM/yyyy"
-                    value={selectedDate}
-                    onChange={this.handleDateChange}
-                    //minDate={new Date("2018-03-01")}
-                    maxDate={new Date(Date.now() - 7776000000)}
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                  />
-                </Grid>
+                <KeyboardDatePicker
+                  required
+                  //margin="normal"
+                  id="date-picker-dialog"
+                  label="Year Farm opened"
+                  format="dd/MM/yyyy"
+                  fullWidth
+                  value={yearOpened}
+                  onChange={this.handleDateChange}
+                  maxDate={new Date(Date.now() - 7776000000)} // Disables dates less than 3 months
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                  KeyboardButtonProps={{
+                    "aria-label": "change date"
+                  }}
+                  //InputAdornmentProps={{ position: "end" }}
+                />
               </MuiPickersUtilsProvider>
             </Grid>
             <Grid item xs={6} sm={6}>
@@ -444,6 +433,22 @@ class CreateFarmer extends React.Component {
                 }}
                 customInput={TextField}
                 label="Hectarage under cultivation"
+                helperText="(Enter in Acres)"
+                fullWidth
+                autoComplete="off"
+              />
+            </Grid>
+            <Grid item xs={6} sm={6}>
+              <NumberFormat
+                value={acreage}
+                thousandSeparator={true}
+                onValueChange={values => {
+                  const { formattedValue } = values;
+
+                  this.setState({ acreage: formattedValue });
+                }}
+                customInput={TextField}
+                label="Acreage under cultivation"
                 helperText="(Enter in Acres)"
                 fullWidth
                 autoComplete="off"

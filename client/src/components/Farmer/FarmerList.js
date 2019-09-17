@@ -26,6 +26,12 @@ import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+
 import { titles } from "../common/titleList";
 import { genders } from "../common/genderList";
 import { maritalStatuses } from "../common/maritalStatusList";
@@ -130,6 +136,7 @@ class FarmerList extends Component {
       matureTrees: "",
       immatureTrees: "",
       hectarage: "",
+      acreage: "",
 
       dataValue: "Chitipa"
     };
@@ -166,7 +173,8 @@ class FarmerList extends Component {
           yearOpened: items[item].yearOpened,
           matureTrees: items[item].matureTrees,
           immatureTrees: items[item].immatureTrees,
-          hectarage: items[item].hectarage
+          hectarage: items[item].hectarage,
+          acreage: items[item].acreage
         });
       }
 
@@ -177,6 +185,12 @@ class FarmerList extends Component {
       //console.log(this.state.data);
     });
   }
+
+  handleDateChange = date => {
+    this.setState({
+      yearOpened: date
+    });
+  };
 
   updateFarmer(id) {
     //const recordToEdit = this.state.data.find(item => item.id === id);
@@ -207,7 +221,8 @@ class FarmerList extends Component {
         yearOpened: snapshot.child("yearOpened").val(),
         matureTrees: snapshot.child("matureTrees").val(),
         immatureTrees: snapshot.child("immatureTrees").val(),
-        hectarage: snapshot.child("hectarage").val()
+        hectarage: snapshot.child("hectarage").val(),
+        acreage: snapshot.child("acreage").val()
       });
     });
     console.log(
@@ -243,7 +258,8 @@ class FarmerList extends Component {
       yearOpened: this.state.yearOpened,
       matureTrees: parseInt(this.state.matureTrees),
       immatureTrees: parseInt(this.state.immatureTrees),
-      hectarage: parseInt(this.state.hectarage)
+      hectarage: parseInt(this.state.hectarage),
+      acreage: parseFloat(this.state.acreage)
     };
 
     //Update farmer module
@@ -289,7 +305,7 @@ class FarmerList extends Component {
       filterType: "dropdown",
       responsive: "stacked",
       serverSide: false,
-      rowsPerPage: 10,
+      rowsPerPage: 5,
       pagination: true,
       customToolbar: () => {
         return <CustomToolbar />;
@@ -639,21 +655,28 @@ class FarmerList extends Component {
                 </Grid>
 
                 <Grid item xs={6} sm={6}>
-                  <TextField
-                    required
-                    id="yearOpened"
-                    name="yearOpened"
-                    value={this.state.yearOpened}
-                    onChange={this.onChange}
-                    label="Year farm opened"
-                    type="date"
-                    fullWidth
-                    autoComplete="off"
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                  />
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                      required
+                      //margin="normal"
+                      id="date-picker-dialog"
+                      label="Year Farm opened"
+                      format="dd/MM/yyyy"
+                      fullWidth
+                      value={this.state.yearOpened}
+                      onChange={this.handleDateChange}
+                      maxDate={new Date(Date.now() - 7776000000)} // Disables dates less than 3 months
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                      KeyboardButtonProps={{
+                        "aria-label": "change date"
+                      }}
+                      //InputAdornmentProps={{ position: "end" }}
+                    />
+                  </MuiPickersUtilsProvider>
                 </Grid>
+
                 <Grid item xs={6} sm={6}>
                   <NumberFormat
                     value={this.state.matureTrees}
@@ -697,6 +720,23 @@ class FarmerList extends Component {
                     }}
                     customInput={TextField}
                     label="Hectarage under cultivation"
+                    helperText="(Enter in Acres)"
+                    fullWidth
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <NumberFormat
+                    value={this.state.acreage}
+                    thousandSeparator={true}
+                    onValueChange={values => {
+                      const { formattedValue } = values;
+
+                      this.setState({ acreage: formattedValue });
+                    }}
+                    customInput={TextField}
+                    label="Acreage under cultivation"
                     helperText="(Enter in Acres)"
                     fullWidth
                     autoComplete="off"
