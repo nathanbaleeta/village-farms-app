@@ -46,7 +46,7 @@ class CreateFarmer extends React.Component {
       mmPayment: "",
       district: "",
       traditionalAuthority: "",
-      yearOpened: new Date(Date.now() - 7776000000),
+      yearOpened: "",
       matureTrees: "",
       immatureTrees: "",
       hectarage: "",
@@ -56,10 +56,13 @@ class CreateFarmer extends React.Component {
     };
   }
 
-  capitalize(str) {
-    let lower = str.toLowerCase();
-    return lower.charAt(0).toUpperCase() + lower.slice(1);
-  }
+  toTitleCase = phrase => {
+    return phrase
+      .toLowerCase()
+      .split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   onChangeDistrict = e => {
     this.setState({
@@ -72,8 +75,9 @@ class CreateFarmer extends React.Component {
 
   handleDateChange = date => {
     this.setState({
-      yearOpened: date
+      yearOpened: date.toLocaleString()
     });
+    console.log(this.state.yearOpened);
   };
 
   onChange = e => {
@@ -90,8 +94,8 @@ class CreateFarmer extends React.Component {
 
     // get our form data out of state
     const farmer = {
-      firstname: this.capitalize(this.state.firstname),
-      lastname: this.capitalize(this.state.lastname),
+      firstname: this.toTitleCase(this.state.firstname),
+      lastname: this.toTitleCase(this.state.lastname),
       title: this.state.title,
       sex: this.state.sex,
       maritalStatus: this.state.maritalStatus,
@@ -100,7 +104,7 @@ class CreateFarmer extends React.Component {
       mmPayment: this.state.mmPayment,
       district: this.state.district,
       traditionalAuthority: this.state.traditionalAuthority,
-      yearOpened: Date(this.state.yearOpened),
+      yearOpened: this.state.yearOpened,
       matureTrees: parseInt(this.state.matureTrees),
       immatureTrees: parseInt(this.state.immatureTrees),
       hectarage: parseInt(this.state.hectarage),
@@ -372,21 +376,21 @@ class CreateFarmer extends React.Component {
             <Grid item xs={6} sm={6}>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardDatePicker
-                  required
+                  //required
                   //margin="normal"
-                  id="date-picker-dialog"
+                  //id="date-picker-dialog"
                   label="Year Farm opened"
-                  format="dd/MM/yyyy"
+                  format="dd-MM-yyyy"
                   fullWidth
                   value={yearOpened}
+                  defaultValue="dd-mm-yyyy"
+                  customInput={TextField}
                   onChange={this.handleDateChange}
-                  maxDate={new Date(Date.now() - 7776000000)} // Disables dates less than 3 months
+                  maxDate={Date.now() - 7776000000} // Disables dates less than 3 months
                   InputLabelProps={{
                     shrink: true
                   }}
-                  KeyboardButtonProps={{
-                    "aria-label": "change date"
-                  }}
+
                   //InputAdornmentProps={{ position: "end" }}
                 />
               </MuiPickersUtilsProvider>

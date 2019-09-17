@@ -284,11 +284,6 @@ class FarmerList extends Component {
     //console.log(e.target.value);
   };
 
-  capitalize(str) {
-    let lower = str.toLowerCase();
-    return lower.charAt(0).toUpperCase() + lower.slice(1);
-  }
-
   toTitleCase = phrase => {
     return phrase
       .toLowerCase()
@@ -669,17 +664,16 @@ class FarmerList extends Component {
                       //margin="normal"
                       id="date-picker-dialog"
                       label="Year Farm opened"
-                      format="dd/MM/yyyy"
+                      format="dd-MM-yyyy"
                       fullWidth
                       value={this.state.yearOpened}
+                      defaultValue="dd-mm-yyyy"
                       onChange={this.handleDateChange}
                       maxDate={new Date(Date.now() - 7776000000)} // Disables dates less than 3 months
                       InputLabelProps={{
                         shrink: true
                       }}
-                      KeyboardButtonProps={{
-                        "aria-label": "change date"
-                      }}
+
                       //InputAdornmentProps={{ position: "end" }}
                     />
                   </MuiPickersUtilsProvider>
