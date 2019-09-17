@@ -46,7 +46,7 @@ class CreateFarmer extends React.Component {
       mmPayment: "",
       district: "",
       traditionalAuthority: "",
-      selectedDate: "",
+      selectedDate: new Date(Date.now() - 7776000000),
       yearOpened: "",
       matureTrees: "",
       immatureTrees: "",
@@ -390,13 +390,11 @@ class CreateFarmer extends React.Component {
                     margin="normal"
                     id="date-picker-dialog"
                     label="Date opened"
-                    format="MM/dd/yyyy"
+                    format="dd/MM/yyyy"
                     value={selectedDate}
                     onChange={this.handleDateChange}
-                    autoComplete="off"
-                    KeyboardButtonProps={{
-                      "aria-label": "change date"
-                    }}
+                    //minDate={new Date("2018-03-01")}
+                    maxDate={new Date(Date.now() - 7776000000)}
                     InputLabelProps={{
                       shrink: true
                     }}
