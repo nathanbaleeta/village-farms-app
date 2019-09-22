@@ -20,7 +20,7 @@ class FarmHistoryStatus extends React.Component {
   constructor() {
     super();
     this.state = {
-      hectarage: 0,
+      acreage: 0,
       mature: 0,
       immature: 0
     };
@@ -35,7 +35,7 @@ class FarmHistoryStatus extends React.Component {
     query.on("value", snapshot => {
       let matureCounter = 0;
       let immatureCounter = 0;
-      let hectarageCounter = 0;
+      let acreageCounter = 0;
       snapshot.forEach(function(childSnapshot) {
         // Immature trees counter; convert string to int
         immatureCounter =
@@ -47,13 +47,13 @@ class FarmHistoryStatus extends React.Component {
           matureCounter + parseInt(childSnapshot.child("matureTrees").val());
 
         // Hectarage counter; convert string to int
-        hectarageCounter =
-          hectarageCounter + parseInt(childSnapshot.child("hectarage").val());
+        acreageCounter =
+          acreageCounter + parseFloat(childSnapshot.child("acreage").val());
       });
       this.setState({
         mature: matureCounter,
         immature: immatureCounter,
-        hectarage: hectarageCounter
+        acreage: acreageCounter.toFixed(2)
       });
     });
   }
@@ -86,7 +86,7 @@ class FarmHistoryStatus extends React.Component {
               <Grid container spacing={24}>
                 <Grid item xs={4} sm={4}>
                   <Typography variant="h5" align="center" gutterBottom>
-                    Hectarage
+                    Acreage
                   </Typography>
                   <Typography
                     variant="h5"
@@ -94,7 +94,7 @@ class FarmHistoryStatus extends React.Component {
                     color="Primary"
                     gutterBottom
                   >
-                    {this.state.hectarage}
+                    {this.state.acreage}
                   </Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>
