@@ -230,6 +230,12 @@ class FarmerList extends Component {
     );
   }
 
+  // remove commas before saving to firebase
+  removeCommas(str) {
+    let result = str.replace(/,/g, "");
+    return Number(result);
+  }
+
   onChange = e => {
     /*
           Because we named the inputs to match their
@@ -256,9 +262,10 @@ class FarmerList extends Component {
       traditionalAuthority: this.state.traditionalAuthority,
 
       yearOpened: this.state.yearOpened,
-      year1: parseInt(this.state.year1),
-      year2: parseInt(this.state.year2),
-      year3: parseInt(this.state.year3),
+      //year1: !this.state.year1 ? "" : this.removeCommas(this.state.year1),
+      year1: !this.state.year1 ? 0 : this.state.year1.replace(/,/g, ""),
+      year2: !this.state.year2 ? 0 : this.removeCommas(this.state.year2),
+      year3: !this.state.year3 ? 0 : this.removeCommas(this.state.year3),
       acreage: parseFloat(this.state.acreage)
     };
 

@@ -10,7 +10,8 @@ import Grid from "@material-ui/core/Grid";
 import RegistrationSummary from "../analytics/RegistrationSummary";
 import ProcurementSummary from "../analytics/ProcurementSummary";
 import AdvancesSummary from "../analytics/AdvancesSummary";
-import SalesSummary from "../analytics/SalesSummary";
+import TreeCountSummary from "../analytics/TreeCountSummary";
+//import SalesSummary from "../analytics/SalesSummary";
 
 import FarmHistoryStatus from "../analytics/FarmHistoryStatus";
 
@@ -56,8 +57,11 @@ class Analytics extends React.Component {
             <AdvancesSummary />
           </Grid>
           <Grid item lg={3} sm={6} xs={12}>
-            <SalesSummary />
+            <TreeCountSummary />
           </Grid>
+          {/*  <Grid item lg={3} sm={6} xs={12}>
+            <SalesSummary />
+          </Grid> */}
         </Grid>
         <br />
         <Typography variant="h4" align="center" gutterBottom>
