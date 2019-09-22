@@ -47,9 +47,9 @@ class CreateFarmer extends React.Component {
       district: "",
       traditionalAuthority: "",
       yearOpened: "",
-      matureTrees: "",
-      immatureTrees: "",
-      hectarage: "",
+      year1: "",
+      year2: "",
+      year3: "",
       acreage: "",
 
       dataValue: "Chitipa"
@@ -105,9 +105,9 @@ class CreateFarmer extends React.Component {
       district: this.state.district,
       traditionalAuthority: this.state.traditionalAuthority,
       yearOpened: this.state.yearOpened,
-      matureTrees: parseInt(this.state.matureTrees),
-      immatureTrees: parseInt(this.state.immatureTrees),
-      hectarage: parseInt(this.state.hectarage),
+      year1: parseInt(this.state.year1),
+      year2: parseInt(this.state.year2),
+      year3: parseInt(this.state.year3),
       acreage: parseFloat(this.state.acreage),
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Maputo"
@@ -133,9 +133,9 @@ class CreateFarmer extends React.Component {
       traditionalAuthority: "",
 
       yearOpened: "",
-      matureTrees: "",
-      immatureTrees: "",
-      hectarage: "",
+      year1: "",
+      year2: "",
+      year3: "",
       acreage: ""
     });
   };
@@ -153,9 +153,9 @@ class CreateFarmer extends React.Component {
       //district,
       //traditionalAuthority,
       yearOpened,
-      matureTrees,
-      immatureTrees,
-      hectarage,
+      year1,
+      year2,
+      year3,
       acreage
     } = this.state;
 
@@ -397,47 +397,48 @@ class CreateFarmer extends React.Component {
             </Grid>
             <Grid item xs={6} sm={6}>
               <NumberFormat
-                value={matureTrees}
+                value={year1}
                 thousandSeparator={true}
                 onValueChange={values => {
                   const { formattedValue } = values;
 
-                  this.setState({ matureTrees: formattedValue });
+                  this.setState({ year1: formattedValue });
                 }}
                 customInput={TextField}
-                label="Number of mature trees"
+                label="Year 1"
+                helperText="Tree count which are 1 year"
                 fullWidth
                 autoComplete="off"
               />
             </Grid>
             <Grid item xs={6} sm={6}>
               <NumberFormat
-                value={immatureTrees}
+                value={year2}
                 thousandSeparator={true}
                 onValueChange={values => {
                   const { formattedValue } = values;
 
-                  this.setState({ immatureTrees: formattedValue });
+                  this.setState({ year2: formattedValue });
                 }}
                 customInput={TextField}
-                label="Number of immature trees"
-                helperText="(below 3 years)"
+                label="Year 2"
+                helperText="Tree count which are 2 years"
                 fullWidth
                 autoComplete="off"
               />
             </Grid>
             <Grid item xs={6} sm={6}>
               <NumberFormat
-                value={hectarage}
+                value={year3}
                 thousandSeparator={true}
                 onValueChange={values => {
                   const { formattedValue } = values;
 
-                  this.setState({ hectarage: formattedValue });
+                  this.setState({ year3: formattedValue });
                 }}
                 customInput={TextField}
-                label="Hectarage under cultivation"
-                helperText="(Enter in Acres)"
+                label="Year 3"
+                helperText="Tree count above 3 years"
                 fullWidth
                 autoComplete="off"
               />

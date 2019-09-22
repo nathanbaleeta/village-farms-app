@@ -133,9 +133,9 @@ class FarmerList extends Component {
       district: "",
 
       yearOpened: "",
-      matureTrees: "",
-      immatureTrees: "",
-      hectarage: "",
+      year1: "",
+      year2: "",
+      year3: "",
       acreage: "",
 
       dataValue: "Chitipa"
@@ -171,9 +171,9 @@ class FarmerList extends Component {
           district: items[item].district,
 
           yearOpened: items[item].yearOpened,
-          matureTrees: items[item].matureTrees,
-          immatureTrees: items[item].immatureTrees,
-          hectarage: items[item].hectarage,
+          year1: items[item].year1,
+          year2: items[item].year2,
+          year3: items[item].year3,
           acreage: items[item].acreage
         });
       }
@@ -219,9 +219,9 @@ class FarmerList extends Component {
         district: snapshot.child("district").val(),
 
         yearOpened: snapshot.child("yearOpened").val(),
-        matureTrees: snapshot.child("matureTrees").val(),
-        immatureTrees: snapshot.child("immatureTrees").val(),
-        hectarage: snapshot.child("hectarage").val(),
+        year1: snapshot.child("year1").val(),
+        year2: snapshot.child("year2").val(),
+        year3: snapshot.child("year3").val(),
         acreage: snapshot.child("acreage").val()
       });
     });
@@ -256,9 +256,9 @@ class FarmerList extends Component {
       traditionalAuthority: this.state.traditionalAuthority,
 
       yearOpened: this.state.yearOpened,
-      matureTrees: parseInt(this.state.matureTrees),
-      immatureTrees: parseInt(this.state.immatureTrees),
-      hectarage: parseInt(this.state.hectarage),
+      year1: parseInt(this.state.year1),
+      year2: parseInt(this.state.year2),
+      year3: parseInt(this.state.year3),
       acreage: parseFloat(this.state.acreage)
     };
 
@@ -681,31 +681,32 @@ class FarmerList extends Component {
 
                 <Grid item xs={6} sm={6}>
                   <NumberFormat
-                    value={this.state.matureTrees}
+                    value={this.state.year1}
                     thousandSeparator={true}
                     onValueChange={values => {
                       const { formattedValue } = values;
 
-                      this.setState({ matureTrees: formattedValue });
+                      this.setState({ year1: formattedValue });
                     }}
                     customInput={TextField}
-                    label="Number of mature trees"
+                    label="Year 1"
+                    helperText="Tree count which are 1 year"
                     fullWidth
                     autoComplete="off"
                   />
                 </Grid>
                 <Grid item xs={6} sm={6}>
                   <NumberFormat
-                    value={this.state.immatureTrees}
+                    value={this.state.year2}
                     thousandSeparator={true}
                     onValueChange={values => {
                       const { formattedValue } = values;
 
-                      this.setState({ immatureTrees: formattedValue });
+                      this.setState({ year2: formattedValue });
                     }}
                     customInput={TextField}
-                    label="Number of immature trees"
-                    helperText="(below 3 years)"
+                    label="Year 2"
+                    helperText="Tree count which are 2 years"
                     fullWidth
                     autoComplete="off"
                   />
@@ -713,16 +714,16 @@ class FarmerList extends Component {
 
                 <Grid item xs={6} sm={6}>
                   <NumberFormat
-                    value={this.state.hectarage}
+                    value={this.state.year3}
                     thousandSeparator={true}
                     onValueChange={values => {
                       const { formattedValue } = values;
 
-                      this.setState({ hectarage: formattedValue });
+                      this.setState({ year3: formattedValue });
                     }}
                     customInput={TextField}
-                    label="Hectarage under cultivation"
-                    helperText="(Enter in Acres)"
+                    label="Year 3"
+                    helperText="Tree count above 3 years"
                     fullWidth
                     autoComplete="off"
                   />

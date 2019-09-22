@@ -16,44 +16,57 @@ const styles = theme => ({
   }
 });
 
-class FarmHistoryStatus extends React.Component {
+class AdvancesSummary extends React.Component {
   constructor() {
     super();
     this.state = {
-      acreage: 0,
-      mature: 0,
-      immature: 0
+      received: 0,
+      value: 0,
+      weight: 0
     };
   }
 
   componentDidMount() {
-    // Get mature & immature trees count
+    // Get count of farmers who have received advances
+    const farmersRef = firebase.database().ref("advances");
+    farmersRef.on("value", snapshot => {
+      console.log(snapshot);
+      const farmerCount = snapshot.numChildren();
+      this.setState({
+        received: farmerCount
+      });
+    });
+
+    // Get value of advances provided
     const query = firebase
       .database()
-      .ref("farmers")
+      .ref("advances")
       .orderByKey();
     query.on("value", snapshot => {
-      let matureCounter = 0;
-      let immatureCounter = 0;
-      let acreageCounter = 0;
-      snapshot.forEach(function(childSnapshot) {
-        // Immature trees counter; convert string to int
-        immatureCounter =
-          immatureCounter +
-          parseInt(childSnapshot.child("immatureTrees").val());
+      let valueCounter = 0;
+      let weightCounter = 0;
 
-        // Mature trees counter; convert string to int
-        matureCounter =
-          matureCounter + parseInt(childSnapshot.child("matureTrees").val());
+      snapshot.forEach(childSnapshot => {
+        // Get values
 
-        // Hectarage counter; convert string to int
-        acreageCounter =
-          acreageCounter + parseFloat(childSnapshot.child("acreage").val());
+        childSnapshot.forEach(grandChildSnapshot => {
+          //console.log(grandChildSnapshot.child("advanceAmount").val());
+          console.log(grandChildSnapshot.child("totalCoffeeWeight").val());
+
+          // Advance Value counter; convert string to int
+          valueCounter =
+            valueCounter +
+            parseInt(grandChildSnapshot.child("advanceAmount").val());
+
+          // Total coffee weight counter; convert string to int
+          weightCounter =
+            weightCounter +
+            parseInt(grandChildSnapshot.child("totalCoffeeWeight").val());
+        });
       });
       this.setState({
-        mature: matureCounter,
-        immature: immatureCounter,
-        acreage: acreageCounter.toFixed(2) // Round off to 2 decimal places
+        value: valueCounter,
+        weight: weightCounter
       });
     });
   }
@@ -72,12 +85,12 @@ class FarmHistoryStatus extends React.Component {
                   color: "#0000CD"
                 }}
               >
-                Farm History & Status
+                Advances Summary
               </Typography>
               <br />
               <Avatar
                 alt="Remy Sharp"
-                src="/static/images/avatar/stats.png"
+                src="/static/images/avatar/advance.png"
                 className={classes.bigAvatar}
               />
               <br />
@@ -86,7 +99,7 @@ class FarmHistoryStatus extends React.Component {
               <Grid container spacing={24}>
                 <Grid item xs={4} sm={4}>
                   <Typography variant="h5" align="center" gutterBottom>
-                    Acreage
+                    Received
                   </Typography>
                   <Typography
                     variant="h5"
@@ -94,12 +107,12 @@ class FarmHistoryStatus extends React.Component {
                     color="Primary"
                     gutterBottom
                   >
-                    {this.state.acreage}
+                    {this.state.received}
                   </Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>
                   <Typography variant="h5" align="center" gutterBottom>
-                    Mature
+                    Value
                   </Typography>
                   <Typography
                     variant="h5"
@@ -107,12 +120,12 @@ class FarmHistoryStatus extends React.Component {
                     color="Primary"
                     gutterBottom
                   >
-                    {this.state.mature}
+                    {this.state.value}
                   </Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>
                   <Typography variant="h5" align="center" gutterBottom>
-                    Immature
+                    Weight
                   </Typography>
                   <Typography
                     variant="h5"
@@ -120,7 +133,7 @@ class FarmHistoryStatus extends React.Component {
                     color="Primary"
                     gutterBottom
                   >
-                    {this.state.immature}
+                    {this.state.weight}
                   </Typography>
                 </Grid>
               </Grid>
@@ -136,4 +149,4 @@ class FarmHistoryStatus extends React.Component {
   }
 }
 
-export default withStyles(styles)(FarmHistoryStatus);
+export default withStyles(styles)(AdvancesSummary);
