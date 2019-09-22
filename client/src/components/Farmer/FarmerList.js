@@ -256,12 +256,11 @@ class FarmerList extends Component {
       traditionalAuthority: this.state.traditionalAuthority,
 
       yearOpened: this.state.yearOpened,
-      //year1: year2: !this.state.year2 ? 0 : this.removeCommas(this.state.year2),
 
       year1: !this.state.year1 ? 0 : this.removeCommas(this.state.year1),
       year2: !this.state.year2 ? 0 : this.removeCommas(this.state.year2),
       year3: !this.state.year3 ? 0 : this.removeCommas(this.state.year3),
-      acreage: parseFloat(this.state.acreage)
+      acreage: !this.state.acreage ? 0 : this.removeCommas(this.state.acreage)
     };
 
     //Update farmer module

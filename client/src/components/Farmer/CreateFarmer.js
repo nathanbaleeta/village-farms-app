@@ -64,6 +64,16 @@ class CreateFarmer extends React.Component {
       .join(" ");
   };
 
+  // remove commas before saving to firebase
+  removeCommas = num => {
+    //Convert number to string before attempting string manipulation
+    let str = num.toString();
+
+    // Check if string contains comma before attempting to sanitize
+    let result = str.includes(",") ? str.replace(/,/g, "") : str;
+    return Number(result);
+  };
+
   onChangeDistrict = e => {
     this.setState({
       dataValue: e.target.value,
@@ -105,10 +115,10 @@ class CreateFarmer extends React.Component {
       district: this.state.district,
       traditionalAuthority: this.state.traditionalAuthority,
       yearOpened: this.state.yearOpened,
-      year1: parseInt(this.state.year1),
-      year2: parseInt(this.state.year2),
-      year3: parseInt(this.state.year3),
-      acreage: parseFloat(this.state.acreage),
+      year1: !this.state.year1 ? 0 : this.removeCommas(this.state.year1),
+      year2: !this.state.year2 ? 0 : this.removeCommas(this.state.year2),
+      year3: !this.state.year3 ? 0 : this.removeCommas(this.state.year3),
+      acreage: !this.state.acreage ? 0 : this.removeCommas(this.state.acreage),
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Maputo"
       })
