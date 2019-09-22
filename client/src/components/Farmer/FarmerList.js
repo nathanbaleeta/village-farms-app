@@ -230,12 +230,6 @@ class FarmerList extends Component {
     );
   }
 
-  // remove commas before saving to firebase
-  removeCommas(str) {
-    let result = str.replace(/,/g, "");
-    return Number(result);
-  }
-
   onChange = e => {
     /*
           Because we named the inputs to match their
@@ -262,8 +256,9 @@ class FarmerList extends Component {
       traditionalAuthority: this.state.traditionalAuthority,
 
       yearOpened: this.state.yearOpened,
-      //year1: !this.state.year1 ? "" : this.removeCommas(this.state.year1),
-      year1: !this.state.year1 ? 0 : this.state.year1.replace(/,/g, ""),
+      //year1: year2: !this.state.year2 ? 0 : this.removeCommas(this.state.year2),
+
+      year1: !this.state.year1 ? 0 : this.removeCommas(this.state.year1),
       year2: !this.state.year2 ? 0 : this.removeCommas(this.state.year2),
       year3: !this.state.year3 ? 0 : this.removeCommas(this.state.year3),
       acreage: parseFloat(this.state.acreage)
@@ -297,6 +292,16 @@ class FarmerList extends Component {
       .split(" ")
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
+  };
+
+  // remove commas before saving to firebase
+  removeCommas = num => {
+    //Convert number to string before attempting string manipulation
+    let str = num.toString();
+
+    // Check if string contains comma before attempting to sanitize
+    let result = str.includes(",") ? str.replace(/,/g, "") : str;
+    return Number(result);
   };
 
   CapitalizeInitial(str) {
