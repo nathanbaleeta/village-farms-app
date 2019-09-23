@@ -91,9 +91,11 @@ class FarmerDetails extends Component {
       traditionalAuthority: "",
       district: "",
       yearOpened: "",
-      matureTrees: "",
+      year1: "",
+      year2: "",
+      year3: "",
       immatureTrees: "",
-      hectarage: "",
+      acreage: "",
 
       // Dashboard registration summary
       value: 0,
@@ -227,9 +229,10 @@ class FarmerDetails extends Component {
       const district = snapshot.child("district").val();
 
       const yearOpened = snapshot.child("yearOpened").val();
-      const matureTrees = snapshot.child("matureTrees").val();
-      const immatureTrees = snapshot.child("immatureTrees").val();
-      const hectarage = snapshot.child("hectarage").val();
+      const year1 = snapshot.child("year1").val();
+      const year2 = snapshot.child("year2").val();
+      const year3 = snapshot.child("year3").val();
+      const acreage = snapshot.child("acreage").val();
 
       this.setState({
         id: key,
@@ -244,9 +247,10 @@ class FarmerDetails extends Component {
         traditionalAuthority: traditionalAuthority,
         district: district,
         yearOpened: yearOpened,
-        matureTrees: matureTrees,
-        immatureTrees: immatureTrees,
-        hectarage: hectarage,
+        year1: year1,
+        year2: year2,
+        year3: year3,
+        acreage: acreage,
 
         //Dialog box
         open: false
@@ -355,9 +359,9 @@ class FarmerDetails extends Component {
                 </Typography>
                 <br />
                 <Grid container spacing={24}>
-                  <Grid item xs={4} sm={4}>
+                  <Grid item xs={12} sm={12}>
                     <Typography variant="h5" gutterBottom>
-                      Hectarage
+                      Acreage
                     </Typography>
 
                     <Typography
@@ -366,12 +370,12 @@ class FarmerDetails extends Component {
                       color="Primary"
                       gutterBottom
                     >
-                      {this.state.hectarage}
+                      {this.state.acreage}
                     </Typography>
                   </Grid>
                   <Grid item xs={4} sm={4}>
                     <Typography variant="h5" gutterBottom>
-                      Mature
+                      Y1
                     </Typography>
                     <Typography
                       variant="h5"
@@ -379,12 +383,12 @@ class FarmerDetails extends Component {
                       color="Primary"
                       gutterBottom
                     >
-                      {this.state.matureTrees}
+                      {this.state.year1}
                     </Typography>
                   </Grid>
                   <Grid item xs={4} sm={4}>
                     <Typography variant="h5" gutterBottom>
-                      Immature
+                      Y2
                     </Typography>
                     <Typography
                       variant="h5"
@@ -392,7 +396,20 @@ class FarmerDetails extends Component {
                       color="Primary"
                       gutterBottom
                     >
-                      {this.state.immatureTrees}
+                      {this.state.year2}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} sm={4}>
+                    <Typography variant="h5" gutterBottom>
+                      Y3
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      align="center"
+                      color="Primary"
+                      gutterBottom
+                    >
+                      {this.state.year3}
                     </Typography>
                   </Grid>
                 </Grid>
