@@ -84,10 +84,15 @@ class CreateFarmer extends React.Component {
   };
 
   handleDateChange = date => {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    };
     this.setState({
-      yearOpened: date.toLocaleString()
+      yearOpened: date.toLocaleDateString("en-US", options)
     });
-    console.log(this.state.yearOpened);
   };
 
   onChange = e => {

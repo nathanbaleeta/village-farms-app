@@ -187,8 +187,14 @@ class FarmerList extends Component {
   }
 
   handleDateChange = date => {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    };
     this.setState({
-      yearOpened: date
+      yearOpened: date.toLocaleDateString("en-US", options)
     });
   };
 
