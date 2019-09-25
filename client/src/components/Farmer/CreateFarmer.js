@@ -84,14 +84,8 @@ class CreateFarmer extends React.Component {
   };
 
   handleDateChange = date => {
-    const options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric"
-    };
     this.setState({
-      yearOpened: date.toLocaleDateString("en-US", options)
+      yearOpened: date.toISOString().substr(0, 10) // trim timestamp using regular expression
     });
   };
 
@@ -398,7 +392,7 @@ class CreateFarmer extends React.Component {
                   format="dd-MM-yyyy"
                   fullWidth
                   value={yearOpened}
-                  defaultValue="dd-mm-yyyy"
+                  //defaultValue="dd-MM-yyyy"
                   customInput={TextField}
                   onChange={this.handleDateChange}
                   maxDate={Date.now() - 7776000000} // Disables dates less than 3 months

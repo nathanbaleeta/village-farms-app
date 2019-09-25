@@ -26,6 +26,8 @@ import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 
+import moment from "moment";
+
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
@@ -187,14 +189,8 @@ class FarmerList extends Component {
   }
 
   handleDateChange = date => {
-    const options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric"
-    };
     this.setState({
-      yearOpened: date.toLocaleDateString("en-US", options)
+      yearOpened: date.toISOString().substr(0, 10) // trim timestamp using regular expression
     });
   };
 
@@ -276,6 +272,7 @@ class FarmerList extends Component {
       .update(farmer)
       .then(function() {
         console.log("Synchronization succeeded");
+        console.log(this.state);
       })
       .catch(function(error) {
         console.log("Synchronization failed");
@@ -684,7 +681,7 @@ class FarmerList extends Component {
                       format="dd-MM-yyyy"
                       fullWidth
                       value={this.state.yearOpened}
-                      defaultValue="dd-mm-yyyy"
+                      defaultValue="dd-MM-yyyy"
                       onChange={this.handleDateChange}
                       maxDate={new Date(Date.now() - 7776000000)} // Disables dates less than 3 months
                       InputLabelProps={{
