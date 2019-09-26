@@ -273,7 +273,7 @@ class CreateFarmer extends React.Component {
             <Grid item xs={6} sm={6}>
               <InputMask
                 required
-                mask="(+265) 999 999 999"
+                mask="265999999999"
                 value={phone}
                 onChange={this.onChange}
               >

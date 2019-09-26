@@ -26,8 +26,6 @@ import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 
-import moment from "moment";
-
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
@@ -557,7 +555,7 @@ class FarmerList extends Component {
                 </Grid>
                 <Grid item xs={6} sm={6}>
                   <InputMask
-                    mask="(+265) 999 999 999"
+                    mask="265999999999"
                     value={this.state.phone}
                     onChange={this.onChange}
                   >
