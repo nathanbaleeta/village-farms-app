@@ -1,29 +1,31 @@
 import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+import { Typography, Divider } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
 import firebase from "../common/firebase";
 
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardContent from "@material-ui/core/CardContent";
-
 import Avatar from "@material-ui/core/Avatar";
 import PersonIcon from "@material-ui/icons/Person";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 import PhoneIcon from "@material-ui/icons/Phone";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import WcOutlinedIcon from "@material-ui/icons/WcOutlined";
+import CakeOutlinedIcon from "@material-ui/icons/CakeOutlined";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import PollIcon from "@material-ui/icons/Poll";
+import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
+import NatureOutlinedIcon from "@material-ui/icons/NatureOutlined";
+import HourglassEmptySharpIcon from "@material-ui/icons/HourglassEmptySharp";
+import PaymentOutlinedIcon from "@material-ui/icons/PaymentOutlined";
 
 import CreateProcurement from "../procurement/CreateProcurement";
 
@@ -57,9 +59,14 @@ const styles = theme => ({
     flexGrow: 1
   },
 
-  bigAvatar: {
+  smallAvatar: {
     width: 60,
     height: 60
+  },
+  bigAvatar: {
+    width: 220,
+    height: 220,
+    margin: "auto"
   },
   fab: {
     margin: theme.spacing.unit
@@ -311,191 +318,7 @@ class FarmerDetails extends Component {
     return (
       <Fragment>
         <Grid container spacing={2}>
-          <Grid item xs={3} sm={3}>
-            <Link to="/farmers" className={classes.link}>
-              <Fab
-                color="primary"
-                size="small"
-                align="center"
-                aria-label="Add"
-                className={classes.fab}
-              >
-                <ArrowBackIcon />
-              </Fab>
-            </Link>
-          </Grid>
-          <Grid item xs={3} sm={3}>
-            <Typography variant="h5" gutterBottom>
-              Farmer Details
-            </Typography>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={2}>
-          <Grid item xs={3} sm={3}>
-            <Card className={classes.card}>
-              <CardHeader />
-              <CardContent align="center">
-                <Avatar
-                  alt="Remy Sharp"
-                  src="/static/images/avatar/profile.jpeg"
-                  className={classes.bigAvatar}
-                />
-
-                <Typography
-                  variant="h6"
-                  component="h4"
-                  style={{ fontWeight: "bold" }}
-                >
-                  {this.state.title}.{" "}
-                  {this.state.firstname + " " + this.state.lastname}
-                </Typography>
-                <Typography variant="subtitle1" gutterBottom align="center">
-                  Lives in {this.state.traditionalAuthority},{" "}
-                  {this.state.district}
-                </Typography>
-                <Typography variant="subtitle1" gutterBottom align="center">
-                  Farm opened in <b>{this.state.yearOpened}</b>
-                </Typography>
-                <br />
-                <Grid container spacing={24}>
-                  <Grid item xs={12} sm={12}>
-                    <Typography variant="h5" gutterBottom>
-                      Acreage
-                    </Typography>
-
-                    <Typography
-                      variant="h5"
-                      align="center"
-                      color="Primary"
-                      gutterBottom
-                    >
-                      {this.state.acreage}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4} sm={4}>
-                    <Typography variant="h5" gutterBottom>
-                      Y1
-                    </Typography>
-                    <Typography
-                      variant="h5"
-                      align="center"
-                      color="Primary"
-                      gutterBottom
-                    >
-                      {this.state.year1}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4} sm={4}>
-                    <Typography variant="h5" gutterBottom>
-                      Y2
-                    </Typography>
-                    <Typography
-                      variant="h5"
-                      align="center"
-                      color="Primary"
-                      gutterBottom
-                    >
-                      {this.state.year2}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4} sm={4}>
-                    <Typography variant="h5" gutterBottom>
-                      Y3
-                    </Typography>
-                    <Typography
-                      variant="h5"
-                      align="center"
-                      color="Primary"
-                      gutterBottom
-                    >
-                      {this.state.year3}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
-            <br />
-            <Paper className={classes.root} elevation={1} align="center">
-              <Fab
-                color="primary"
-                size="medium"
-                align="center"
-                aria-label="Add"
-                className={classes.fab}
-              >
-                <PersonIcon />
-              </Fab>
-              <br />
-              <br />
-              <Grid container spacing={24}>
-                <Grid item xs={5} sm={5}>
-                  <Typography
-                    variant="subtitle1"
-                    gutterBottom
-                    align="left"
-                    style={{ fontWeight: "bold" }}
-                  >
-                    Gender:
-                  </Typography>
-                  <Typography
-                    variant="subtitle1"
-                    gutterBottom
-                    align="left"
-                    style={{ fontWeight: "bold" }}
-                  >
-                    Marital status:
-                  </Typography>
-                  <Typography
-                    variant="subtitle1"
-                    gutterBottom
-                    align="left"
-                    style={{ fontWeight: "bold" }}
-                  >
-                    Mobile:
-                  </Typography>
-                  <Typography
-                    variant="subtitle1"
-                    gutterBottom
-                    align="left"
-                    style={{ fontWeight: "bold" }}
-                  >
-                    MM Registered?:
-                  </Typography>
-                  <Typography
-                    variant="subtitle1"
-                    gutterBottom
-                    align="left"
-                    style={{ fontWeight: "bold" }}
-                  >
-                    Payments via MM?:
-                  </Typography>
-                </Grid>
-                <Grid item xs={7} sm={7}>
-                  <Typography variant="subtitle1" gutterBottom align="left">
-                    {this.state.sex}
-                  </Typography>
-                  <Typography variant="subtitle1" gutterBottom align="left">
-                    {this.state.maritalStatus}
-                  </Typography>
-                  <Typography variant="subtitle1" gutterBottom align="left">
-                    {this.state.phone}
-                  </Typography>
-                  <Typography variant="subtitle1" gutterBottom align="left">
-                    {this.state.mmRegistered}
-                  </Typography>
-                  <Typography variant="subtitle1" gutterBottom align="left">
-                    {this.state.mmPayment}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <br />
-
-              <br />
-            </Paper>
-            <br />
-          </Grid>
-          <Grid item xs={9} sm={9}>
+          <Grid item xs={12} sm={12}>
             <Paper square className={classes.root} elevation="1">
               <Tabs
                 value={this.state.value}
@@ -504,11 +327,99 @@ class FarmerDetails extends Component {
                 indicatorColor="secondary"
                 textColor="secondary"
               >
+                <Tab icon={<PersonIcon />} label="PROFILE" />
                 <Tab icon={<PhoneIcon />} label="PROCUREMENTS" />
                 <Tab icon={<FavoriteIcon />} label="ADVANCES" />
                 <Tab icon={<PollIcon />} label="REPORTS" />
               </Tabs>
               {value === 0 && (
+                <TabContainer>
+                  <Grid container spacing={2}>
+                    <Grid item xs={3} sm={3}>
+                      <br />
+                      <Avatar
+                        alt="Avatar icon"
+                        src="/static/images/avatar/1.png"
+                        className={classes.bigAvatar}
+                      />
+                    </Grid>
+                    <Grid item xs={9} sm={9}>
+                      <br />
+                      <Typography
+                        variant="h3"
+                        component="h4"
+                        style={{ fontWeight: "bold" }}
+                      >
+                        {this.state.title}.{" "}
+                        {this.state.firstname + " " + this.state.lastname}
+                      </Typography>
+                      <br />
+                      <Typography variant="h6" gutterBottom align="left">
+                        <WcOutlinedIcon /> &nbsp;&nbsp; {this.state.sex}
+                      </Typography>
+                      <br />
+                      <Typography variant="h6" gutterBottom align="left">
+                        <AccountCircleIcon /> &nbsp;&nbsp;{" "}
+                        {this.state.maritalStatus}
+                      </Typography>
+                      <br />
+                      <Typography variant="h6" gutterBottom align="left">
+                        <PhoneIcon /> &nbsp;&nbsp; {this.state.phone}
+                      </Typography>
+                      <br />
+                      <Typography variant="h6" gutterBottom align="left">
+                        <RoomOutlinedIcon /> &nbsp;&nbsp; Lives in{" "}
+                        {this.state.traditionalAuthority}, {this.state.district}
+                      </Typography>
+                      <br />
+                      <Typography variant="h6" gutterBottom align="left">
+                        <CakeOutlinedIcon /> &nbsp;&nbsp; Farm opened in{" "}
+                        <b>{this.state.yearOpened}</b>
+                      </Typography>
+                      <br />
+                      <Divider />
+                      <br />
+                      <Typography variant="h6" gutterBottom align="left">
+                        <NatureOutlinedIcon /> &nbsp;&nbsp; Acreage{" "}
+                        <b>{this.state.acreage}</b>
+                      </Typography>
+                      <br />
+                      <Typography variant="h6" gutterBottom align="left">
+                        <HourglassEmptySharpIcon /> &nbsp;&nbsp; Year1{" "}
+                        &nbsp;&nbsp;
+                        <b>{this.state.year1}</b>
+                      </Typography>
+                      <br />
+                      <Typography variant="h6" gutterBottom align="left">
+                        <HourglassEmptySharpIcon /> &nbsp;&nbsp; Year2{" "}
+                        &nbsp;&nbsp;
+                        <b>{this.state.year2}</b>
+                      </Typography>
+                      <br />
+                      <Typography variant="h6" gutterBottom align="left">
+                        <HourglassEmptySharpIcon /> &nbsp;&nbsp; Year3{" "}
+                        &nbsp;&nbsp;
+                        <b>{this.state.year3}</b>
+                      </Typography>
+                      <br />
+                      <Divider />
+                      <br />
+                      <Typography variant="h6" gutterBottom align="left">
+                        <PaymentOutlinedIcon /> &nbsp;&nbsp; Mobile Money
+                        Registered &nbsp;&nbsp;
+                        <b>{this.state.mmRegistered}</b>
+                      </Typography>
+                      <br />
+                      <Typography variant="h6" gutterBottom align="left">
+                        <PaymentOutlinedIcon /> &nbsp;&nbsp; Mobile Money
+                        Payments &nbsp;&nbsp;
+                        <b>{this.state.mmPayment}</b>
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </TabContainer>
+              )}
+              {value === 1 && (
                 <TabContainer>
                   <Fab
                     color="primary"
@@ -571,7 +482,7 @@ class FarmerDetails extends Component {
                   {/* Procurement details for farmer*/}
                 </TabContainer>
               )}
-              {value === 1 && (
+              {value === 2 && (
                 <TabContainer>
                   <Fab
                     color="primary"
@@ -628,7 +539,7 @@ class FarmerDetails extends Component {
                   <br />
                 </TabContainer>
               )}
-              {value === 2 && <TabContainer />}
+              {value === 3 && <TabContainer />}
             </Paper>
           </Grid>
         </Grid>
