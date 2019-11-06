@@ -5,8 +5,6 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 //import { Link } from "react-router-dom";
 
-import firebase from "../common/firebase";
-
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 
@@ -41,6 +39,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
+import firebase from "../common/firebase";
 import CreateAdvance from "../advances/CreateAdvance";
 
 function TabContainer(props) {
@@ -354,67 +353,224 @@ class FarmerDetails extends Component {
                         {this.state.firstname + " " + this.state.lastname}
                       </Typography>
                       <br />
-                      <Typography variant="h6" gutterBottom align="left">
-                        <WcOutlinedIcon /> &nbsp;&nbsp; {this.state.sex}
-                      </Typography>
-                      <br />
-                      <Typography variant="h6" gutterBottom align="left">
-                        <AccountCircleIcon /> &nbsp;&nbsp;{" "}
-                        {this.state.maritalStatus}
-                      </Typography>
-                      <br />
-                      <Typography variant="h6" gutterBottom align="left">
-                        <PhoneIcon /> &nbsp;&nbsp; {this.state.phone}
-                      </Typography>
-                      <br />
-                      <Typography variant="h6" gutterBottom align="left">
-                        <RoomOutlinedIcon /> &nbsp;&nbsp; Lives in{" "}
-                        {this.state.traditionalAuthority}, {this.state.district}
-                      </Typography>
-                      <br />
-                      <Typography variant="h6" gutterBottom align="left">
-                        <CakeOutlinedIcon /> &nbsp;&nbsp; Farm opened in{" "}
-                        <b>{this.state.yearOpened}</b>
-                      </Typography>
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} sm={6}>
+                          <Typography variant="h6" gutterBottom align="left">
+                            <WcOutlinedIcon /> &nbsp;&nbsp; {this.state.sex}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6} sm={6}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            color="primary"
+                            align="left"
+                          >
+                            Edit sex
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} sm={6}>
+                          <Typography variant="h6" gutterBottom align="left">
+                            <AccountCircleIcon /> &nbsp;&nbsp;{" "}
+                            {this.state.maritalStatus}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6} sm={6}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            color="primary"
+                            align="left"
+                          >
+                            Edit marital status
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} sm={6}>
+                          <Typography variant="h6" gutterBottom align="left">
+                            <PhoneIcon /> &nbsp;&nbsp; {this.state.phone}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6} sm={6}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            color="primary"
+                            align="left"
+                          >
+                            Edit phone number
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} sm={6}>
+                          <Typography variant="h6" gutterBottom align="left">
+                            <RoomOutlinedIcon /> &nbsp;&nbsp; Lives in{" "}
+                            {this.state.traditionalAuthority},{" "}
+                            {this.state.district}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6} sm={6}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            color="primary"
+                            align="left"
+                          >
+                            Edit location
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} sm={6}>
+                          <Typography variant="h6" gutterBottom align="left">
+                            <CakeOutlinedIcon /> &nbsp;&nbsp; Farm opened in{" "}
+                            <b>{this.state.yearOpened}</b>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6} sm={6}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            color="primary"
+                            align="left"
+                          >
+                            Change year opened
+                          </Typography>
+                        </Grid>
+                      </Grid>
                       <br />
                       <Divider />
                       <br />
-                      <Typography variant="h6" gutterBottom align="left">
-                        <NatureOutlinedIcon /> &nbsp;&nbsp; Acreage{" "}
-                        <b>{this.state.acreage}</b>
-                      </Typography>
-                      <br />
-                      <Typography variant="h6" gutterBottom align="left">
-                        <HourglassEmptySharpIcon /> &nbsp;&nbsp; Year1{" "}
-                        &nbsp;&nbsp;
-                        <b>{this.state.year1}</b>
-                      </Typography>
-                      <br />
-                      <Typography variant="h6" gutterBottom align="left">
-                        <HourglassEmptySharpIcon /> &nbsp;&nbsp; Year2{" "}
-                        &nbsp;&nbsp;
-                        <b>{this.state.year2}</b>
-                      </Typography>
-                      <br />
-                      <Typography variant="h6" gutterBottom align="left">
-                        <HourglassEmptySharpIcon /> &nbsp;&nbsp; Year3{" "}
-                        &nbsp;&nbsp;
-                        <b>{this.state.year3}</b>
-                      </Typography>
+
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} sm={6}>
+                          <Typography variant="h6" gutterBottom align="left">
+                            <NatureOutlinedIcon /> &nbsp;&nbsp; Acreage{" "}
+                            <b>{this.state.acreage}</b>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6} sm={6}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            color="primary"
+                            align="left"
+                          >
+                            Edit acreage
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} sm={6}>
+                          <Typography variant="h6" gutterBottom align="left">
+                            <HourglassEmptySharpIcon /> &nbsp;&nbsp; Year1{" "}
+                            &nbsp;&nbsp;
+                            <b>{this.state.year1}</b>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6} sm={6}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            color="primary"
+                            align="left"
+                          >
+                            Edit year 1 tree count
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} sm={6}>
+                          <Typography variant="h6" gutterBottom align="left">
+                            <HourglassEmptySharpIcon /> &nbsp;&nbsp; Year1{" "}
+                            &nbsp;&nbsp;
+                            <b>{this.state.year2}</b>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6} sm={6}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            color="primary"
+                            align="left"
+                          >
+                            Edit year 2 tree count
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} sm={6}>
+                          <Typography variant="h6" gutterBottom align="left">
+                            <HourglassEmptySharpIcon /> &nbsp;&nbsp; Year1{" "}
+                            &nbsp;&nbsp;
+                            <b>{this.state.year3}</b>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6} sm={6}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            color="primary"
+                            align="left"
+                          >
+                            Edit year 3 tree count
+                          </Typography>
+                        </Grid>
+                      </Grid>
                       <br />
                       <Divider />
                       <br />
-                      <Typography variant="h6" gutterBottom align="left">
-                        <PaymentOutlinedIcon /> &nbsp;&nbsp; Mobile Money
-                        Registered &nbsp;&nbsp;
-                        <b>{this.state.mmRegistered}</b>
-                      </Typography>
-                      <br />
-                      <Typography variant="h6" gutterBottom align="left">
-                        <PaymentOutlinedIcon /> &nbsp;&nbsp; Mobile Money
-                        Payments &nbsp;&nbsp;
-                        <b>{this.state.mmPayment}</b>
-                      </Typography>
+
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} sm={6}>
+                          <Typography variant="h6" gutterBottom align="left">
+                            <PaymentOutlinedIcon /> &nbsp;&nbsp; Mobile Money
+                            Registered &nbsp;&nbsp;
+                            <b>{this.state.mmRegistered}</b>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6} sm={6}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            color="primary"
+                            align="left"
+                          >
+                            Edit Mobile Money registered
+                          </Typography>
+                        </Grid>
+                      </Grid>
+
+                      <Grid container spacing={2}>
+                        <Grid item xs={6} sm={6}>
+                          <Typography variant="h6" gutterBottom align="left">
+                            <PaymentOutlinedIcon /> &nbsp;&nbsp; Mobile Money
+                            Payments &nbsp;&nbsp;
+                            <b>{this.state.mmPayment}</b>
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={6} sm={6}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            color="primary"
+                            align="left"
+                          >
+                            Edit Mobile Money payments
+                          </Typography>
+                        </Grid>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </TabContainer>
