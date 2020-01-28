@@ -15,7 +15,8 @@ import AdvancesMode from "../analytics/AdvancesMode";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    //flexGrow: 1,
+    zoom: "80%"
   },
   paper: {
     padding: theme.spacing.unit * 2,
@@ -31,10 +32,10 @@ const styles = theme => ({
 
 class Visualization extends React.Component {
   render() {
-    //const { classes } = this.props;
+    const { classes } = this.props;
 
     return (
-      <div>
+      <div className={classes.root}>
         <Typography variant="headline" align="center">
           Analytics
         </Typography>

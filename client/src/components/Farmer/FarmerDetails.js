@@ -8,6 +8,9 @@ import Grid from "@material-ui/core/Grid";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 
+import TextField from "@material-ui/core/TextField";
+import InputMask from "react-input-mask";
+
 import Avatar from "@material-ui/core/Avatar";
 import PersonIcon from "@material-ui/icons/Person";
 
@@ -125,7 +128,10 @@ class FarmerDetails extends Component {
       advancesData: [],
 
       // Advance dialog settings
-      isVisible: false
+      isVisible: false,
+
+      // Editing settings
+      isEditing: false
     };
   }
 
@@ -264,6 +270,12 @@ class FarmerDetails extends Component {
     });
   }
 
+  onEdit = e => {
+    this.setState({
+      isEditing: true
+    });
+  };
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -334,7 +346,7 @@ class FarmerDetails extends Component {
               {value === 0 && (
                 <TabContainer>
                   <Grid container spacing={2}>
-                    <Grid item xs={3} sm={3}>
+                    <Grid item lg="auto" md="auto" sm="auto" xs="auto">
                       <br />
                       <Avatar
                         alt="Avatar icon"
@@ -342,7 +354,7 @@ class FarmerDetails extends Component {
                         className={classes.bigAvatar}
                       />
                     </Grid>
-                    <Grid item xs={9} sm={9}>
+                    <Grid item lg={9} md={9} sm="auto" xs="auto">
                       <br />
                       <Typography
                         variant="h3"
@@ -351,6 +363,15 @@ class FarmerDetails extends Component {
                       >
                         {this.state.title}.{" "}
                         {this.state.firstname + " " + this.state.lastname}
+                      </Typography>
+
+                      <Typography
+                        variant="h6"
+                        gutterBottom
+                        color="primary"
+                        align="left"
+                      >
+                        Edit name
                       </Typography>
                       <br />
                       <Grid container spacing={2}>
@@ -390,21 +411,56 @@ class FarmerDetails extends Component {
                         </Grid>
                       </Grid>
 
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} sm={6}>
+                      <Grid container spacing={1}>
+                        <Grid item xs={1} sm={1}>
+                          <Typography variant="h6" gutterBottom align="right">
+                            <br />
+                            <PhoneIcon /> &nbsp;&nbsp;
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={5} sm={5}>
                           <Typography variant="h6" gutterBottom align="left">
-                            <PhoneIcon /> &nbsp;&nbsp; {this.state.phone}
+                            <br />
+                            {!this.state.isEditing ? (
+                              this.state.phone
+                            ) : (
+                              <Fragment>
+                                <InputMask
+                                  mask="(+265) 999 999 999"
+                                  value={this.state.phone}
+                                  onChange={this.onChange}
+                                >
+                                  {() => (
+                                    <TextField
+                                      id="phone"
+                                      name="phone"
+                                      label="Phone"
+                                      fullWidth
+                                      helperText="For example: 772 123 456"
+                                      autoComplete="phone"
+                                      InputLabelProps={{
+                                        shrink: true
+                                      }}
+                                    />
+                                  )}
+                                </InputMask>
+                              </Fragment>
+                            )}
                           </Typography>
                         </Grid>
                         <Grid item xs={6} sm={6}>
-                          <Typography
-                            variant="h6"
-                            gutterBottom
-                            color="primary"
-                            align="left"
-                          >
-                            Edit phone number
-                          </Typography>
+                          <div onClick={this.onEdit}>
+                            <br />
+                            <br />
+                            <Typography
+                              variant="h6"
+                              gutterBottom
+                              color="primary"
+                              align="left"
+                            >
+                              Edit phone number
+                            </Typography>
+                          </div>
                         </Grid>
                       </Grid>
 
@@ -535,8 +591,8 @@ class FarmerDetails extends Component {
                       <Grid container spacing={2}>
                         <Grid item xs={6} sm={6}>
                           <Typography variant="h6" gutterBottom align="left">
-                            <PaymentOutlinedIcon /> &nbsp;&nbsp; Mobile Money
-                            Registered &nbsp;&nbsp;
+                            <PaymentOutlinedIcon /> &nbsp;&nbsp; MM Registered
+                            &nbsp;&nbsp;
                             <b>{this.state.mmRegistered}</b>
                           </Typography>
                         </Grid>
@@ -555,8 +611,8 @@ class FarmerDetails extends Component {
                       <Grid container spacing={2}>
                         <Grid item xs={6} sm={6}>
                           <Typography variant="h6" gutterBottom align="left">
-                            <PaymentOutlinedIcon /> &nbsp;&nbsp; Mobile Money
-                            Payments &nbsp;&nbsp;
+                            <PaymentOutlinedIcon /> &nbsp;&nbsp; MM Payments
+                            &nbsp;&nbsp;
                             <b>{this.state.mmPayment}</b>
                           </Typography>
                         </Grid>

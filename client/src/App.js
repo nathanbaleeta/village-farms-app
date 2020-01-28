@@ -1,7 +1,16 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import { withStyles } from "@material-ui/core/styles";
 
 import Navigation from "./components/Navigation/Navigation";
 import firebase from "./components/common/firebase";
+
+
+const styles = theme => ({
+  root: {
+    zoom: "85%"
+  }
+});
+
 
 class App extends Component {
   state = {
@@ -19,7 +28,16 @@ class App extends Component {
     });
   }
   render() {
-    return <Navigation authenticated={this.state.authenticated} />;
+    const { classes } = this.props;
+
+    return (
+      <Fragment>
+      <div className={classes.root}>
+          <Navigation authenticated={this.state.authenticated} />
+      </div>
+      </Fragment>
+      );
   }
 }
-export default App;
+
+export default withStyles(styles)(App);

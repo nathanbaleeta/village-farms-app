@@ -29,7 +29,7 @@ import firebase from "firebase";
 
 const styles = theme => ({
   root: {
-    width: "100%"
+    width: "100%",
   },
   grow: {
     flexGrow: 1
