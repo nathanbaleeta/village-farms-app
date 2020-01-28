@@ -8,9 +8,6 @@ import { Link } from "react-router-dom";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 
-import TextField from "@material-ui/core/TextField";
-import InputMask from "react-input-mask";
-
 import Avatar from "@material-ui/core/Avatar";
 import PersonIcon from "@material-ui/icons/Person";
 
@@ -55,8 +52,8 @@ function TabContainer(props) {
 const styles = theme => ({
   root: {
     ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
 
     flexGrow: 1
   },
@@ -76,7 +73,7 @@ const styles = theme => ({
 
   tableRoot: {
     width: "100%",
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(3),
     overflowX: "auto"
   },
   table: {

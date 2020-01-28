@@ -30,7 +30,7 @@ class AdvancesSummary extends React.Component {
     // Get count of farmers who have received advances
     const farmersRef = firebase.database().ref("advances");
     farmersRef.on("value", snapshot => {
-      console.log(snapshot);
+      //console.log(snapshot);
       const farmerCount = snapshot.numChildren();
       this.setState({
         received: farmerCount
@@ -51,7 +51,7 @@ class AdvancesSummary extends React.Component {
 
         childSnapshot.forEach(grandChildSnapshot => {
           //console.log(grandChildSnapshot.child("advanceAmount").val());
-          console.log(grandChildSnapshot.child("totalCoffeeWeight").val());
+          //console.log(grandChildSnapshot.child("totalCoffeeWeight").val());
 
           // Advance Value counter; convert string to int
           valueCounter =

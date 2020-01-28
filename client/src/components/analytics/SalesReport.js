@@ -91,7 +91,7 @@ class SalesReport extends React.Component {
               monthCounter + parseInt(childSnapshot.child("totalPrice").val()))
           : (monthCounter = monthCounter + 0);
 
-        console.log(isToday);
+        //console.log(isToday);
 
         //console.log(moment(created, "DD/MM/YYYY").fromNow());
 
