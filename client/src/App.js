@@ -7,7 +7,7 @@ import firebase from "./components/common/firebase";
 
 const styles = theme => ({
   root: {
-    zoom: "85%"
+    zoom: "80%"
   }
 });
 
