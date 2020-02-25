@@ -66,7 +66,10 @@ class CreateAdvances extends React.Component {
 
       // inputValues
       amount: false,
-      commodity: false
+      commodity: false,
+
+      //errors
+      errors: []
     };
   }
 
@@ -136,8 +139,40 @@ class CreateAdvances extends React.Component {
     return value == null || value.length === 0;
   }
 
+  // Validate input
+  onValidate = (advanceType, paymentMode, pricePerKg, totalCoffeeWeight) => {
+    // Store errors for all fields in a single array
+    const errors = [];
+
+    if (advanceType.length === 0) {
+      errors.push("Advance type can't be empty");
+    }
+    if (paymentMode.length === 0) {
+      errors.push("Payment mode can't be empty");
+    }
+    if (pricePerKg.length < 1) {
+      errors.push("Price per Kg can't be empty");
+    }
+    if (totalCoffeeWeight.length < 1) {
+      errors.push("Total coffee weight can't be empty");
+    }
+
+    return errors;
+  };
+
   handleSubmit = event => {
     event.preventDefault();
+
+    const errors = this.onValidate(
+      this.state.advanceType,
+      this.state.paymentMode,
+      this.state.pricePerKg,
+      this.state.totalCoffeeWeight
+    );
+    if (errors.length > 0) {
+      this.setState({ errors });
+      return;
+    }
 
     // target ID retrieved from another component using onClick event listener
     const key = this.props.id;
