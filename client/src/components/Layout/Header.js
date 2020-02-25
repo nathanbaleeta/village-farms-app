@@ -12,9 +12,9 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import GroupIcon from "@material-ui/icons/Group";
-import PaymentIcon from "@material-ui/icons/Payment";
-import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+//import PaymentIcon from "@material-ui/icons/Payment";
+//import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+//import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
@@ -254,7 +254,7 @@ class Header extends React.Component {
                     </Link>
                   </div>
 
-                  <div style={{ paddingRight: 20 }}>
+                  {/*  <div style={{ paddingRight: 20 }}>
                     <Link to="/advances" className={classes.link}>
                       <IconButton color="inherit">
                         <PaymentIcon />
@@ -270,8 +270,8 @@ class Header extends React.Component {
                       </Typography>
                     </Link>
                   </div>
-
-                  <div style={{ paddingRight: 20 }}>
+ */}
+                  {/*  <div style={{ paddingRight: 20 }}>
                     <Link to="/procurement" className={classes.link}>
                       <IconButton color="inherit">
                         <ShoppingBasketIcon />
@@ -287,8 +287,8 @@ class Header extends React.Component {
                       </Typography>
                     </Link>
                   </div>
-
-                  <div style={{ paddingRight: 20 }}>
+ */}
+                  {/*   <div style={{ paddingRight: 20 }}>
                     <Link to="/sales" className={classes.link}>
                       <IconButton color="inherit">
                         <ShoppingCartIcon />
@@ -304,6 +304,7 @@ class Header extends React.Component {
                       </Typography>
                     </Link>
                   </div>
+                 */}
                 </Grid>
               </div>
 

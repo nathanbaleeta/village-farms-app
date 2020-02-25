@@ -18,9 +18,9 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import WcOutlinedIcon from "@material-ui/icons/WcOutlined";
 import CakeOutlinedIcon from "@material-ui/icons/CakeOutlined";
-import PollIcon from "@material-ui/icons/Poll";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import PaymentIcon from "@material-ui/icons/Payment";
+import DeleteIcon from "@material-ui/icons/Delete";
 import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import NatureOutlinedIcon from "@material-ui/icons/NatureOutlined";
 import HourglassEmptySharpIcon from "@material-ui/icons/HourglassEmptySharp";
@@ -156,7 +156,7 @@ class FarmerDetails extends Component {
         advanceCounter: advanceCounter
       });
 
-      console.log(this.state.advanceCounter);
+      //console.log(this.state.advanceCounter);
     });
     /********************** Retrieve advance balance *********************/
 
@@ -320,6 +320,17 @@ class FarmerDetails extends Component {
     });
   };
 
+  onDeleteAdvance = row => {
+    //console.log(row.advanceID);
+
+    firebase
+      .database()
+      .ref("advances")
+      .child(this.props.match.params.id)
+      .child(row.advanceID)
+      .remove();
+  };
+
   handleSubmit = event => {};
 
   render() {
@@ -341,7 +352,7 @@ class FarmerDetails extends Component {
                 <Tab icon={<PersonIcon />} label="PROFILE" />
                 <Tab icon={<ShoppingBasketIcon />} label="PROCUREMENTS" />
                 <Tab icon={<PaymentIcon />} label="ADVANCES" />
-                <Tab icon={<PollIcon />} label="REPORTS" />
+                {/* <Tab icon={<PollIcon />} label="REPORTS" /> */}
               </Tabs>
               {value === 0 && (
                 <TabContainer>
@@ -562,7 +573,7 @@ class FarmerDetails extends Component {
               {value === 2 && (
                 <TabContainer>
                   <Fab
-                    color="primary"
+                    color="default"
                     variant="extended"
                     aria-label="Add"
                     className={classes.fab}
@@ -578,13 +589,81 @@ class FarmerDetails extends Component {
                     <Table className={classes.table}>
                       <TableHead>
                         <TableRow>
-                          <TableCell>Advance type</TableCell>
-                          <TableCell align="left">Advance amount</TableCell>
-                          <TableCell align="left">Commodity</TableCell>
-                          <TableCell align="left">Mode of payment</TableCell>
-                          <TableCell align="left">Price per kg</TableCell>
-                          <TableCell align="left">
+                          <TableCell
+                            style={{
+                              background: "black",
+                              color: "white",
+                              fontSize: 15,
+                              fontWeight: "bold"
+                            }}
+                          >
+                            Advance type
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              background: "orange",
+                              color: "white",
+                              fontSize: 15,
+                              fontWeight: "bold"
+                            }}
+                          >
+                            Advance amount
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              background: "black",
+                              color: "white",
+                              fontSize: 15,
+                              fontWeight: "bold"
+                            }}
+                          >
+                            Commodity
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              background: "black",
+                              color: "white",
+                              fontSize: 15,
+                              fontWeight: "bold"
+                            }}
+                          >
+                            Mode of payment
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              background: "black",
+                              color: "white",
+                              fontSize: 15,
+                              fontWeight: "bold"
+                            }}
+                          >
+                            Price per kg
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              background: "black",
+                              color: "white",
+                              fontSize: 15,
+                              fontWeight: "bold"
+                            }}
+                          >
                             Total Coffee Weight
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              background: "black",
+                              color: "white",
+                              fontSize: 15,
+                              fontWeight: "bold"
+                            }}
+                          >
+                            Action
                           </TableCell>
                         </TableRow>
                       </TableHead>
@@ -595,7 +674,7 @@ class FarmerDetails extends Component {
                               {row.advanceType}
                             </TableCell>
                             <TableCell align="left">
-                              {row.advanceAmount}
+                              {numeral(row.advanceAmount).format("0,0[.]00")}
                             </TableCell>
                             <TableCell align="left">
                               {row.commodityAdvanced}
@@ -611,6 +690,17 @@ class FarmerDetails extends Component {
                               {numeral(row.totalCoffeeWeight).format(
                                 "0,0[.]00"
                               )}
+                            </TableCell>
+                            <TableCell align="left">
+                              <Typography
+                                variant="subheading"
+                                align="center"
+                                color="secondary"
+                              >
+                                <DeleteIcon
+                                  onClick={this.onDeleteAdvance.bind(this, row)}
+                                />
+                              </Typography>
                             </TableCell>
                           </TableRow>
                         ))}

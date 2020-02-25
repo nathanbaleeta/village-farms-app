@@ -154,6 +154,7 @@ class CreateAdvances extends React.Component {
   };
 
   render() {
+    const { advanceAmount, pricePerKg, totalCoffeeWeight } = this.state;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -195,9 +196,9 @@ class CreateAdvances extends React.Component {
                 disabled={this.state.amount}
                 allowNegative={false}
                 onValueChange={values => {
-                  const { formattedValue } = values;
+                  const { floatValue } = values;
 
-                  this.setState({ advanceAmount: formattedValue });
+                  this.setState({ advanceAmount: floatValue });
                 }}
                 customInput={TextField}
                 label="Advance amount"
@@ -252,13 +253,15 @@ class CreateAdvances extends React.Component {
 
             <Grid item xs={12} sm={12}>
               <NumberFormat
-                value={this.state.pricePerKg}
+                value={pricePerKg}
                 thousandSeparator={true}
                 allowNegative={false}
                 onValueChange={values => {
-                  const { formattedValue } = values;
-
-                  this.setState({ pricePerKg: formattedValue });
+                  const { floatValue } = values;
+                  this.setState({
+                    pricePerKg: floatValue,
+                    totalCoffeeWeight: advanceAmount / floatValue
+                  });
                 }}
                 customInput={TextField}
                 label="Price Per Kg"
@@ -270,13 +273,15 @@ class CreateAdvances extends React.Component {
 
             <Grid item xs={12} sm={12}>
               <NumberFormat
-                value={this.state.totalCoffeeWeight}
+                disabled={true}
+                value={totalCoffeeWeight}
                 thousandSeparator={true}
                 allowNegative={false}
+                decimalScale={2}
                 onValueChange={values => {
-                  const { formattedValue } = values;
+                  const { floatValue } = values;
 
-                  this.setState({ totalCoffeeWeight: formattedValue });
+                  this.setState({ totalCoffeeWeight: floatValue });
                 }}
                 customInput={TextField}
                 label="Total coffee weight"
