@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
+import deepOrange from "@material-ui/core/colors/deepOrange";
+
 import MUIDataTable from "mui-datatables";
 import { Link } from "react-router-dom";
-import firebase from "../common/firebase";
 
-import deepOrange from "@material-ui/core/colors/deepOrange";
+import numeral from "numeral";
+import firebase from "../common/firebase";
 
 const columns = [
   {
@@ -175,7 +177,7 @@ class AdvancesList extends Component {
                   fontSize: 16
                 }}
               >
-                {row.advanceAmount}
+                {numeral(row.advanceAmount).format("0,0[.]00")}
               </div>,
               <div
                 style={{
@@ -196,14 +198,14 @@ class AdvancesList extends Component {
                   fontSize: 16
                 }}
               >
-                {row.pricePerKg}
+                {numeral(row.pricePerKg).format("0,0[.]00")}
               </div>,
               <div
                 style={{
                   fontSize: 16
                 }}
               >
-                {row.totalCoffeeWeight}
+                {numeral(row.totalCoffeeWeight).format("0,0[.]00")}
               </div>
             ];
           })}

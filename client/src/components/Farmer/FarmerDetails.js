@@ -18,7 +18,6 @@ import PhoneIcon from "@material-ui/icons/Phone";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import WcOutlinedIcon from "@material-ui/icons/WcOutlined";
 import CakeOutlinedIcon from "@material-ui/icons/CakeOutlined";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import PollIcon from "@material-ui/icons/Poll";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import PaymentIcon from "@material-ui/icons/Payment";
@@ -41,8 +40,10 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
-import firebase from "../common/firebase";
 import CreateAdvance from "../advances/CreateAdvance";
+
+import firebase from "../common/firebase";
+import numeral from "numeral";
 
 function TabContainer(props) {
   return (
@@ -602,9 +603,14 @@ class FarmerDetails extends Component {
                             <TableCell align="left">
                               {row.paymentMode}
                             </TableCell>
-                            <TableCell align="left">{row.pricePerKg}</TableCell>
                             <TableCell align="left">
-                              {row.totalCoffeeWeight}
+                              {" "}
+                              {numeral(row.pricePerKg).format("0,0[.]00")}
+                            </TableCell>
+                            <TableCell align="left">
+                              {numeral(row.totalCoffeeWeight).format(
+                                "0,0[.]00"
+                              )}
                             </TableCell>
                           </TableRow>
                         ))}

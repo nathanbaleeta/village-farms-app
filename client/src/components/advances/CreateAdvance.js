@@ -129,7 +129,7 @@ class CreateAdvances extends React.Component {
       advanceType: this.state.advanceType,
       advanceAmount: this.isEmpty(this.state.advanceAmount)
         ? 0
-        : this.state.advanceAmount,
+        : this.removeCommas(this.state.advanceAmount),
       //advanceAmount: this.state.advanceAmount,
       commodityAdvanced: this.state.commodityAdvanced,
       paymentMode: this.state.paymentMode,
@@ -166,7 +166,7 @@ class CreateAdvances extends React.Component {
               </Typography>
             </Grid>
 
-            <Grid item xs={6} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 id="advanceType"
                 select
@@ -188,17 +188,21 @@ class CreateAdvances extends React.Component {
               </TextField>
             </Grid>
 
-            <Grid item xs={6} sm={6}>
-              <TextField
-                required
-                id="advanceAmount"
-                disabled={this.state.amount}
-                name="advanceAmount"
+            <Grid item xs={12} sm={12}>
+              <NumberFormat
                 value={this.state.advanceAmount}
-                onChange={this.onChange}
+                thousandSeparator={true}
+                disabled={this.state.amount}
+                allowNegative={false}
+                onValueChange={values => {
+                  const { formattedValue } = values;
+
+                  this.setState({ advanceAmount: formattedValue });
+                }}
+                customInput={TextField}
                 label="Advance amount"
-                type="number"
                 fullWidth
+                margin="normal"
                 autoComplete="off"
               />
             </Grid>
