@@ -118,6 +118,8 @@ class CreateAdvances extends React.Component {
   }
 
   handleSubmit = event => {
+    event.preventDefault();
+
     // target ID retrieved from another component using onClick event listener
     const key = this.props.id;
     event.preventDefault();
@@ -131,8 +133,8 @@ class CreateAdvances extends React.Component {
       //advanceAmount: this.state.advanceAmount,
       commodityAdvanced: this.state.commodityAdvanced,
       paymentMode: this.state.paymentMode,
-      pricePerKg: this.state.pricePerKg,
-      totalCoffeeWeight: this.state.totalCoffeeWeight,
+      pricePerKg: this.removeCommas(this.state.pricePerKg),
+      totalCoffeeWeight: this.removeCommas(this.state.totalCoffeeWeight),
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Maputo"
       })
