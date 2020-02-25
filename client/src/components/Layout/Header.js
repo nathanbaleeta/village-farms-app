@@ -13,9 +13,8 @@ import { withStyles } from "@material-ui/core/styles";
 //import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import GroupIcon from "@material-ui/icons/Group";
-import ListAltIcon from "@material-ui/icons/ListAlt";
-import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
-//import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import PaymentIcon from "@material-ui/icons/Payment";
+import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -29,7 +28,7 @@ import firebase from "firebase";
 
 const styles = theme => ({
   root: {
-    width: "100%",
+    width: "100%"
   },
   grow: {
     flexGrow: 1
@@ -259,7 +258,7 @@ class Header extends React.Component {
                   <div style={{ paddingRight: 20 }}>
                     <Link to="/advances" className={classes.link}>
                       <IconButton color="inherit">
-                        <ListAltIcon />
+                        <PaymentIcon />
                       </IconButton>
 
                       <Typography
@@ -276,7 +275,7 @@ class Header extends React.Component {
                   <div style={{ paddingRight: 20 }}>
                     <Link to="/procurement" className={classes.link}>
                       <IconButton color="inherit">
-                        <AttachMoneyIcon />
+                        <ShoppingBasketIcon />
                       </IconButton>
 
                       <Typography

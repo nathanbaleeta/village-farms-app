@@ -20,6 +20,8 @@ import WcOutlinedIcon from "@material-ui/icons/WcOutlined";
 import CakeOutlinedIcon from "@material-ui/icons/CakeOutlined";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import PollIcon from "@material-ui/icons/Poll";
+import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import PaymentIcon from "@material-ui/icons/Payment";
 import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
 import NatureOutlinedIcon from "@material-ui/icons/NatureOutlined";
 import HourglassEmptySharpIcon from "@material-ui/icons/HourglassEmptySharp";
@@ -336,8 +338,8 @@ class FarmerDetails extends Component {
                 textColor="secondary"
               >
                 <Tab icon={<PersonIcon />} label="PROFILE" />
-                <Tab icon={<PhoneIcon />} label="PROCUREMENTS" />
-                <Tab icon={<FavoriteIcon />} label="ADVANCES" />
+                <Tab icon={<ShoppingBasketIcon />} label="PROCUREMENTS" />
+                <Tab icon={<PaymentIcon />} label="ADVANCES" />
                 <Tab icon={<PollIcon />} label="REPORTS" />
               </Tabs>
               {value === 0 && (
@@ -357,11 +359,16 @@ class FarmerDetails extends Component {
                         color="primary"
                         align="center"
                       >
-                        <Link  to='#' style={{
+                        <Link
+                          to="#"
+                          style={{
                             color: "darkblue",
                             textDecoration: "none",
                             fontSize: 18
-                          }}>Edit Account</Link>
+                          }}
+                        >
+                          Edit Account
+                        </Link>
                       </Typography>
                     </Grid>
                     <Grid item lg={9} md={9} sm="auto" xs="auto">
@@ -382,7 +389,6 @@ class FarmerDetails extends Component {
                             <WcOutlinedIcon /> &nbsp;&nbsp; {this.state.sex}
                           </Typography>
                         </Grid>
-                        
                       </Grid>
 
                       <Grid container spacing={2}>
@@ -392,19 +398,15 @@ class FarmerDetails extends Component {
                             {this.state.maritalStatus}
                           </Typography>
                         </Grid>
-                        
                       </Grid>
 
                       <Grid container spacing={2}>
                         <Grid item xs={6} sm={6}>
                           <Typography variant="h6" gutterBottom align="left">
-                            <PhoneIcon /> &nbsp;&nbsp;{" "}
-                            {this.state.phone}
+                            <PhoneIcon /> &nbsp;&nbsp; {this.state.phone}
                           </Typography>
                         </Grid>
-                        
                       </Grid>
-
 
                       <Grid container spacing={2}>
                         <Grid item xs={6} sm={6}>
@@ -414,7 +416,6 @@ class FarmerDetails extends Component {
                             {this.state.district}
                           </Typography>
                         </Grid>
-                    
                       </Grid>
 
                       <Grid container spacing={2}>
@@ -424,7 +425,6 @@ class FarmerDetails extends Component {
                             <b>{this.state.yearOpened}</b>
                           </Typography>
                         </Grid>
-                        
                       </Grid>
                       <br />
                       <Divider />

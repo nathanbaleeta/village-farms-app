@@ -74,6 +74,16 @@ class CreateAdvances extends React.Component {
     console.log(this.props.id);
   }
 
+  // remove commas before saving to firebase
+  removeCommas = num => {
+    //Convert number to string before attempting string manipulation
+    let str = num.toString();
+
+    // Check if string contains comma before attempting to sanitize
+    let result = str.includes(",") ? str.replace(/,/g, "") : str;
+    return Number(result);
+  };
+
   handleActivation = event => {
     if (event.target.value !== "Cash") {
       this.handleCashInput();
