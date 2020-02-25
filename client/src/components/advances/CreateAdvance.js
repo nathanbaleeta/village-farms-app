@@ -183,10 +183,11 @@ class CreateAdvances extends React.Component {
       advanceAmount: this.isEmpty(this.state.advanceAmount)
         ? 0
         : this.removeCommas(this.state.advanceAmount),
-      //advanceAmount: this.state.advanceAmount,
       commodityAdvanced: this.state.commodityAdvanced,
-
-      commodityValue: this.state.commodityValue,
+      commodityValue: this.isEmpty(this.state.commodityValue)
+        ? 0
+        : this.removeCommas(this.state.commodityValue),
+      //commodityValue: this.state.commodityValue,
       paymentMode: this.state.paymentMode,
       pricePerKg: this.removeCommas(this.state.pricePerKg),
       totalCoffeeWeight: this.removeCommas(this.state.totalCoffeeWeight),
