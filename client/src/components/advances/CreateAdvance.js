@@ -238,6 +238,7 @@ class CreateAdvances extends React.Component {
               <NumberFormat
                 value={this.state.pricePerKg}
                 thousandSeparator={true}
+                allowNegative={false}
                 onValueChange={values => {
                   const { formattedValue } = values;
 
