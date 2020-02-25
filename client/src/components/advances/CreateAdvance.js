@@ -59,6 +59,7 @@ class CreateAdvances extends React.Component {
       advanceType: "",
       advanceAmount: "",
       commodityAdvanced: "",
+      commodityValue: "",
       paymentMode: "",
       pricePerKg: "",
       totalCoffeeWeight: "",
@@ -122,7 +123,6 @@ class CreateAdvances extends React.Component {
 
     // target ID retrieved from another component using onClick event listener
     const key = this.props.id;
-    event.preventDefault();
 
     // get our form data out of state
     const advance = {
@@ -132,6 +132,8 @@ class CreateAdvances extends React.Component {
         : this.removeCommas(this.state.advanceAmount),
       //advanceAmount: this.state.advanceAmount,
       commodityAdvanced: this.state.commodityAdvanced,
+
+      commodityValue: this.state.commodityValue,
       paymentMode: this.state.paymentMode,
       pricePerKg: this.removeCommas(this.state.pricePerKg),
       totalCoffeeWeight: this.removeCommas(this.state.totalCoffeeWeight),
@@ -147,6 +149,7 @@ class CreateAdvances extends React.Component {
       advanceType: "",
       advanceAmount: "",
       commodityAdvanced: "",
+      commodityValue: "",
       paymentMode: "",
       pricePerKg: "",
       totalCoffeeWeight: ""
@@ -154,7 +157,12 @@ class CreateAdvances extends React.Component {
   };
 
   render() {
-    const { advanceAmount, pricePerKg, totalCoffeeWeight } = this.state;
+    const {
+      advanceAmount,
+      commodityValue,
+      pricePerKg,
+      totalCoffeeWeight
+    } = this.state;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -198,7 +206,10 @@ class CreateAdvances extends React.Component {
                 onValueChange={values => {
                   const { floatValue } = values;
 
-                  this.setState({ advanceAmount: floatValue });
+                  this.setState({
+                    advanceAmount: floatValue,
+                    totalCoffeeWeight: floatValue / pricePerKg
+                  });
                 }}
                 customInput={TextField}
                 label="Advance amount"
@@ -207,7 +218,7 @@ class CreateAdvances extends React.Component {
                 autoComplete="off"
               />
             </Grid>
-            <Grid item xs={6} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 id="commodityAdvanced"
                 disabled={this.state.commodity}
@@ -229,7 +240,27 @@ class CreateAdvances extends React.Component {
                 ))}
               </TextField>
             </Grid>
-            <Grid item xs={6} sm={6}>
+            <Grid item xs={12} sm={12}>
+              <NumberFormat
+                disabled={this.state.commodity}
+                value={commodityValue}
+                thousandSeparator={true}
+                allowNegative={false}
+                decimalScale={2}
+                onValueChange={values => {
+                  const { floatValue } = values;
+
+                  this.setState({ commodityValue: floatValue });
+                }}
+                customInput={TextField}
+                label="Commodity value"
+                fullWidth
+                margin="normal"
+                autoComplete="off"
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={12}>
               <TextField
                 id="paymentMode"
                 select
