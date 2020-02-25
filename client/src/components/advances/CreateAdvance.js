@@ -4,8 +4,9 @@ import TextField from "@material-ui/core/TextField";
 import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-
 import MenuItem from "@material-ui/core/MenuItem";
+
+import NumberFormat from "react-number-format";
 
 import firebase from "../common/firebase";
 
@@ -233,31 +234,37 @@ class CreateAdvances extends React.Component {
               </TextField>
             </Grid>
 
-            <Grid item xs={6} sm={6}>
-              <TextField
-                required
-                id="pricePerKg"
-                name="pricePerKg"
+            <Grid item xs={12} sm={12}>
+              <NumberFormat
                 value={this.state.pricePerKg}
-                onChange={this.onChange}
+                thousandSeparator={true}
+                onValueChange={values => {
+                  const { formattedValue } = values;
+
+                  this.setState({ pricePerKg: formattedValue });
+                }}
+                customInput={TextField}
                 label="Price Per Kg"
-                type="number"
                 fullWidth
+                margin="normal"
                 autoComplete="off"
               />
             </Grid>
 
-            <Grid item xs={6} sm={6}>
-              <TextField
-                required
-                id="totalCoffeeWeight"
-                name="totalCoffeeWeight"
+            <Grid item xs={12} sm={12}>
+              <NumberFormat
                 value={this.state.totalCoffeeWeight}
-                onChange={this.onChange}
+                thousandSeparator={true}
+                allowNegative={false}
+                onValueChange={values => {
+                  const { formattedValue } = values;
+
+                  this.setState({ totalCoffeeWeight: formattedValue });
+                }}
+                customInput={TextField}
                 label="Total coffee weight"
-                helperText="based on price"
-                type="number"
                 fullWidth
+                margin="normal"
                 autoComplete="off"
               />
             </Grid>
