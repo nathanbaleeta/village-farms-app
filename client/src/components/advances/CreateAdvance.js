@@ -87,9 +87,27 @@ class CreateAdvances extends React.Component {
 
   handleActivation = event => {
     if (event.target.value !== "Cash") {
+      // Clear form before proceeding
+      this.setState({
+        advanceAmount: "",
+        commodityAdvanced: "",
+        commodityValue: "",
+        paymentMode: "",
+        pricePerKg: "",
+        totalCoffeeWeight: ""
+      });
       this.handleCashInput();
       this.setState({ [event.target.name]: event.target.value });
     } else {
+      this.setState({
+        // Clear form before proceeding
+        advanceAmount: "",
+        commodityAdvanced: "",
+        commodityValue: "",
+        paymentMode: "",
+        pricePerKg: "",
+        totalCoffeeWeight: ""
+      });
       this.handleCommodityInput();
       this.setState({ [event.target.name]: event.target.value });
     }
@@ -177,6 +195,7 @@ class CreateAdvances extends React.Component {
 
             <Grid item xs={12} sm={12}>
               <TextField
+                required
                 id="advanceType"
                 select
                 name="advanceType"
@@ -199,7 +218,7 @@ class CreateAdvances extends React.Component {
 
             <Grid item xs={12} sm={12}>
               <NumberFormat
-                value={this.state.advanceAmount}
+                value={advanceAmount}
                 thousandSeparator={true}
                 disabled={this.state.amount}
                 allowNegative={false}
@@ -250,7 +269,10 @@ class CreateAdvances extends React.Component {
                 onValueChange={values => {
                   const { floatValue } = values;
 
-                  this.setState({ commodityValue: floatValue });
+                  this.setState({
+                    commodityValue: floatValue,
+                    totalCoffeeWeight: floatValue / pricePerKg
+                  });
                 }}
                 customInput={TextField}
                 label="Commodity value"
@@ -291,7 +313,9 @@ class CreateAdvances extends React.Component {
                   const { floatValue } = values;
                   this.setState({
                     pricePerKg: floatValue,
-                    totalCoffeeWeight: advanceAmount / floatValue
+                    totalCoffeeWeight:
+                      (advanceAmount / floatValue) |
+                      (commodityValue / floatValue)
                   });
                 }}
                 customInput={TextField}
@@ -311,7 +335,6 @@ class CreateAdvances extends React.Component {
                 decimalScale={2}
                 onValueChange={values => {
                   const { floatValue } = values;
-
                   this.setState({ totalCoffeeWeight: floatValue });
                 }}
                 customInput={TextField}

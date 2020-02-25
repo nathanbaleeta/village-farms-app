@@ -209,6 +209,7 @@ class FarmerDetails extends Component {
           advanceType: a.advanceType,
           advanceAmount: a.advanceAmount,
           commodityAdvanced: a.commodityAdvanced,
+          commodityValue: a.commodityValue,
           paymentMode: a.paymentMode,
           pricePerKg: a.pricePerKg,
           totalCoffeeWeight: a.totalCoffeeWeight
@@ -630,6 +631,17 @@ class FarmerDetails extends Component {
                               fontWeight: "bold"
                             }}
                           >
+                            Commodity Value
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              background: "black",
+                              color: "white",
+                              fontSize: 15,
+                              fontWeight: "bold"
+                            }}
+                          >
                             Mode of payment
                           </TableCell>
                           <TableCell
@@ -678,6 +690,9 @@ class FarmerDetails extends Component {
                             </TableCell>
                             <TableCell align="left">
                               {row.commodityAdvanced}
+                            </TableCell>
+                            <TableCell align="left">
+                              {row.commodityValue}
                             </TableCell>
                             <TableCell align="left">
                               {row.paymentMode}
