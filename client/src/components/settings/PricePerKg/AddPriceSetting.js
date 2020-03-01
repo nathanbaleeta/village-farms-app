@@ -15,6 +15,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+import NumberFormat from "react-number-format";
+
 import firebase from "../../common/firebase";
 
 const styles = theme => ({});
@@ -99,7 +101,7 @@ class AddPriceSetting extends Component {
 
   render() {
     const { classes } = this.props;
-    const { districts } = this.state;
+    const { pricePerKg, districts } = this.state;
 
     return (
       <Fragment>
@@ -153,21 +155,6 @@ class AddPriceSetting extends Component {
 
                     <Grid item xs={12} sm={12}>
                       <TextField
-                        id="pricePerKg"
-                        name="pricePerKg"
-                        label="Price per kg"
-                        type="number"
-                        required
-                        fullWidth
-                        className={classes.textField}
-                        value={this.state.pricePerKg}
-                        onChange={this.onChange}
-                        margin="normal"
-                      />
-                    </Grid>
-
-                    <Grid item xs={12} sm={12}>
-                      <TextField
                         required
                         id="district"
                         select
@@ -182,12 +169,33 @@ class AddPriceSetting extends Component {
                         }}
                       >
                         {districts.map(option => (
-                          <MenuItem key={option.id} value={option.id}>
+                          <MenuItem key={option.id} value={option.district}>
                             {option.district}
                           </MenuItem>
                         ))}
                       </TextField>
                     </Grid>
+
+                    <Grid item xs={12} sm={12}>
+                      <NumberFormat
+                        value={pricePerKg}
+                        thousandSeparator={true}
+                        allowNegative={false}
+                        decimalScale={2}
+                        onValueChange={values => {
+                          const { floatValue } = values;
+                          this.setState({
+                            pricePerKg: floatValue
+                          });
+                        }}
+                        customInput={TextField}
+                        label="Price per kg"
+                        fullWidth
+                        margin="normal"
+                        autoComplete="off"
+                      />
+                    </Grid>
+
                     <Grid item xs={12} sm={12}>
                       <Button
                         type="submit"

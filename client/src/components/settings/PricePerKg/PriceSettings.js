@@ -11,6 +11,8 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
+import numeral from "numeral";
+
 import AddPriceSetting from "./AddPriceSetting";
 
 import firebase from "../../common/firebase";
@@ -140,6 +142,7 @@ class PriceSettings extends Component {
                 <TableCell
                   style={{
                     color: "black",
+                    background: "lightGray",
                     fontWeight: "bold",
                     fontSize: 18
                   }}
@@ -151,6 +154,7 @@ class PriceSettings extends Component {
                   align="left"
                   style={{
                     color: "black",
+                    background: "lightGray",
                     fontWeight: "bold",
                     fontSize: 18
                   }}
@@ -161,6 +165,7 @@ class PriceSettings extends Component {
                   align="left"
                   style={{
                     color: "black",
+                    background: "lightGray",
                     fontWeight: "bold",
                     fontSize: 18
                   }}
@@ -171,6 +176,7 @@ class PriceSettings extends Component {
                   align="left"
                   style={{
                     color: "black",
+                    background: "lightGray",
                     fontWeight: "bold",
                     fontSize: 18
                   }}
@@ -201,7 +207,7 @@ class PriceSettings extends Component {
                       fontSize: 16
                     }}
                   >
-                    {row.pricePerKg}
+                    {numeral(row.pricePerKg).format("0,0[.]00")}
                   </TableCell>
 
                   <TableCell

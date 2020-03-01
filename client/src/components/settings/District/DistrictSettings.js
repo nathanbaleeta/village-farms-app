@@ -144,6 +144,7 @@ class PriceSettings extends Component {
                 <TableCell
                   style={{
                     color: "black",
+                    background: "lightGray",
                     fontWeight: "bold",
                     fontSize: 18
                   }}
@@ -155,6 +156,7 @@ class PriceSettings extends Component {
                   align="left"
                   style={{
                     color: "black",
+                    background: "lightGray",
                     fontWeight: "bold",
                     fontSize: 18
                   }}
