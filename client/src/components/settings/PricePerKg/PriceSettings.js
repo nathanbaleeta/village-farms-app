@@ -3,16 +3,17 @@ import PropTypes from "prop-types";
 import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
 
-import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import firebase from "../../common/firebase";
 
-import AddDistrict from "./AddDistrict";
+import AddPriceSetting from "./AddPriceSetting";
+
+import firebase from "../../common/firebase";
 
 const styles = theme => ({
   layout: {
@@ -40,7 +41,8 @@ class PriceSettings extends Component {
   state = {
     pricePerKg: "",
     district: "",
-    districts: []
+
+    priceData: []
   };
 
   handleOpen = () => {
@@ -52,25 +54,26 @@ class PriceSettings extends Component {
   };
 
   componentWillMount() {
-    const districtsRef = firebase
+    const pricesRef = firebase
       .database()
       .ref("settings")
-      .child("districts");
+      .child("prices");
 
-    districtsRef.on("value", snapshot => {
+    pricesRef.on("value", snapshot => {
       let items = snapshot.val();
       let newState = [];
       for (let item in items) {
         newState.push({
           id: item,
           district: items[item].district,
-          created: items[item].created
+          pricePerKg: items[item].pricePerKg,
+          dateConfigured: items[item].dateConfigured
         });
       }
 
       //console.log(newState);
       this.setState({
-        districts: newState
+        priceData: newState
       });
       //console.log(this.state.districts);
     });
@@ -119,22 +122,15 @@ class PriceSettings extends Component {
     settingsRef.push(priceConfig);
   };
 
-  onDeleteDistrict = row => {
-    firebase
-      .database()
-      .ref("settings")
-      .child("districts")
-      .child(row.id)
-      .remove();
-  };
+  onEditPrice = row => {};
 
   render() {
     const { classes } = this.props;
-    const { districts } = this.state;
+    const { priceData } = this.state;
 
     return (
       <Fragment>
-        <AddDistrict />
+        <AddPriceSetting />
         <br />
 
         <Paper className={classes.tableRoot}>
@@ -159,12 +155,32 @@ class PriceSettings extends Component {
                     fontSize: 18
                   }}
                 >
+                  Price per kg
+                </TableCell>
+                <TableCell
+                  align="left"
+                  style={{
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: 18
+                  }}
+                >
+                  Created on
+                </TableCell>
+                <TableCell
+                  align="left"
+                  style={{
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: 18
+                  }}
+                >
                   Action
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {districts.map(row => (
+              {priceData.map(row => (
                 <TableRow key={row.id}>
                   <TableCell
                     component="th"
@@ -178,15 +194,35 @@ class PriceSettings extends Component {
                   </TableCell>
 
                   <TableCell
+                    component="th"
+                    scope="row"
+                    style={{
+                      color: "black",
+                      fontSize: 16
+                    }}
+                  >
+                    {row.pricePerKg}
+                  </TableCell>
+
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    style={{
+                      color: "black",
+                      fontSize: 16
+                    }}
+                  >
+                    {row.dateConfigured}
+                  </TableCell>
+
+                  <TableCell
                     align="left"
                     style={{
                       color: "black",
                       fontSize: 16
                     }}
                   >
-                    <DeleteIcon
-                      onClick={this.onDeleteDistrict.bind(this, row)}
-                    />
+                    <EditIcon onClick={this.onEditPrice.bind(this, row)} />
                   </TableCell>
                 </TableRow>
               ))}

@@ -10,7 +10,7 @@ import GroupIcon from "@material-ui/icons/Group";
 
 import Typography from "@material-ui/core/Typography";
 
-import PriceSettings from "../settings/PriceSettings";
+import PriceSettings from "../settings/PricePerKg/PriceSettings";
 
 import DistrictSettings from "./District/DistrictSettings";
 

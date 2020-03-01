@@ -114,7 +114,7 @@ class AddDistrict extends React.Component {
                 <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
                     <Typography variant="h6" align="left" color="primary">
-                      District settings
+                      [For addition of new districts]
                     </Typography>
                   </Grid>
 
