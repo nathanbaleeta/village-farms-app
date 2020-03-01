@@ -37,7 +37,7 @@ import { genders } from "../common/genderList";
 import { maritalStatuses } from "../common/maritalStatusList";
 import { mmOptions } from "../common/mobileMoneyOptions";
 import { mmPayments } from "../common/mobileMoneyPayments";
-import { districts } from "../common/districtList";
+//import { districts } from "../common/districtList";
 import { lookup } from "../common/traditionalAuthorityList";
 
 const columns = [
@@ -138,19 +138,15 @@ class FarmerList extends Component {
       year3: "",
       acreage: "",
 
+      districts: [],
+
       dataValue: "Chitipa"
-    };
-
-    this.handleOpen = () => {
-      this.setState({ open: true });
-    };
-
-    this.handleClose = () => {
-      this.setState({ open: false });
     };
   }
 
   componentDidMount() {
+    this.populateDistricts();
+
     const farmersRef = firebase.database().ref("farmers");
 
     farmersRef.on("value", snapshot => {
@@ -186,9 +182,41 @@ class FarmerList extends Component {
     });
   }
 
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   handleDateChange = date => {
     this.setState({
       yearOpened: date.toISOString().substr(0, 10) // trim timestamp using regular expression
+    });
+  };
+
+  populateDistricts = () => {
+    const districtsRef = firebase
+      .database()
+      .ref("settings")
+      .child("districts");
+
+    districtsRef.on("value", snapshot => {
+      let items = snapshot.val();
+      let newState = [];
+      for (let item in items) {
+        newState.push({
+          id: item,
+          district: items[item].district
+        });
+      }
+
+      //console.log(newState);
+      this.setState({
+        districts: newState
+      });
+      //console.log(this.state.districts);
     });
   };
 
@@ -309,7 +337,7 @@ class FarmerList extends Component {
   }
 
   render() {
-    const { data } = this.state;
+    const { data, districts } = this.state;
     const { classes } = this.props;
 
     const { dataValue } = this.state;
@@ -634,8 +662,8 @@ class FarmerList extends Component {
                     }}
                   >
                     {districts.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
+                      <MenuItem key={option.id} value={option.district}>
+                        {option.district}
                       </MenuItem>
                     ))}
                   </TextField>
