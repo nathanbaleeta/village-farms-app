@@ -61,8 +61,10 @@ class CreateAdvances extends React.Component {
       commodityAdvanced: "",
       commodityValue: "",
       paymentMode: "",
-      pricePerKg: "",
+      pricePerKg: 0,
       totalCoffeeWeight: "",
+
+      priceData: [],
 
       // inputValues
       amount: false,
@@ -73,10 +75,54 @@ class CreateAdvances extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // targetID retrieved from another component using onClick event listener
-    console.log(this.props.id);
+    //console.log(this.props.id);
+
+    //console.log(this.props.district);
+
+    this.getDistrictPrice();
   }
+
+  // Retrieve price data from firebase
+  getDistrictPrice = () => {
+    const pricesRef = firebase
+      .database()
+      .ref("settings")
+      .child("prices");
+
+    pricesRef.on("value", snapshot => {
+      let items = snapshot.val();
+      let newState = [];
+      for (let item in items) {
+        newState.push({
+          id: item,
+          district: items[item].district,
+          pricePerKg: items[item].pricePerKg,
+          dateConfigured: items[item].dateConfigured
+        });
+      }
+
+      this.setState({
+        priceData: newState
+      });
+
+      // Filter row which matches farmer district
+      const resultset = newState.filter(row => {
+        return row.district === this.props.district;
+      });
+
+      //console.log(resultset);
+
+      resultset.length > 0
+        ? this.setState({
+            pricePerKg: resultset[0].pricePerKg
+          })
+        : this.setState({
+            pricePerKg: 0
+          });
+    });
+  };
 
   // remove commas before saving to firebase
   removeCommas = num => {
@@ -96,7 +142,7 @@ class CreateAdvances extends React.Component {
         commodityAdvanced: "",
         commodityValue: "",
         paymentMode: "",
-        pricePerKg: "",
+        //pricePerKg: "",
         totalCoffeeWeight: ""
       });
       this.handleCashInput();
@@ -108,7 +154,7 @@ class CreateAdvances extends React.Component {
         commodityAdvanced: "",
         commodityValue: "",
         paymentMode: "",
-        pricePerKg: "",
+        //pricePerKg: "",
         totalCoffeeWeight: ""
       });
       this.handleCommodityInput();
@@ -342,6 +388,7 @@ class CreateAdvances extends React.Component {
 
             <Grid item xs={12} sm={12}>
               <NumberFormat
+                disabled={true}
                 value={pricePerKg}
                 thousandSeparator={true}
                 allowNegative={false}

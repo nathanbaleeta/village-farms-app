@@ -81,7 +81,7 @@ class AddPriceSetting extends Component {
 
     // get our form data out of state
     const priceConfig = {
-      pricePerKg: this.state.pricePerKg,
+      pricePerKg: parseInt(this.state.pricePerKg),
       district: this.state.district,
       dateConfigured: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Maputo"

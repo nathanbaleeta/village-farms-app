@@ -692,7 +692,7 @@ class FarmerDetails extends Component {
                               {row.commodityAdvanced}
                             </TableCell>
                             <TableCell align="left">
-                              {row.commodityValue}
+                              {numeral(row.commodityValue).format("0,0[.]00")}
                             </TableCell>
                             <TableCell align="left">
                               {row.paymentMode}
@@ -786,7 +786,7 @@ class FarmerDetails extends Component {
             </Typography>
           </DialogTitle>
           <DialogContent>
-            <CreateAdvance id={this.state.id} />
+            <CreateAdvance id={this.state.id} district={this.state.district} />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleInVisible} color="primary">

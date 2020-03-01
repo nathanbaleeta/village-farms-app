@@ -93,7 +93,7 @@ class PriceSettings extends Component {
       this.setState({
         pricePerKg: priceConfig
       });
-      console.log(this.state.pricePerKg);
+      //console.log(this.state.pricePerKg);
     });
   }
   onChange = e => {
