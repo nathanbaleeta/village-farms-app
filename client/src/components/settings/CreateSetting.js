@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
+import TrendingUpIcon from "@material-ui/icons/TrendingUp";
 
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
@@ -77,11 +77,17 @@ class CreateFarmer extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <Fab
             color="primary"
-            aria-label="Add"
-            className={classes.fab}
+            variant="extended"
+            aria-label="Delete"
             onClick={this.handleOpen}
+            className={classes.fab}
+            style={{
+              backgroundColor: "mediumblue",
+              color: "white"
+            }}
           >
-            <AddIcon />
+            <TrendingUpIcon className={classes.extendedIcon} />
+            Set Price per kg
           </Fab>
 
           <Dialog
@@ -94,28 +100,27 @@ class CreateFarmer extends React.Component {
               id="simple-dialog-title"
               color="default"
               style={{
-                backgroundColor: "mediumblue"
+                backgroundColor: "white"
               }}
             >
               <Typography
                 component="h1"
-                variant="display1"
+                variant="h4"
                 align="center"
-                style={{ color: "white" }}
+                style={{ color: "black" }}
               >
                 Add Price setting
               </Typography>
             </DialogTitle>
             <DialogContent>
               <form onSubmit={this.handlePriceSetting}>
-                <br />
-                <Grid container spacing={24}>
+                <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
-                    <Typography variant="headline" align="left" color="inherit">
+                    <Typography variant="h6" align="left" color="primary">
                       Procurement prices
                     </Typography>
                   </Grid>
-                  <br />
+
                   <Grid item xs={12} sm={12}>
                     <TextField
                       id="pricePerKg"
@@ -159,7 +164,6 @@ class CreateFarmer extends React.Component {
                       variant="contained"
                       size="large"
                       fullWidth
-                      //color="default"
                       style={{
                         backgroundColor: "mediumblue",
                         color: "white"

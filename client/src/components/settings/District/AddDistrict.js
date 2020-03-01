@@ -77,6 +77,10 @@ class AddDistrict extends React.Component {
             aria-label="Delete"
             onClick={this.handleOpen}
             className={classes.fab}
+            style={{
+              backgroundColor: "mediumblue",
+              color: "white"
+            }}
           >
             <AddLocationIcon className={classes.extendedIcon} />
             Add district
@@ -90,30 +94,30 @@ class AddDistrict extends React.Component {
           >
             <DialogTitle
               id="simple-dialog-title"
-              color="default"
+              color="primary"
               style={{
-                backgroundColor: "indigo"
+                backgroundColor: "white",
+                color: "black"
               }}
             >
               <Typography
                 component="h1"
-                variant="display1"
+                variant="h4"
                 align="center"
-                style={{ color: "white" }}
+                style={{ color: "black" }}
               >
                 Add District
               </Typography>
             </DialogTitle>
             <DialogContent>
               <form onSubmit={this.handleDistrictSetting}>
-                <br />
-                <Grid container spacing={24}>
+                <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
-                    <Typography variant="headline" align="left" color="inherit">
+                    <Typography variant="h6" align="left" color="primary">
                       District settings
                     </Typography>
                   </Grid>
-                  <br />
+
                   <Grid item xs={12} sm={12}>
                     <TextField
                       required
@@ -127,7 +131,7 @@ class AddDistrict extends React.Component {
                       margin="normal"
                     />
                   </Grid>
-                  <br />
+
                   <Grid item xs={12} sm={12}>
                     <Button
                       type="submit"
@@ -135,6 +139,10 @@ class AddDistrict extends React.Component {
                       size="large"
                       fullWidth
                       color="primary"
+                      style={{
+                        backgroundColor: "mediumblue",
+                        color: "white"
+                      }}
                     >
                       Save District
                     </Button>

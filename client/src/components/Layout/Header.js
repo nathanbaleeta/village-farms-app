@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -11,6 +11,7 @@ import Menu from "@material-ui/core/Menu";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import SettingsIcon from "@material-ui/icons/Settings";
 import GroupIcon from "@material-ui/icons/Group";
 //import PaymentIcon from "@material-ui/icons/Payment";
 //import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
@@ -109,7 +110,7 @@ const styles = theme => ({
   }
 });
 
-class Header extends React.Component {
+class Header extends Component {
   state = {
     anchorEl: null,
     mobileMoreAnchorEl: null
@@ -204,57 +205,76 @@ class Header extends React.Component {
     );
 
     return (
-      <div className={classes.root}>
-        <AppBar position="fixed" style={{ background: "#0000CD" }}>
-          <Toolbar>
-            <Typography
-              className={classes.title}
-              variant="h4"
-              color="inherit"
-              noWrap
-              //style={{ fontWeight: "bold" }}
-            >
-              Village Farms Manager
-            </Typography>
+      <Fragment>
+        {" "}
+        <div className={classes.root}>
+          <AppBar position="fixed" style={{ background: "#0000CD" }}>
+            <Toolbar>
+              <Typography
+                className={classes.title}
+                variant="h4"
+                color="inherit"
+                noWrap
+                //style={{ fontWeight: "bold" }}
+              >
+                Village Farms Manager
+              </Typography>
 
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <div>
-                <Grid container justify="center" alignItems="center">
-                  <div style={{ paddingRight: 20 }}>
-                    <Link to="/" className={classes.link}>
-                      <IconButton color="inherit">
-                        <PollIcon />
-                      </IconButton>
+              <div className={classes.grow} />
+              <div className={classes.sectionDesktop}>
+                <div>
+                  <Grid container justify="center" alignItems="center">
+                    <div style={{ paddingRight: 20 }}>
+                      <Link to="/" className={classes.link}>
+                        <IconButton color="inherit">
+                          <PollIcon />
+                        </IconButton>
 
-                      <Typography
-                        variant="body2"
-                        color="inherit"
-                        noWrap
-                        style={{ fontWeight: "bold" }}
-                      >
-                        Analytics
-                      </Typography>
-                    </Link>
-                  </div>
-                  <div style={{ paddingRight: 20 }}>
-                    <Link to="/farmers" className={classes.link}>
-                      <IconButton color="inherit">
-                        <GroupIcon />
-                      </IconButton>
+                        <Typography
+                          variant="body2"
+                          color="inherit"
+                          noWrap
+                          style={{ fontWeight: "bold" }}
+                        >
+                          Analytics
+                        </Typography>
+                      </Link>
+                    </div>
+                    <div style={{ paddingRight: 20 }}>
+                      <Link to="/farmers" className={classes.link}>
+                        <IconButton color="inherit">
+                          <GroupIcon />
+                        </IconButton>
 
-                      <Typography
-                        variant="body2"
-                        color="inherit"
-                        noWrap
-                        style={{ fontWeight: "bold" }}
-                      >
-                        Farmers
-                      </Typography>
-                    </Link>
-                  </div>
+                        <Typography
+                          variant="body2"
+                          color="inherit"
+                          noWrap
+                          style={{ fontWeight: "bold" }}
+                        >
+                          Farmers
+                        </Typography>
+                      </Link>
+                    </div>
 
-                  {/*  <div style={{ paddingRight: 20 }}>
+                    <div style={{ paddingRight: 20 }}>
+                      <Link to="/settings" className={classes.link}>
+                        <IconButton color="inherit">
+                          <SettingsIcon />
+                        </IconButton>
+
+                        <Typography
+                          variant="body2"
+                          color="inherit"
+                          noWrap
+                          style={{ fontWeight: "bold" }}
+                        >
+                          Settings
+                        </Typography>
+                      </Link>
+                    </div>
+
+                    {/*  <div style={{ paddingRight: 20 }}>
                     <Link to="/advances" className={classes.link}>
                       <IconButton color="inherit">
                         <PaymentIcon />
@@ -271,7 +291,7 @@ class Header extends React.Component {
                     </Link>
                   </div>
  */}
-                  {/*  <div style={{ paddingRight: 20 }}>
+                    {/*  <div style={{ paddingRight: 20 }}>
                     <Link to="/procurement" className={classes.link}>
                       <IconButton color="inherit">
                         <ShoppingBasketIcon />
@@ -288,7 +308,7 @@ class Header extends React.Component {
                     </Link>
                   </div>
  */}
-                  {/*   <div style={{ paddingRight: 20 }}>
+                    {/*   <div style={{ paddingRight: 20 }}>
                     <Link to="/sales" className={classes.link}>
                       <IconButton color="inherit">
                         <ShoppingCartIcon />
@@ -305,10 +325,10 @@ class Header extends React.Component {
                     </Link>
                   </div>
                  */}
-                </Grid>
-              </div>
+                  </Grid>
+                </div>
 
-              {/*  <IconButton
+                {/*  <IconButton
                 aria-owns={isMenuOpen ? "material-appbar" : undefined}
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
@@ -316,24 +336,28 @@ class Header extends React.Component {
               >
                 <ArrowDropDownIcon />
               </IconButton> */}
-              <IconButton color="inherit" onClick={this.handleProfileMenuOpen}>
-                <AccountCircle style={{ height: 50, width: 50 }} />
-              </IconButton>
-            </div>
-            <div className={classes.sectionMobile}>
-              <IconButton
-                aria-haspopup="true"
-                onClick={this.handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon />
-              </IconButton>
-            </div>
-          </Toolbar>
-        </AppBar>
-        {renderMenu}
-        {renderMobileMenu}
-      </div>
+                <IconButton
+                  color="inherit"
+                  onClick={this.handleProfileMenuOpen}
+                >
+                  <AccountCircle style={{ height: 50, width: 50 }} />
+                </IconButton>
+              </div>
+              <div className={classes.sectionMobile}>
+                <IconButton
+                  aria-haspopup="true"
+                  onClick={this.handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+              </div>
+            </Toolbar>
+          </AppBar>
+          {renderMenu}
+          {renderMobileMenu}
+        </div>
+      </Fragment>
     );
   }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import firebase from "../../common/firebase";
@@ -27,7 +27,7 @@ const styles = theme => ({
   }
 });
 
-class PriceSettings extends React.Component {
+class PriceSettings extends Component {
   state = {
     pricePerKg: "",
     district: ""
@@ -90,9 +90,9 @@ class PriceSettings extends React.Component {
     //const { classes } = this.props;
 
     return (
-      <React.Fragment>
+      <Fragment>
         <AddDistrict />
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

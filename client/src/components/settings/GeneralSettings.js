@@ -48,7 +48,7 @@ class GeneralSettings extends React.Component {
 
     return (
       <div>
-        <Typography variant="display1" align="center" color="inherit">
+        <Typography variant="h4" align="center" color="inherit">
           General Settings
         </Typography>
         <br />
@@ -62,7 +62,7 @@ class GeneralSettings extends React.Component {
             indicatorColor="secondary"
             textColor="secondary"
           >
-            <Tab icon={<AttachMoneyIcon />} label="PRICES PER KG" />
+            <Tab icon={<AttachMoneyIcon />} label="PRICE PER KG" />
             <Tab icon={<AddLocationIcon />} label="LOCATIONS" />
             <Tab icon={<GroupIcon />} label="USERS" />
           </Tabs>

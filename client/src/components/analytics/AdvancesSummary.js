@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
@@ -6,6 +6,8 @@ import CardContent from "@material-ui/core/CardContent";
 
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
+
+import numeral from "numeral";
 
 import firebase from "../common/firebase";
 
@@ -16,7 +18,7 @@ const styles = theme => ({
   }
 });
 
-class AdvancesSummary extends React.Component {
+class AdvancesSummary extends Component {
   constructor() {
     super();
     this.state = {
@@ -51,12 +53,14 @@ class AdvancesSummary extends React.Component {
 
         childSnapshot.forEach(grandChildSnapshot => {
           //console.log(grandChildSnapshot.child("advanceAmount").val());
+          //console.log(grandChildSnapshot.child("commodityValue").val());
           //console.log(grandChildSnapshot.child("totalCoffeeWeight").val());
 
           // Advance Value counter; convert string to int
           valueCounter =
-            valueCounter +
-            parseInt(grandChildSnapshot.child("advanceAmount").val());
+            (valueCounter +
+              parseInt(grandChildSnapshot.child("advanceAmount").val())) |
+            parseInt(grandChildSnapshot.child("commodityValue").val());
 
           // Total coffee weight counter; convert string to int
           weightCounter =
@@ -120,7 +124,7 @@ class AdvancesSummary extends React.Component {
                     color="Primary"
                     gutterBottom
                   >
-                    {this.state.value}
+                    {numeral(this.state.value).format("0,0[.]00")}
                   </Typography>
                 </Grid>
                 <Grid item xs={4} sm={4}>
