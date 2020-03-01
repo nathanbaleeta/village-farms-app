@@ -112,7 +112,7 @@ class CreateFarmer extends React.Component {
                 Add Price setting
               </Typography>
             </DialogTitle>
-            <DialogContent>
+            <DialogContent style={{ overflow: "hidden" }}>
               <form onSubmit={this.handlePriceSetting}>
                 <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
