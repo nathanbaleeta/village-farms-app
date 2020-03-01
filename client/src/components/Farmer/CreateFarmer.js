@@ -16,7 +16,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
-import { districts } from "../common/districtList";
+//import { districts } from "../common/districtList";
 import { titles } from "../common/titleList";
 import { genders } from "../common/genderList";
 import { maritalStatuses } from "../common/maritalStatusList";
@@ -52,9 +52,39 @@ class CreateFarmer extends React.Component {
       year3: "",
       acreage: "",
 
+      districts: [],
+
       dataValue: "Chitipa"
     };
   }
+
+  componentDidMount() {
+    this.populateDistricts();
+  }
+
+  populateDistricts = () => {
+    const districtsRef = firebase
+      .database()
+      .ref("settings")
+      .child("districts");
+
+    districtsRef.on("value", snapshot => {
+      let items = snapshot.val();
+      let newState = [];
+      for (let item in items) {
+        newState.push({
+          id: item,
+          district: items[item].district
+        });
+      }
+
+      //console.log(newState);
+      this.setState({
+        districts: newState
+      });
+      //console.log(this.state.districts);
+    });
+  };
 
   toTitleCase = phrase => {
     return phrase
@@ -165,7 +195,8 @@ class CreateFarmer extends React.Component {
       year1,
       year2,
       year3,
-      acreage
+      acreage,
+      districts
     } = this.state;
 
     const { dataValue } = this.state;
@@ -348,8 +379,8 @@ class CreateFarmer extends React.Component {
                 }}
               >
                 {districts.map(option => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
+                  <MenuItem key={option.id} value={option.district}>
+                    {option.district}
                   </MenuItem>
                 ))}
               </TextField>

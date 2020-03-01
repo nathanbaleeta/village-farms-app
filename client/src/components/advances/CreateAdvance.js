@@ -64,8 +64,6 @@ class CreateAdvances extends React.Component {
       pricePerKg: 0,
       totalCoffeeWeight: "",
 
-      priceData: [],
-
       // inputValues
       amount: false,
       commodity: false,
@@ -81,11 +79,11 @@ class CreateAdvances extends React.Component {
 
     //console.log(this.props.district);
 
-    this.getDistrictPrice();
+    this.getPriceByDistrict();
   }
 
   // Retrieve price data from firebase
-  getDistrictPrice = () => {
+  getPriceByDistrict = () => {
     const pricesRef = firebase
       .database()
       .ref("settings")
@@ -103,11 +101,7 @@ class CreateAdvances extends React.Component {
         });
       }
 
-      this.setState({
-        priceData: newState
-      });
-
-      // Filter row which matches farmer district
+      // Filter row which matches farmer district and generate resultset
       const resultset = newState.filter(row => {
         return row.district === this.props.district;
       });
@@ -142,7 +136,6 @@ class CreateAdvances extends React.Component {
         commodityAdvanced: "",
         commodityValue: "",
         paymentMode: "",
-        //pricePerKg: "",
         totalCoffeeWeight: ""
       });
       this.handleCashInput();
@@ -154,7 +147,6 @@ class CreateAdvances extends React.Component {
         commodityAdvanced: "",
         commodityValue: "",
         paymentMode: "",
-        //pricePerKg: "",
         totalCoffeeWeight: ""
       });
       this.handleCommodityInput();
