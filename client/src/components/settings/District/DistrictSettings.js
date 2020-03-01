@@ -1,6 +1,15 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
+import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
+
+import DeleteIcon from "@material-ui/icons/Delete";
+
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
 import firebase from "../../common/firebase";
 
 import AddDistrict from "./AddDistrict";
@@ -30,7 +39,8 @@ const styles = theme => ({
 class PriceSettings extends Component {
   state = {
     pricePerKg: "",
-    district: ""
+    district: "",
+    districts: []
   };
 
   handleOpen = () => {
@@ -42,6 +52,29 @@ class PriceSettings extends Component {
   };
 
   componentWillMount() {
+    const districtsRef = firebase
+      .database()
+      .ref("settings")
+      .child("districts");
+
+    districtsRef.on("value", snapshot => {
+      let items = snapshot.val();
+      let newState = [];
+      for (let item in items) {
+        newState.push({
+          id: item,
+          district: items[item].district,
+          created: items[item].created
+        });
+      }
+
+      //console.log(newState);
+      this.setState({
+        districts: newState
+      });
+      //console.log(this.state.districts);
+    });
+
     // procurement price setting.
     const priceRef = firebase
       .database()
@@ -86,12 +119,82 @@ class PriceSettings extends Component {
     settingsRef.push(priceConfig);
   };
 
+  onDeleteDistrict = row => {
+    //console.log(row.advanceID);
+
+    firebase
+      .database()
+      .ref("settings")
+      .child("districts")
+      .child(row.id)
+      .remove();
+  };
+
   render() {
-    //const { classes } = this.props;
+    const { classes } = this.props;
+    const { districts } = this.state;
 
     return (
       <Fragment>
         <AddDistrict />
+        <br />
+
+        <Paper className={classes.tableRoot}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  style={{
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: 18
+                  }}
+                >
+                  District
+                </TableCell>
+
+                <TableCell
+                  align="left"
+                  style={{
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: 18
+                  }}
+                >
+                  Action
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {districts.map(row => (
+                <TableRow key={row.id}>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    style={{
+                      color: "black",
+                      fontSize: 16
+                    }}
+                  >
+                    {row.district}
+                  </TableCell>
+
+                  <TableCell
+                    align="left"
+                    style={{
+                      color: "black",
+                      fontSize: 16
+                    }}
+                  >
+                    <DeleteIcon
+                      onClick={this.onDeleteDistrict.bind(this, row)}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
       </Fragment>
     );
   }

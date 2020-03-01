@@ -109,7 +109,7 @@ class CreateFarmer extends React.Component {
                 align="center"
                 style={{ color: "black" }}
               >
-                Add Price setting
+                Set Price per kg setting
               </Typography>
             </DialogTitle>
             <DialogContent style={{ overflow: "hidden" }}>
@@ -117,7 +117,7 @@ class CreateFarmer extends React.Component {
                 <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
                     <Typography variant="h6" align="left" color="primary">
-                      Procurement prices
+                      [Used in Procurement/ Advance modules]
                     </Typography>
                   </Grid>
 
