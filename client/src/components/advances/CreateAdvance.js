@@ -378,7 +378,7 @@ class CreateAdvances extends React.Component {
               </TextField>
             </Grid>
 
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={12} sm={6}>
               <NumberFormat
                 disabled={true}
                 value={pricePerKg}
@@ -401,7 +401,7 @@ class CreateAdvances extends React.Component {
               />
             </Grid>
 
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={12} sm={6}>
               <NumberFormat
                 disabled={true}
                 value={totalCoffeeWeight}
