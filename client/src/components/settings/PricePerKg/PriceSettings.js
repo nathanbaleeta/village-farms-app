@@ -58,7 +58,7 @@ const styles = theme => ({
 class PriceSettings extends Component {
   state = {
     key: "",
-    pricePerKg: "",
+    pricePerKg: 0,
     district: "",
     dateConfigured: "",
     visible: false,
@@ -73,14 +73,6 @@ class PriceSettings extends Component {
 
   closeDialog = () => {
     this.setState({ visible: false });
-  };
-
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
   };
 
   componentWillMount() {
@@ -200,18 +192,6 @@ class PriceSettings extends Component {
         district: snapshot.child("district").val()
       });
     });
-
-    // get our form data out of state
-    const priceObject = {
-      pricePerKg: this.state.pricePerKg,
-      district: this.state.district,
-      dateConfigured: new Date().toLocaleString("en-GB", {
-        timeZone: "Africa/Maputo"
-      })
-    };
-
-    pricingRef.push(priceObject);
-    console.log(priceObject);
   };
 
   onDeletePrice = row => {

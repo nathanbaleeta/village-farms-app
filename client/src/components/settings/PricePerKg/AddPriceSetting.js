@@ -88,8 +88,7 @@ class AddPriceSetting extends Component {
       })
     };
 
-    console.log(priceConfig);
-
+    //Form validation for adding price setting
     if (this.state.pricePerKg === "" || this.state.district === "") {
       return;
     } else {
