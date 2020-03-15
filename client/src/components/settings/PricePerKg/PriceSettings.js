@@ -151,7 +151,12 @@ class PriceSettings extends Component {
     event.preventDefault();
 
     //Form validation for adding price setting
-    if (this.state.pricePerKg === "" || this.state.district === "") {
+    if (
+      this.state.pricePerKg === null ||
+      this.state.pricePerKg === undefined ||
+      this.state.district === ""
+    ) {
+      event.preventDefault();
       return;
     } else {
       // get our form data out of state
