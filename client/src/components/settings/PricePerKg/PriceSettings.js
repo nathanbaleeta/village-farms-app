@@ -4,6 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -127,6 +128,15 @@ class PriceSettings extends Component {
 
   onEditPrice = row => {};
 
+  onDeletePrice = row => {
+    firebase
+      .database()
+      .ref("settings")
+      .child("prices")
+      .child(row.id)
+      .remove();
+  };
+
   render() {
     const { classes } = this.props;
     const { priceData } = this.state;
@@ -233,6 +243,8 @@ class PriceSettings extends Component {
                     }}
                   >
                     <EditIcon onClick={this.onEditPrice.bind(this, row)} />
+
+                    <DeleteIcon onClick={this.onDeletePrice.bind(this, row)} />
                   </TableCell>
                 </TableRow>
               ))}

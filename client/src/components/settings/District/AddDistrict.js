@@ -85,8 +85,8 @@ class AddDistrict extends React.Component {
             onClick={this.handleOpen}
             className={classes.fab}
             style={{
-              backgroundColor: "mediumblue",
-              color: "white"
+              backgroundColor: "#FFBF00",
+              color: "black"
             }}
           >
             <AddLocationIcon className={classes.extendedIcon} />

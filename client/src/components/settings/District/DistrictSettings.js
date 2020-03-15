@@ -17,8 +17,8 @@ import AddDistrict from "./AddDistrict";
 const styles = theme => ({
   layout: {
     width: "auto",
-    marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2,
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
       width: 700,
       marginLeft: "auto",
@@ -143,8 +143,8 @@ class PriceSettings extends Component {
               <TableRow>
                 <TableCell
                   style={{
-                    color: "black",
-                    background: "lightGray",
+                    color: "white",
+                    background: "midnightblue",
                     fontWeight: "bold",
                     fontSize: 18
                   }}
@@ -155,8 +155,8 @@ class PriceSettings extends Component {
                 <TableCell
                   align="left"
                   style={{
-                    color: "black",
-                    background: "lightGray",
+                    color: "white",
+                    background: "midnightblue",
                     fontWeight: "bold",
                     fontSize: 18
                   }}
