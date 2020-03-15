@@ -57,14 +57,17 @@ class AddDistrict extends React.Component {
       })
     };
 
-    console.log(district);
-
-    //Save price settings
-    const settingsRef = firebase.database().ref("settings/districts");
-    settingsRef.push(district);
-    this.setState({
-      district: ""
-    });
+    //Form validation for adding price setting
+    if (this.state.district === "") {
+      return;
+    } else {
+      //Save price settings
+      const settingsRef = firebase.database().ref("settings/districts");
+      settingsRef.push(district);
+      this.setState({
+        district: ""
+      });
+    }
   };
 
   render() {

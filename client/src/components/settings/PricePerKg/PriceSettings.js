@@ -150,29 +150,34 @@ class PriceSettings extends Component {
   handlePriceSetting = event => {
     event.preventDefault();
 
-    // get our form data out of state
-    const priceConfig = {
-      pricePerKg: this.state.pricePerKg,
-      district: this.state.district,
-      dateConfigured: new Date().toLocaleString("en-GB", {
-        timeZone: "Africa/Maputo"
-      })
-    };
-
-    const priceRef = firebase
-      .database()
-      .ref("settings")
-      .child("prices")
-      .child(this.state.key);
-    priceRef
-      .update(priceConfig)
-      .then(function() {
-        console.log("Synchronization succeeded");
-        console.log(this.state);
-      })
-      .catch(function(error) {
-        console.log("Synchronization failed");
-      });
+    //Form validation for adding price setting
+    if (this.state.pricePerKg === "" || this.state.district === "") {
+      return;
+    } else {
+      // get our form data out of state
+      const priceConfig = {
+        pricePerKg: this.state.pricePerKg,
+        district: this.state.district,
+        dateConfigured: new Date().toLocaleString("en-GB", {
+          timeZone: "Africa/Maputo"
+        })
+      };
+      // Update price setting info for district
+      const priceRef = firebase
+        .database()
+        .ref("settings")
+        .child("prices")
+        .child(this.state.key);
+      priceRef
+        .update(priceConfig)
+        .then(function() {
+          console.log("Synchronization succeeded");
+          console.log(this.state);
+        })
+        .catch(function(error) {
+          console.log("Synchronization failed");
+        });
+    }
   };
 
   onEditPrice = id => {
