@@ -380,6 +380,7 @@ class PriceSettings extends Component {
 
                 <Grid item xs={12} sm={12}>
                   <TextField
+                    disabled
                     required
                     id="district"
                     select
