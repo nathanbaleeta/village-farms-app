@@ -57,8 +57,10 @@ const styles = theme => ({
 
 class PriceSettings extends Component {
   state = {
+    key: "",
     pricePerKg: "",
     district: "",
+    dateConfigured: "",
     visible: false,
 
     priceData: [],
@@ -150,11 +152,6 @@ class PriceSettings extends Component {
   };
 
   onChange = e => {
-    /*
-          Because we named the inputs to match their
-          corresponding values in state, it's
-          super easy to update the state
-        */
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -162,8 +159,6 @@ class PriceSettings extends Component {
     event.preventDefault();
 
     // get our form data out of state
-    //const date = Date.now();
-    console.log(Date(Date.now()));
     const priceConfig = {
       pricePerKg: this.state.pricePerKg,
       district: this.state.district,
@@ -172,13 +167,51 @@ class PriceSettings extends Component {
       })
     };
 
-    const settingsRef = firebase.database().ref("settings");
-
-    settingsRef.push(priceConfig);
+    const priceRef = firebase
+      .database()
+      .ref("settings")
+      .child("prices")
+      .child(this.state.key);
+    priceRef
+      .update(priceConfig)
+      .then(function() {
+        console.log("Synchronization succeeded");
+        console.log(this.state);
+      })
+      .catch(function(error) {
+        console.log("Synchronization failed");
+      });
   };
 
-  onEditPrice = row => {
+  onEditPrice = id => {
     this.showDialog();
+    const key = id;
+
+    const pricingRef = firebase
+      .database()
+      .ref("settings")
+      .child("prices")
+      .child(key);
+
+    pricingRef.on("value", snapshot => {
+      this.setState({
+        key: snapshot.key,
+        pricePerKg: snapshot.child("pricePerKg").val(),
+        district: snapshot.child("district").val()
+      });
+    });
+
+    // get our form data out of state
+    const priceObject = {
+      pricePerKg: this.state.pricePerKg,
+      district: this.state.district,
+      dateConfigured: new Date().toLocaleString("en-GB", {
+        timeZone: "Africa/Maputo"
+      })
+    };
+
+    pricingRef.push(priceObject);
+    console.log(priceObject);
   };
 
   onDeletePrice = row => {
@@ -192,7 +225,7 @@ class PriceSettings extends Component {
 
   render() {
     const { classes } = this.props;
-    const { priceData, pricePerKg, districts } = this.state;
+    const { priceData, pricePerKg, district, districts } = this.state;
 
     return (
       <Fragment>
@@ -302,7 +335,7 @@ class PriceSettings extends Component {
                       fontSize: 16
                     }}
                   >
-                    <EditIcon onClick={this.onEditPrice.bind(this, row)} />
+                    <EditIcon onClick={this.onEditPrice.bind(this, row.id)} />
                   </TableCell>
 
                   <TableCell
@@ -361,7 +394,7 @@ class PriceSettings extends Component {
                     id="district"
                     select
                     name="district"
-                    value={this.state.district}
+                    value={district}
                     onChange={this.onChange}
                     label="District"
                     fullWidth
@@ -409,14 +442,14 @@ class PriceSettings extends Component {
                       color: "white"
                     }}
                   >
-                    Save
+                    Update price
                   </Button>
                 </Grid>
               </Grid>
             </form>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.closeDialog} color="primary">
               Cancel
             </Button>
           </DialogActions>

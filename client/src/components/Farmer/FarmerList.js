@@ -228,11 +228,6 @@ class FarmerList extends Component {
     const key = id;
     const farmersRef = firebase.database().ref(`farmers/${key}`);
     farmersRef.on("value", snapshot => {
-      // handle read data.
-      //let data = snapshot.val();
-      //traditionalAuthority: snapshot.child("traditionalAuthority").val(),
-      //console.log(snapshot.child("traditionalAuthority").val());
-
       this.setState({
         key: snapshot.key,
         firstname: snapshot.child("firstname").val(),
@@ -259,11 +254,6 @@ class FarmerList extends Component {
   }
 
   onChange = e => {
-    /*
-          Because we named the inputs to match their
-          corresponding values in state, it's
-          super easy to update the state
-        */
     this.setState({ [e.target.name]: e.target.value });
   };
 

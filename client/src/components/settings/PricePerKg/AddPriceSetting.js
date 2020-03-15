@@ -90,13 +90,17 @@ class AddPriceSetting extends Component {
 
     console.log(priceConfig);
 
-    //Save price settings
-    const settingsRef = firebase.database().ref("settings/prices");
-    settingsRef.push(priceConfig);
-    this.setState({
-      pricePerKg: "",
-      district: ""
-    });
+    if (this.state.pricePerKg === "" || this.state.district === "") {
+      return;
+    } else {
+      //Save price settings
+      const settingsRef = firebase.database().ref("settings/prices");
+      settingsRef.push(priceConfig);
+      this.setState({
+        pricePerKg: "",
+        district: ""
+      });
+    }
   };
 
   render() {
