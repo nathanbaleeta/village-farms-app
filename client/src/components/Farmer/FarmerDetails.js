@@ -342,22 +342,43 @@ class FarmerDetails extends Component {
       <Fragment>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12}>
-            <Paper square className={classes.root} elevation="1">
+            <Paper square className={classes.root} elevation="0">
               <Tabs
                 value={this.state.value}
                 onChange={this.handleChange}
                 variant="fullWidth"
                 indicatorColor="secondary"
-                textColor="secondary"
+                textColor="primary"
               >
-                <Tab icon={<PersonIcon />} label="PROFILE" />
-                <Tab icon={<ShoppingBasketIcon />} label="PROCUREMENTS" />
-                <Tab icon={<PaymentIcon />} label="ADVANCES" />
+                <Tab
+                  icon={<PersonIcon />}
+                  label="PROFILE"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 18
+                  }}
+                />
+                <Tab
+                  icon={<ShoppingBasketIcon />}
+                  label="PROCUREMENTS"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 18
+                  }}
+                />
+                <Tab
+                  icon={<PaymentIcon />}
+                  label="ADVANCES"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 18
+                  }}
+                />
                 {/* <Tab icon={<PollIcon />} label="REPORTS" /> */}
               </Tabs>
               {value === 0 && (
                 <TabContainer>
-                  <Grid container spacing={2}>
+                  <Grid container spacing={4}>
                     <Grid item lg="auto" md="auto" sm="auto" xs="auto">
                       <br />
                       <Avatar
@@ -384,12 +405,12 @@ class FarmerDetails extends Component {
                         </Link>
                       </Typography>
                     </Grid>
-                    <Grid item lg={9} md={9} sm="auto" xs="auto">
+                    <Grid item lg={8} md={9} sm="auto" xs="auto">
                       <br />
                       <Typography
                         variant="h3"
                         component="h4"
-                        style={{ fontWeight: "bold" }}
+                        style={{ fontWeight: "bold", color: "midnightblue" }}
                       >
                         {this.state.title}.{" "}
                         {this.state.firstname + " " + this.state.lastname}
@@ -516,28 +537,105 @@ class FarmerDetails extends Component {
                     aria-label="Add"
                     className={classes.fab}
                     onClick={this.handleOpen.bind(this)}
+                    style={{
+                      backgroundColor: "#FFBF00",
+                      color: "black"
+                    }}
                   >
                     <AddIcon className={classes.extendedIcon} />
                     Create Procurement
                   </Fab>
-                  <br />
-                  <br />
                   <br />
                   {/* Procurement details for farmer*/}
                   <Paper className={classes.tableRoot}>
                     <Table className={classes.table}>
                       <TableHead>
                         <TableRow>
-                          <TableCell>Advance balance</TableCell>
-                          <TableCell align="left">
+                          <TableCell
+                            style={{
+                              color: "white",
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
+                            }}
+                          >
+                            Advance balance
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              color: "white",
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
+                            }}
+                          >
                             Cash available today
                           </TableCell>
-                          <TableCell align="left">Coffee type</TableCell>
-                          <TableCell align="left">Price per Kg</TableCell>
-                          <TableCell align="left">Total value sale</TableCell>
-                          <TableCell align="left">Pay now</TableCell>
-                          <TableCell align="left">Amount paid</TableCell>
-                          <TableCell align="left">
+                          <TableCell
+                            align="left"
+                            style={{
+                              color: "white",
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
+                            }}
+                          >
+                            Coffee type
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              color: "white",
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
+                            }}
+                          >
+                            Price per Kg
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              color: "white",
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
+                            }}
+                          >
+                            Total value sale
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              color: "white",
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
+                            }}
+                          >
+                            Pay now
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              color: "white",
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
+                            }}
+                          >
+                            Amount paid
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              color: "white",
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
+                            }}
+                          >
                             Outstanding balance
                           </TableCell>
                         </TableRow>
@@ -579,6 +677,10 @@ class FarmerDetails extends Component {
                     aria-label="Add"
                     className={classes.fab}
                     onClick={this.handleVisible.bind(this)}
+                    style={{
+                      backgroundColor: "#FFBF00",
+                      color: "black"
+                    }}
                   >
                     <AddIcon className={classes.extendedIcon} />
                     Create Advance
@@ -592,10 +694,10 @@ class FarmerDetails extends Component {
                         <TableRow>
                           <TableCell
                             style={{
-                              background: "black",
                               color: "white",
-                              fontSize: 15,
-                              fontWeight: "bold"
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
                             }}
                           >
                             Advance type
@@ -603,10 +705,10 @@ class FarmerDetails extends Component {
                           <TableCell
                             align="left"
                             style={{
-                              background: "orange",
                               color: "white",
-                              fontSize: 15,
-                              fontWeight: "bold"
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
                             }}
                           >
                             Advance amount
@@ -614,10 +716,10 @@ class FarmerDetails extends Component {
                           <TableCell
                             align="left"
                             style={{
-                              background: "black",
                               color: "white",
-                              fontSize: 15,
-                              fontWeight: "bold"
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
                             }}
                           >
                             Commodity
@@ -625,10 +727,10 @@ class FarmerDetails extends Component {
                           <TableCell
                             align="left"
                             style={{
-                              background: "orange",
                               color: "white",
-                              fontSize: 15,
-                              fontWeight: "bold"
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
                             }}
                           >
                             Commodity Value
@@ -636,10 +738,10 @@ class FarmerDetails extends Component {
                           <TableCell
                             align="left"
                             style={{
-                              background: "black",
                               color: "white",
-                              fontSize: 15,
-                              fontWeight: "bold"
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
                             }}
                           >
                             Mode of payment
@@ -647,10 +749,10 @@ class FarmerDetails extends Component {
                           <TableCell
                             align="left"
                             style={{
-                              background: "black",
                               color: "white",
-                              fontSize: 15,
-                              fontWeight: "bold"
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
                             }}
                           >
                             Price per kg
@@ -658,10 +760,10 @@ class FarmerDetails extends Component {
                           <TableCell
                             align="left"
                             style={{
-                              background: "black",
                               color: "white",
-                              fontSize: 15,
-                              fontWeight: "bold"
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
                             }}
                           >
                             Total Coffee Weight
@@ -669,10 +771,10 @@ class FarmerDetails extends Component {
                           <TableCell
                             align="left"
                             style={{
-                              background: "black",
                               color: "white",
-                              fontSize: 15,
-                              fontWeight: "bold"
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18
                             }}
                           >
                             Action
@@ -682,35 +784,83 @@ class FarmerDetails extends Component {
                       <TableBody>
                         {this.state.advancesData.map(row => (
                           <TableRow key={row.id}>
-                            <TableCell component="th" scope="row">
+                            <TableCell
+                              component="th"
+                              scope="row"
+                              style={{
+                                color: "black",
+                                fontSize: 16
+                              }}
+                            >
                               {row.advanceType}
                             </TableCell>
-                            <TableCell align="left">
+                            <TableCell
+                              align="left"
+                              style={{
+                                color: "black",
+                                fontSize: 16
+                              }}
+                            >
                               {numeral(row.advanceAmount).format("0,0[.]00")}
                             </TableCell>
-                            <TableCell align="left">
+                            <TableCell
+                              align="left"
+                              style={{
+                                color: "black",
+                                fontSize: 16
+                              }}
+                            >
                               {row.commodityAdvanced}
                             </TableCell>
-                            <TableCell align="left">
+                            <TableCell
+                              align="left"
+                              style={{
+                                color: "black",
+                                fontSize: 16
+                              }}
+                            >
                               {numeral(row.commodityValue).format("0,0[.]00")}
                             </TableCell>
-                            <TableCell align="left">
+                            <TableCell
+                              align="left"
+                              style={{
+                                color: "black",
+                                fontSize: 16
+                              }}
+                            >
                               {row.paymentMode}
                             </TableCell>
-                            <TableCell align="left">
-                              {" "}
+                            <TableCell
+                              align="left"
+                              style={{
+                                color: "black",
+                                fontSize: 16
+                              }}
+                            >
                               {numeral(row.pricePerKg).format("0,0[.]00")}
                             </TableCell>
-                            <TableCell align="left">
+                            <TableCell
+                              align="left"
+                              style={{
+                                color: "black",
+                                fontSize: 16
+                              }}
+                            >
                               {numeral(row.totalCoffeeWeight).format(
                                 "0,0[.]00"
                               )}
                             </TableCell>
-                            <TableCell align="left">
+                            <TableCell
+                              align="left"
+                              style={{
+                                color: "black",
+                                fontSize: 16
+                              }}
+                            >
                               <Typography
                                 variant="subheading"
                                 align="center"
-                                color="secondary"
+                                color="default"
                               >
                                 <DeleteIcon
                                   onClick={this.onDeleteAdvance.bind(this, row)}

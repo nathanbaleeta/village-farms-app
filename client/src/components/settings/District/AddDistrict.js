@@ -46,6 +46,21 @@ class AddDistrict extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  hasDuplicates = district => {
+    let value = false;
+    firebase
+      .database()
+      .ref()
+      .child("settings")
+      .child("districts")
+      .orderByChild("district")
+      .equalTo(district)
+      .once("value", snapshot => {
+        snapshot.exists() ? (value = true) : (value = false);
+      });
+    return value;
+  };
+
   handleSubmit = event => {
     event.preventDefault();
 
@@ -59,6 +74,10 @@ class AddDistrict extends React.Component {
 
     //Form validation for adding price setting
     if (this.state.district === "") {
+      return;
+    }
+    // Prevent duplicate districts by checking if it exists before saving
+    else if (this.hasDuplicates(this.state.district)) {
       return;
     } else {
       //Save price settings
