@@ -95,9 +95,13 @@ class AddDistrict extends React.Component {
 
           <Dialog
             id="myDialog"
+            maxWidth="xs"
             open={this.state.open}
             aria-labelledby="form-dialog-title"
             onClose={this.handleClose}
+            style={{
+              zoom: "80%"
+            }}
           >
             <DialogTitle
               id="simple-dialog-title"
@@ -147,7 +151,7 @@ class AddDistrict extends React.Component {
                       fullWidth
                       color="primary"
                       style={{
-                        backgroundColor: "mediumblue",
+                        backgroundColor: "midnightblue",
                         color: "white"
                       }}
                     >

@@ -3,8 +3,21 @@ import PropTypes from "prop-types";
 import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
 
+import { Typography } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+
+import Button from "@material-ui/core/Button";
+
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+
+import MenuItem from "@material-ui/core/MenuItem";
+import Grid from "@material-ui/core/Grid";
+
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -12,11 +25,12 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
+import NumberFormat from "react-number-format";
+
 import numeral from "numeral";
 import moment from "moment";
 
 import AddPriceSetting from "./AddPriceSetting";
-
 import firebase from "../../common/firebase";
 
 const styles = theme => ({
@@ -36,8 +50,8 @@ const styles = theme => ({
     justifyContent: "flex-end"
   },
   button: {
-    marginTop: theme.spacing.unit * 3,
-    marginLeft: theme.spacing.unit
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1)
   }
 });
 
@@ -45,8 +59,18 @@ class PriceSettings extends Component {
   state = {
     pricePerKg: "",
     district: "",
+    visible: false,
 
-    priceData: []
+    priceData: [],
+    districts: []
+  };
+
+  showDialog = () => {
+    this.setState({ visible: true });
+  };
+
+  closeDialog = () => {
+    this.setState({ visible: false });
   };
 
   handleOpen = () => {
@@ -58,6 +82,8 @@ class PriceSettings extends Component {
   };
 
   componentWillMount() {
+    this.populateDistricts();
+
     const pricesRef = firebase
       .database()
       .ref("settings")
@@ -98,6 +124,31 @@ class PriceSettings extends Component {
       //console.log(this.state.pricePerKg);
     });
   }
+
+  populateDistricts = () => {
+    const districtsRef = firebase
+      .database()
+      .ref("settings")
+      .child("districts");
+
+    districtsRef.on("value", snapshot => {
+      let items = snapshot.val();
+      let newState = [];
+      for (let item in items) {
+        newState.push({
+          id: item,
+          district: items[item].district
+        });
+      }
+
+      //console.log(newState);
+      this.setState({
+        districts: newState
+      });
+      //console.log(this.state.districts);
+    });
+  };
+
   onChange = e => {
     /*
           Because we named the inputs to match their
@@ -126,7 +177,9 @@ class PriceSettings extends Component {
     settingsRef.push(priceConfig);
   };
 
-  onEditPrice = row => {};
+  onEditPrice = row => {
+    this.showDialog();
+  };
 
   onDeletePrice = row => {
     firebase
@@ -139,7 +192,7 @@ class PriceSettings extends Component {
 
   render() {
     const { classes } = this.props;
-    const { priceData } = this.state;
+    const { priceData, pricePerKg, districts } = this.state;
 
     return (
       <Fragment>
@@ -191,9 +244,16 @@ class PriceSettings extends Component {
                     fontWeight: "bold",
                     fontSize: 18
                   }}
-                >
-                  Action
-                </TableCell>
+                ></TableCell>
+                <TableCell
+                  align="left"
+                  style={{
+                    color: "white",
+                    background: "midnightblue",
+                    fontWeight: "bold",
+                    fontSize: 18
+                  }}
+                ></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -243,7 +303,15 @@ class PriceSettings extends Component {
                     }}
                   >
                     <EditIcon onClick={this.onEditPrice.bind(this, row)} />
+                  </TableCell>
 
+                  <TableCell
+                    align="left"
+                    style={{
+                      color: "black",
+                      fontSize: 16
+                    }}
+                  >
                     <DeleteIcon onClick={this.onDeletePrice.bind(this, row)} />
                   </TableCell>
                 </TableRow>
@@ -251,6 +319,108 @@ class PriceSettings extends Component {
             </TableBody>
           </Table>
         </Paper>
+
+        <Dialog
+          id="myDialog"
+          maxWidth="sm"
+          open={this.state.visible}
+          aria-labelledby="form-dialog-title"
+          onClose={this.closeDialog}
+          style={{
+            zoom: "80%"
+          }}
+        >
+          <DialogTitle
+            id="simple-dialog-title"
+            color="default"
+            style={{
+              backgroundColor: "white"
+            }}
+          >
+            <Typography
+              component="h1"
+              variant="h4"
+              align="center"
+              style={{ color: "black" }}
+            >
+              Update Price Per Kg
+            </Typography>
+          </DialogTitle>
+          <DialogContent style={{ overflow: "hidden" }}>
+            <form onSubmit={this.handlePriceSetting}>
+              <Grid container spacing={4}>
+                <Grid item xs={12} sm={12}>
+                  <Typography variant="h6" align="left" color="primary">
+                    [Used in Procurement/ Advance modules]
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    required
+                    id="district"
+                    select
+                    name="district"
+                    value={this.state.district}
+                    onChange={this.onChange}
+                    label="District"
+                    fullWidth
+                    helperText="Please select district"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  >
+                    {districts.map(option => (
+                      <MenuItem key={option.id} value={option.district}>
+                        {option.district}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <NumberFormat
+                    value={pricePerKg}
+                    thousandSeparator={true}
+                    allowNegative={false}
+                    decimalScale={2}
+                    onValueChange={values => {
+                      const { floatValue } = values;
+                      this.setState({
+                        pricePerKg: floatValue
+                      });
+                    }}
+                    customInput={TextField}
+                    label="Price per kg"
+                    fullWidth
+                    margin="normal"
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    size="large"
+                    fullWidth
+                    style={{
+                      backgroundColor: "midnightblue",
+                      color: "white"
+                    }}
+                  >
+                    Save
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Fragment>
     );
   }

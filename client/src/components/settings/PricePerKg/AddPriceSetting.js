@@ -124,11 +124,16 @@ class AddPriceSetting extends Component {
 
             <Dialog
               id="myDialog"
+              maxWidth="sm"
               open={this.state.open}
               aria-labelledby="form-dialog-title"
               onClose={this.handleClose}
+              style={{
+                zoom: "80%"
+              }}
             >
               <DialogTitle
+                maxWidth="sm"
                 id="simple-dialog-title"
                 color="default"
                 style={{
@@ -203,7 +208,7 @@ class AddPriceSetting extends Component {
                         size="large"
                         fullWidth
                         style={{
-                          backgroundColor: "mediumblue",
+                          backgroundColor: "midnightblue",
                           color: "white"
                         }}
                       >
