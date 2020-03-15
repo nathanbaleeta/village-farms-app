@@ -68,12 +68,23 @@ class AddPriceSetting extends Component {
   };
 
   onChange = e => {
-    /*
-          Because we named the inputs to match their
-          corresponding values in state, it's
-          super easy to update the state
-        */
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  // Boolean function for checking whether district exists already
+  hasDuplicates = district => {
+    let value = false;
+    firebase
+      .database()
+      .ref()
+      .child("settings")
+      .child("prices")
+      .orderByChild("district")
+      .equalTo(district)
+      .once("value", snapshot => {
+        snapshot.exists() ? (value = true) : (value = false);
+      });
+    return value;
   };
 
   handleSubmit = event => {
@@ -90,6 +101,11 @@ class AddPriceSetting extends Component {
 
     //Form validation for adding price setting
     if (this.state.pricePerKg === "" || this.state.district === "") {
+      return;
+    }
+    // Prevent duplicate districts by checking if it exists before saving
+    else if (this.hasDuplicates(this.state.district)) {
+      event.preventDefault();
       return;
     } else {
       //Save price settings

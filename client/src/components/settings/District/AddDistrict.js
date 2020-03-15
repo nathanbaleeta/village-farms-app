@@ -46,6 +46,7 @@ class AddDistrict extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  // Boolean function for checking whether district exists already
   hasDuplicates = district => {
     let value = false;
     firebase
