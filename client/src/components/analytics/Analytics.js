@@ -20,6 +20,12 @@ import SalesReport from "../analytics/SalesReport";
 import AdvancesMode from "../analytics/AdvancesMode";
 import FarmerRegistrationReport from "../analytics/FarmerRegistrationReport";
 
+import Demo1 from "../analytics/Demo1";
+import Demo2 from "../analytics/Demo2";
+import Demo3 from "../analytics/Demo3";
+import Demo4 from "../analytics/Demo4";
+import Demo7 from "../analytics/Demo7";
+
 const styles = theme => ({
   root: {
     flexGrow: 1
@@ -42,6 +48,45 @@ class Analytics extends React.Component {
 
     return (
       <div>
+        <Typography variant="h4" align="center" gutterBottom>
+          Experimental demos
+        </Typography>
+
+        <Grid container spacing={4}>
+          <Grid item lg={4} sm={6} xs={12}>
+            <Demo1 />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <Demo2 />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <Demo3 />
+          </Grid>
+
+          <br />
+        </Grid>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <Grid container spacing={4}>
+          <Grid item lg={4} sm={6} xs={12}>
+            <Demo4 />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <Demo7 />
+          </Grid>
+          <Grid item lg={4} sm={6} xs={12}>
+            <Demo3 />
+          </Grid>
+
+          <br />
+        </Grid>
+        <br />
+        <br />
+        <br />
+        <br />
         <Typography variant="h4" align="center" gutterBottom>
           Data Analytics
         </Typography>
@@ -99,6 +144,10 @@ class Analytics extends React.Component {
 
           <br />
         </Grid>
+
+        <br />
+        <br />
+        <br />
       </div>
     );
   }

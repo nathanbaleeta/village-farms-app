@@ -1,51 +1,25 @@
-import React, { Component, Fragment } from "react";
-import PropTypes from "prop-types";
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-//import InputBase from "@material-ui/core/InputBase";
+import { Link } from "react-router-dom";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import { fade } from "@material-ui/core/styles/colorManipulator";
-import { withStyles } from "@material-ui/core/styles";
+import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import SettingsIcon from "@material-ui/icons/Settings";
-import GroupIcon from "@material-ui/icons/Group";
-//import PaymentIcon from "@material-ui/icons/Payment";
-//import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
-//import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
-import PollIcon from "@material-ui/icons/Poll";
-import { Link } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
-
-import firebase from "firebase";
-
-const styles = theme => ({
-  root: {
-    width: "100%"
-  },
+const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1
   },
   menuButton: {
-    textTransform: "capitalize",
-    fontWeight: "bold",
-    fontSize: "19px",
-    marginLeft: -12,
-    marginRight: 20
-  },
-  link: {
-    textDecoration: "none",
-    color: "white"
-  },
-  avatar: {
-    margin: 10
+    marginRight: theme.spacing(2)
   },
   title: {
     display: "none",
@@ -53,43 +27,15 @@ const styles = theme => ({
       display: "block"
     }
   },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: "white",
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.75)
-    },
-    marginRight: theme.spacing.unit * 2,
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing.unit * 3,
-      width: "auto"
-    }
+  link: {
+    textDecoration: "none",
+    color: "inherit"
   },
-  searchIcon: {
-    color: "black",
-    "&:hover": {
-      color: fade(theme.palette.common.white, 0.25)
-    },
-    width: theme.spacing.unit * 9,
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  inputRoot: {
-    color: "primary",
-    width: "100%"
+  menuItem: {
+    fontWeight: "bold"
   },
   inputInput: {
-    paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
+    padding: theme.spacing(1, 1, 1, 7),
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
@@ -108,262 +54,148 @@ const styles = theme => ({
       display: "none"
     }
   }
-});
+}));
 
-class Header extends Component {
-  state = {
-    anchorEl: null,
-    mobileMoreAnchorEl: null
+export default function Header() {
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  /* const handleProfileMenuOpen = event => {
+    setAnchorEl(event.currentTarget);
+  }; */
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
   };
 
-  logOutUser = () => {
-    firebase.auth().signOut();
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
   };
 
-  handleProfileMenuOpen = event => {
-    this.setState({ anchorEl: event.currentTarget });
+  const handleMobileMenuOpen = event => {
+    setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  handleMenuClose = () => {
-    this.setState({ anchorEl: null });
-    this.handleMobileMenuClose();
-  };
+  const menuId = "primary-search-account-menu";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
 
-  handleMobileMenuOpen = event => {
-    this.setState({ mobileMoreAnchorEl: event.currentTarget });
-  };
-
-  handleMobileMenuClose = () => {
-    this.setState({ mobileMoreAnchorEl: null });
-  };
-
-  render() {
-    const { anchorEl, mobileMoreAnchorEl } = this.state;
-    const { classes } = this.props;
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    const renderMenu = (
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        open={isMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <Link to="/settings" className={classes.link}>
-          <MenuItem>Settings</MenuItem>
-        </Link>
-        <Link to="/users" className={classes.link}>
-          <MenuItem>Users</MenuItem>
-        </Link>
-        <Link to="/login" className={classes.link}>
-          <MenuItem onClick={this.logOutUser}>Logout</MenuItem>
-        </Link>
-        <Typography
-          variant="title"
-          gutterBottom
-          style={{ fontSize: "13px", color: "#D23E56" }}
-          align="center"
-        />
-      </Menu>
-    );
-
-    const renderMobileMenu = (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        open={isMobileMenuOpen}
-        onClose={this.handleMenuClose}
-      >
+  const mobileMenuId = "primary-search-account-menu-mobile";
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <Link to="/" className={classes.link}>
         <MenuItem>
-          <IconButton color="inherit">
+          <IconButton aria-label="show 4 new mails" color="inherit">
             <Badge badgeContent={4} color="secondary">
               <MailIcon />
             </Badge>
           </IconButton>
-          <p>Messages</p>
+          <p>Analytics</p>
         </MenuItem>
+      </Link>
 
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
+      <Link to="/farmers" className={classes.link}>
+        <MenuItem>
+          <IconButton aria-label="show 11 new notifications" color="inherit">
             <Badge badgeContent={11} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <p>Notifications</p>
+          <p>Farmers</p>
         </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
+      </Link>
+
+      <Link to="/settings" className={classes.link}>
+        {/*  <MenuItem onClick={handleProfileMenuOpen}> */}
+        <MenuItem>
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+          >
             <AccountCircle />
           </IconButton>
-          <p>Profile</p>
+          <p>Settings</p>
         </MenuItem>
-      </Menu>
-    );
+      </Link>
+    </Menu>
+  );
 
-    return (
-      <Fragment>
-        {" "}
-        <div className={classes.root}>
-          <AppBar position="fixed" style={{ background: "#0000CD" }}>
-            <Toolbar>
-              <Typography
-                className={classes.title}
-                variant="h4"
-                color="inherit"
-                noWrap
-                //style={{ fontWeight: "bold" }}
-              >
-                Village Farms Manager
+  return (
+    <div className={classes.grow}>
+      <AppBar position="fixed" style={{ background: "midnightblue" }}>
+        <Toolbar>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="open drawer"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography className={classes.title} variant="h5" noWrap>
+            Village Farms Manager
+          </Typography>
+
+          <div className={classes.grow} />
+          <div className={classes.sectionDesktop}>
+            <Link to="/" className={classes.link}>
+              <Typography variant="h6" noWrap>
+                <MenuItem className={classes.menuItem}>Analytics </MenuItem>
               </Typography>
-
-              <div className={classes.grow} />
-              <div className={classes.sectionDesktop}>
-                <div>
-                  <Grid container justify="center" alignItems="center">
-                    <div style={{ paddingRight: 20 }}>
-                      <Link to="/" className={classes.link}>
-                        <IconButton color="inherit">
-                          <PollIcon />
-                        </IconButton>
-
-                        <Typography
-                          variant="body2"
-                          color="inherit"
-                          noWrap
-                          style={{ fontWeight: "bold" }}
-                        >
-                          Analytics
-                        </Typography>
-                      </Link>
-                    </div>
-                    <div style={{ paddingRight: 20 }}>
-                      <Link to="/farmers" className={classes.link}>
-                        <IconButton color="inherit">
-                          <GroupIcon />
-                        </IconButton>
-
-                        <Typography
-                          variant="body2"
-                          color="inherit"
-                          noWrap
-                          style={{ fontWeight: "bold" }}
-                        >
-                          Farmers
-                        </Typography>
-                      </Link>
-                    </div>
-
-                    <div style={{ paddingRight: 20 }}>
-                      <Link to="/settings" className={classes.link}>
-                        <IconButton color="inherit">
-                          <SettingsIcon />
-                        </IconButton>
-
-                        <Typography
-                          variant="body2"
-                          color="inherit"
-                          noWrap
-                          style={{ fontWeight: "bold" }}
-                        >
-                          Settings
-                        </Typography>
-                      </Link>
-                    </div>
-
-                    {/*  <div style={{ paddingRight: 20 }}>
-                    <Link to="/advances" className={classes.link}>
-                      <IconButton color="inherit">
-                        <PaymentIcon />
-                      </IconButton>
-
-                      <Typography
-                        variant="body2"
-                        color="inherit"
-                        noWrap
-                        style={{ fontWeight: "bold" }}
-                      >
-                        Advance
-                      </Typography>
-                    </Link>
-                  </div>
- */}
-                    {/*  <div style={{ paddingRight: 20 }}>
-                    <Link to="/procurement" className={classes.link}>
-                      <IconButton color="inherit">
-                        <ShoppingBasketIcon />
-                      </IconButton>
-
-                      <Typography
-                        variant="body2"
-                        color="inherit"
-                        noWrap
-                        style={{ fontWeight: "bold" }}
-                      >
-                        Procure
-                      </Typography>
-                    </Link>
-                  </div>
- */}
-                    {/*   <div style={{ paddingRight: 20 }}>
-                    <Link to="/sales" className={classes.link}>
-                      <IconButton color="inherit">
-                        <ShoppingCartIcon />
-                      </IconButton>
-
-                      <Typography
-                        variant="body2"
-                        color="inherit"
-                        noWrap
-                        style={{ fontWeight: "bold" }}
-                      >
-                        Sales
-                      </Typography>
-                    </Link>
-                  </div>
-                 */}
-                  </Grid>
-                </div>
-
-                {/*  <IconButton
-                aria-owns={isMenuOpen ? "material-appbar" : undefined}
-                aria-haspopup="true"
-                onClick={this.handleProfileMenuOpen}
-                color="inherit"
-              >
-                <ArrowDropDownIcon />
-              </IconButton> */}
-                <IconButton
-                  color="inherit"
-                  onClick={this.handleProfileMenuOpen}
-                >
-                  <AccountCircle style={{ height: 50, width: 50 }} />
-                </IconButton>
-              </div>
-              <div className={classes.sectionMobile}>
-                <IconButton
-                  aria-haspopup="true"
-                  onClick={this.handleMobileMenuOpen}
-                  color="inherit"
-                >
-                  <MoreIcon />
-                </IconButton>
-              </div>
-            </Toolbar>
-          </AppBar>
-          {renderMenu}
-          {renderMobileMenu}
-        </div>
-      </Fragment>
-    );
-  }
+            </Link>
+            <Link to="/farmers" className={classes.link}>
+              <Typography variant="h6" noWrap>
+                <MenuItem className={classes.menuItem}>Farmers </MenuItem>
+              </Typography>
+            </Link>
+            <Link to="/settings" className={classes.link}>
+              <Typography variant="h6" noWrap>
+                <MenuItem className={classes.menuItem}>Settings </MenuItem>
+              </Typography>
+            </Link>
+          </div>
+          <div className={classes.sectionMobile}>
+            <IconButton
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
+          </div>
+        </Toolbar>
+      </AppBar>
+      {renderMobileMenu}
+      {renderMenu}
+    </div>
+  );
 }
-
-Header.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(Header);

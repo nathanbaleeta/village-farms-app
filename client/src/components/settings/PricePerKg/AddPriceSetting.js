@@ -114,8 +114,8 @@ class AddPriceSetting extends Component {
               onClick={this.handleOpen}
               className={classes.fab}
               style={{
-                backgroundColor: "mediumblue",
-                color: "white"
+                backgroundColor: "#FFBF00",
+                color: "black"
               }}
             >
               <TrendingUpIcon className={classes.extendedIcon} />

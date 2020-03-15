@@ -12,6 +12,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
 import numeral from "numeral";
+import moment from "moment";
 
 import AddPriceSetting from "./AddPriceSetting";
 
@@ -141,8 +142,8 @@ class PriceSettings extends Component {
               <TableRow>
                 <TableCell
                   style={{
-                    color: "black",
-                    background: "lightGray",
+                    color: "white",
+                    background: "midnightblue",
                     fontWeight: "bold",
                     fontSize: 18
                   }}
@@ -153,8 +154,8 @@ class PriceSettings extends Component {
                 <TableCell
                   align="left"
                   style={{
-                    color: "black",
-                    background: "lightGray",
+                    color: "white",
+                    background: "midnightblue",
                     fontWeight: "bold",
                     fontSize: 18
                   }}
@@ -164,19 +165,19 @@ class PriceSettings extends Component {
                 <TableCell
                   align="left"
                   style={{
-                    color: "black",
-                    background: "lightGray",
+                    color: "white",
+                    background: "midnightblue",
                     fontWeight: "bold",
                     fontSize: 18
                   }}
                 >
-                  Created on
+                  Modified
                 </TableCell>
                 <TableCell
                   align="left"
                   style={{
-                    color: "black",
-                    background: "lightGray",
+                    color: "white",
+                    background: "midnightblue",
                     fontWeight: "bold",
                     fontSize: 18
                   }}
@@ -218,7 +219,10 @@ class PriceSettings extends Component {
                       fontSize: 16
                     }}
                   >
-                    {row.dateConfigured}
+                    {moment(
+                      `${row.dateConfigured}`,
+                      "DD-MM-YYYYHH:mm:ssZ"
+                    ).fromNow()}
                   </TableCell>
 
                   <TableCell

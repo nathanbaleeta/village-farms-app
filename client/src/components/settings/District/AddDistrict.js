@@ -5,7 +5,6 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 import Fab from "@material-ui/core/Fab";
-//import AddIcon from "@material-ui/icons/Add";
 import AddLocationIcon from "@material-ui/icons/AddLocation";
 
 import Grid from "@material-ui/core/Grid";
@@ -35,6 +34,14 @@ class AddDistrict extends React.Component {
     this.setState({ open: false });
   };
 
+  toTitleCase = phrase => {
+    return phrase
+      .toLowerCase()
+      .split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   onChange = e => {
     /*
           Because we named the inputs to match their
@@ -49,7 +56,7 @@ class AddDistrict extends React.Component {
 
     // get our form data out of state
     const district = {
-      district: this.state.district,
+      district: this.toTitleCase(this.state.district),
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Maputo"
       })
