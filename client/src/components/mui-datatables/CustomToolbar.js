@@ -55,19 +55,23 @@ class CustomToolbar extends Component {
           open={this.state.open}
           aria-labelledby="form-dialog-title"
           onClose={this.handleClose}
+          style={{
+            zoom: "80%"
+          }}
         >
           <DialogTitle
             id="simple-dialog-title"
             color="default"
             style={{
-              backgroundColor: "mediumblue"
+              backgroundColor: "white",
+              borderBottom: "2px solid midnightblue"
             }}
           >
             <Typography
               variant="h4"
               align="center"
               gutterBottom
-              style={{ color: "white" }}
+              style={{ color: "midnightblue" }}
             >
               Register Farmer
             </Typography>

@@ -27,8 +27,7 @@ import firebase from "../common/firebase";
 
 const styles = theme => ({
   saveFarmerButton: {
-    //background: "mediumblue"
-    background: "orange"
+    background: "midnightblue"
   }
 });
 
@@ -205,7 +204,6 @@ class CreateFarmer extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <br />
           <Typography variant="h5" gutterBottom>
             Autobiography
           </Typography>

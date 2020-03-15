@@ -2,14 +2,27 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
+import Grid from "@material-ui/core/Grid";
 
+import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+
+import { Typography } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+
+import MenuItem from "@material-ui/core/MenuItem";
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import firebase from "../../common/firebase";
 
 import AddDistrict from "./AddDistrict";
@@ -38,17 +51,20 @@ const styles = theme => ({
 
 class PriceSettings extends Component {
   state = {
+    key: "",
     pricePerKg: "",
     district: "",
-    districts: []
+    districts: [],
+
+    visible: false
   };
 
-  handleOpen = () => {
-    this.setState({ open: true });
+  showDialog = () => {
+    this.setState({ visible: true });
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
+  closeDialog = () => {
+    this.setState({ visible: false });
   };
 
   componentWillMount() {
@@ -92,31 +108,62 @@ class PriceSettings extends Component {
     });
   }
   onChange = e => {
-    /*
-          Because we named the inputs to match their
-          corresponding values in state, it's
-          super easy to update the state
-        */
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handlePriceSetting = event => {
+  onUpdateDistrict = id => {
+    this.showDialog();
+    const key = id;
+
+    const pricingRef = firebase
+      .database()
+      .ref("settings")
+      .child("districts")
+      .child(key);
+
+    pricingRef.on("value", snapshot => {
+      this.setState({
+        key: snapshot.key,
+        district: snapshot.child("district").val()
+      });
+    });
+  };
+
+  onSubmitDistrict = event => {
     event.preventDefault();
 
-    // get our form data out of state
-    //const date = Date.now();
-    console.log(Date(Date.now()));
-    const priceConfig = {
-      pricePerKg: this.state.pricePerKg,
-      district: this.state.district,
-      dateConfigured: new Date().toLocaleString("en-GB", {
-        timeZone: "Africa/Maputo"
-      })
-    };
-
-    const settingsRef = firebase.database().ref("settings");
-
-    settingsRef.push(priceConfig);
+    //Form validation for updating district
+    if (
+      this.state.district === null ||
+      this.state.district === undefined ||
+      this.state.district === ""
+    ) {
+      event.preventDefault();
+      return;
+    } else {
+      // get our form data out of state
+      const districtObj = {
+        district: this.state.district,
+        dateConfigured: new Date().toLocaleString("en-GB", {
+          timeZone: "Africa/Maputo"
+        })
+      };
+      // Update price setting info for district
+      const priceRef = firebase
+        .database()
+        .ref("settings")
+        .child("districts")
+        .child(this.state.key);
+      priceRef
+        .update(districtObj)
+        .then(function() {
+          console.log("Synchronization succeeded");
+          console.log(this.state);
+        })
+        .catch(function(error) {
+          console.log("Synchronization failed");
+        });
+    }
   };
 
   onDeleteDistrict = row => {
@@ -130,7 +177,7 @@ class PriceSettings extends Component {
 
   render() {
     const { classes } = this.props;
-    const { districts } = this.state;
+    const { districts, district } = this.state;
 
     return (
       <Fragment>
@@ -161,7 +208,19 @@ class PriceSettings extends Component {
                     fontSize: 18
                   }}
                 >
-                  Action
+                  Edit
+                </TableCell>
+
+                <TableCell
+                  align="left"
+                  style={{
+                    color: "white",
+                    background: "midnightblue",
+                    fontWeight: "bold",
+                    fontSize: 18
+                  }}
+                >
+                  Delete
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -177,6 +236,17 @@ class PriceSettings extends Component {
                     }}
                   >
                     {row.district}
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    style={{
+                      color: "black",
+                      fontSize: 16
+                    }}
+                  >
+                    <EditIcon
+                      onClick={this.onUpdateDistrict.bind(this, row.id)}
+                    />
                   </TableCell>
 
                   <TableCell
@@ -195,6 +265,79 @@ class PriceSettings extends Component {
             </TableBody>
           </Table>
         </Paper>
+
+        <Dialog
+          id="myDialog"
+          maxWidth="sm"
+          open={this.state.visible}
+          aria-labelledby="form-dialog-title"
+          onClose={this.closeDialog}
+          style={{
+            zoom: "80%"
+          }}
+        >
+          <DialogTitle
+            id="simple-dialog-title"
+            color="default"
+            style={{
+              backgroundColor: "white"
+            }}
+          >
+            <Typography
+              component="h1"
+              variant="h4"
+              align="center"
+              style={{ color: "midnightblue" }}
+            >
+              Update district
+            </Typography>
+          </DialogTitle>
+          <DialogContent style={{ overflow: "hidden" }}>
+            <form onSubmit={this.onSubmitDistrict}>
+              <Grid container spacing={4}>
+                <Grid item xs={12} sm={12}>
+                  <Typography variant="h6" align="left" color="default">
+                    [Used in Price per kg setting]
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <TextField
+                    required
+                    id="district"
+                    name="district"
+                    label="District"
+                    fullWidth
+                    className={classes.textField}
+                    value={district}
+                    onChange={this.onChange}
+                    margin="normal"
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    size="large"
+                    fullWidth
+                    style={{
+                      backgroundColor: "midnightblue",
+                      color: "white"
+                    }}
+                  >
+                    Update district
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.closeDialog} color="primary">
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Fragment>
     );
   }

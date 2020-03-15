@@ -37,7 +37,6 @@ import { genders } from "../common/genderList";
 import { maritalStatuses } from "../common/maritalStatusList";
 import { mmOptions } from "../common/mobileMoneyOptions";
 import { mmPayments } from "../common/mobileMoneyPayments";
-//import { districts } from "../common/districtList";
 import { lookup } from "../common/traditionalAuthorityList";
 
 const columns = [
@@ -108,8 +107,7 @@ const styles = {
     backgroundColor: "#FFA500"
   },
   updateFarmerButton: {
-    //background: "mediumblue"
-    background: "orange"
+    background: "midnightblue"
   }
 };
 
@@ -454,24 +452,30 @@ class FarmerList extends Component {
           open={this.state.open}
           aria-labelledby="form-dialog-title"
           onClose={this.handleClose}
+          style={{
+            zoom: "80%"
+          }}
         >
           <DialogTitle
             id="simple-dialog-title"
-            color="inherit"
-            style={{ backgroundColor: "#0000CD" }}
+            color="default"
+            style={{
+              backgroundColor: "white",
+              color: "black",
+              borderBottom: "2px solid midnightblue"
+            }}
           >
             <Typography
               variant="h4"
               align="center"
               gutterBottom
-              style={{ color: "white" }}
+              style={{ color: "midnightblue" }}
             >
               Edit Farmer
             </Typography>
           </DialogTitle>
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
-              <br />
               <Typography variant="h5" gutterBottom>
                 Autobiography
               </Typography>
@@ -565,7 +569,13 @@ class FarmerList extends Component {
                     }}
                   >
                     {maritalStatuses.map(option => (
-                      <MenuItem key={option.value} value={option.value}>
+                      <MenuItem
+                        key={option.value}
+                        value={option.value}
+                        style={{
+                          zoom: "70%"
+                        }}
+                      >
                         {option.label}
                       </MenuItem>
                     ))}

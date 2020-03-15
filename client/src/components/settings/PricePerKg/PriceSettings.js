@@ -364,7 +364,7 @@ class PriceSettings extends Component {
               component="h1"
               variant="h4"
               align="center"
-              style={{ color: "black" }}
+              style={{ color: "midnightblue" }}
             >
               Update Price Per Kg
             </Typography>
@@ -373,7 +373,7 @@ class PriceSettings extends Component {
             <form onSubmit={this.handlePriceSetting}>
               <Grid container spacing={4}>
                 <Grid item xs={12} sm={12}>
-                  <Typography variant="h6" align="left" color="primary">
+                  <Typography variant="h6" align="left" color="default">
                     [Used in Procurement/ Advance modules]
                   </Typography>
                 </Grid>

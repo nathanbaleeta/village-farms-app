@@ -133,7 +133,7 @@ class AddDistrict extends React.Component {
                 component="h1"
                 variant="h4"
                 align="center"
-                style={{ color: "black" }}
+                style={{ color: "midnightblue" }}
               >
                 Add District
               </Typography>
@@ -142,12 +142,9 @@ class AddDistrict extends React.Component {
               <form onSubmit={this.handleDistrictSetting}>
                 <Grid container spacing={4}>
                   <Grid item xs={12} sm={12}>
-                    <Typography variant="h6" align="left" color="primary">
+                    <Typography variant="h6" align="left" color="default">
                       [For addition of new districts]
                     </Typography>
-                  </Grid>
-
-                  <Grid item xs={12} sm={12}>
                     <TextField
                       required
                       id="district"

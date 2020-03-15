@@ -348,7 +348,7 @@ class FarmerDetails extends Component {
                 onChange={this.handleChange}
                 variant="fullWidth"
                 indicatorColor="secondary"
-                textColor="primary"
+                textColor="default"
               >
                 <Tab
                   icon={<PersonIcon />}
@@ -410,7 +410,7 @@ class FarmerDetails extends Component {
                       <Typography
                         variant="h3"
                         component="h4"
-                        style={{ fontWeight: "bold", color: "midnightblue" }}
+                        style={{ fontWeight: "normal", color: "midnightblue" }}
                       >
                         {this.state.title}.{" "}
                         {this.state.firstname + " " + this.state.lastname}

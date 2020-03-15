@@ -60,11 +60,32 @@ class GeneralSettings extends React.Component {
             onChange={this.handleChange}
             variant="fullWidth"
             indicatorColor="secondary"
-            textColor="secondary"
+            textColor="default"
           >
-            <Tab icon={<TrendingUpIcon />} label="PRICE PER KG" />
-            <Tab icon={<AddLocationIcon />} label="LOCATIONS" />
-            <Tab icon={<GroupIcon />} label="USERS" />
+            <Tab
+              icon={<TrendingUpIcon />}
+              label="PRICE PER KG"
+              style={{
+                fontWeight: "bold",
+                fontSize: 18
+              }}
+            />
+            <Tab
+              icon={<AddLocationIcon />}
+              label="LOCATIONS"
+              style={{
+                fontWeight: "bold",
+                fontSize: 18
+              }}
+            />
+            <Tab
+              icon={<GroupIcon />}
+              label="USERS"
+              style={{
+                fontWeight: "bold",
+                fontSize: 18
+              }}
+            />
           </Tabs>
           {value === 0 && (
             <TabContainer>
