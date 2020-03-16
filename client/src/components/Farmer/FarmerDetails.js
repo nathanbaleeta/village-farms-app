@@ -3,6 +3,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { Typography, Divider } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import Switch from "@material-ui/core/Switch";
+
 import { Link } from "react-router-dom";
 
 import Fab from "@material-ui/core/Fab";
@@ -15,15 +17,17 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 import PhoneIcon from "@material-ui/icons/Phone";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import WcOutlinedIcon from "@material-ui/icons/WcOutlined";
 import CakeOutlinedIcon from "@material-ui/icons/CakeOutlined";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import PaymentIcon from "@material-ui/icons/Payment";
 import DeleteIcon from "@material-ui/icons/Delete";
 import RoomOutlinedIcon from "@material-ui/icons/RoomOutlined";
-import NatureOutlinedIcon from "@material-ui/icons/NatureOutlined";
-import HourglassEmptySharpIcon from "@material-ui/icons/HourglassEmptySharp";
+
+import LandscapeIcon from "@material-ui/icons/Landscape";
+import NatureIcon from "@material-ui/icons/Nature";
 import PaymentOutlinedIcon from "@material-ui/icons/PaymentOutlined";
 
 import CreateProcurement from "../procurement/CreateProcurement";
@@ -379,8 +383,7 @@ class FarmerDetails extends Component {
               {value === 0 && (
                 <TabContainer>
                   <Grid container spacing={4}>
-                    <Grid item lg="auto" md="auto" sm="auto" xs="auto">
-                      <br />
+                    <Grid item lg={3} sm={6} xs={12}>
                       <Avatar
                         alt="Avatar icon"
                         src="/static/images/avatar/1.png"
@@ -405,8 +408,7 @@ class FarmerDetails extends Component {
                         </Link>
                       </Typography>
                     </Grid>
-                    <Grid item lg={8} md={9} sm="auto" xs="auto">
-                      <br />
+                    <Grid item lg={9} sm={12} xs={12}>
                       <Typography
                         variant="h3"
                         component="h4"
@@ -415,113 +417,191 @@ class FarmerDetails extends Component {
                         {this.state.title}.{" "}
                         {this.state.firstname + " " + this.state.lastname}
                       </Typography>
-
                       <br />
                       <Grid container spacing={2}>
-                        <Grid item xs={6} sm={6}>
-                          <Typography variant="h6" gutterBottom align="left">
-                            <WcOutlinedIcon /> &nbsp;&nbsp; {this.state.sex}
+                        <Grid item lg={1} sm={2} xs={2}>
+                          <WcOutlinedIcon />
+                        </Grid>
+                        <Grid item lg={11} sm={10} xs={10}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            align="left"
+                            style={{ color: "midnightblue" }}
+                          >
+                            {this.state.sex}
                           </Typography>
                         </Grid>
-                      </Grid>
-
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} sm={6}>
-                          <Typography variant="h6" gutterBottom align="left">
-                            <AccountCircleIcon /> &nbsp;&nbsp;{" "}
+                        <br />
+                        <Grid item lg={1} sm={2} xs={2}>
+                          <FavoriteIcon />
+                        </Grid>
+                        <Grid item lg={11} sm={10} xs={10}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            align="left"
+                            style={{ color: "midnightblue" }}
+                          >
                             {this.state.maritalStatus}
                           </Typography>
                         </Grid>
-                      </Grid>
+                        <br />
 
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} sm={6}>
-                          <Typography variant="h6" gutterBottom align="left">
-                            <PhoneIcon /> &nbsp;&nbsp; {this.state.phone}
+                        <Grid item lg={1} sm={2} xs={2}>
+                          <PhoneIcon />
+                        </Grid>
+                        <Grid item lg={11} sm={10} xs={10}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            align="left"
+                            style={{ color: "midnightblue" }}
+                          >
+                            {this.state.phone}
                           </Typography>
                         </Grid>
-                      </Grid>
+                        <br />
 
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} sm={6}>
-                          <Typography variant="h6" gutterBottom align="left">
-                            <RoomOutlinedIcon /> &nbsp;&nbsp; Lives in{" "}
-                            {this.state.traditionalAuthority},{" "}
+                        <Grid item lg={1} sm={2} xs={2}>
+                          <RoomOutlinedIcon />
+                        </Grid>
+                        <Grid item lg={11} sm={10} xs={10}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            align="left"
+                            style={{ color: "midnightblue" }}
+                          >
+                            Lives in {this.state.traditionalAuthority},{" "}
                             {this.state.district}
                           </Typography>
                         </Grid>
-                      </Grid>
+                        <br />
 
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} sm={6}>
-                          <Typography variant="h6" gutterBottom align="left">
-                            <CakeOutlinedIcon /> &nbsp;&nbsp; Farm opened in{" "}
-                            <b>{this.state.yearOpened}</b>
+                        <Grid item lg={1} sm={2} xs={2}>
+                          <CakeOutlinedIcon />
+                        </Grid>
+                        <Grid item lg={11} sm={10} xs={10}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            align="left"
+                            style={{ color: "midnightblue" }}
+                          >
+                            Farm opened in {this.state.yearOpened}
                           </Typography>
                         </Grid>
+                        <br />
                       </Grid>
-                      <br />
+
                       <Divider />
                       <br />
-
                       <Grid container spacing={2}>
-                        <Grid item xs={6} sm={6}>
-                          <Typography variant="h6" gutterBottom align="left">
-                            <NatureOutlinedIcon /> &nbsp;&nbsp; Acreage{" "}
-                            <b>{this.state.acreage}</b>
+                        <Grid item lg={1} sm={2} xs={2}>
+                          <LandscapeIcon />
+                        </Grid>
+                        <Grid item lg={11} sm={10} xs={10}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            align="left"
+                            style={{ color: "midnightblue" }}
+                          >
+                            {this.state.acreage} acres
+                          </Typography>
+                        </Grid>
+                        <Grid item lg={1} sm={2} xs={2}>
+                          <NatureIcon />
+                        </Grid>
+                        <Grid item lg={11} sm={10} xs={10}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            align="left"
+                            style={{ color: "midnightblue" }}
+                          >
+                            {numeral(this.state.year1).format("0,0[.]00")} below
+                            1 year
+                          </Typography>
+                        </Grid>
+
+                        <Grid item lg={1} sm={2} xs={2}>
+                          <NatureIcon />
+                        </Grid>
+                        <Grid item lg={11} sm={10} xs={10}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            align="left"
+                            style={{ color: "midnightblue" }}
+                          >
+                            {numeral(this.state.year2).format("0,0[.]00")} at 2
+                            years
+                          </Typography>
+                        </Grid>
+
+                        <Grid item lg={1} sm={2} xs={2}>
+                          <NatureIcon />
+                        </Grid>
+                        <Grid item lg={11} sm={10} xs={10}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            align="left"
+                            style={{ color: "midnightblue" }}
+                          >
+                            {numeral(this.state.year3).format("0,0[.]00")} at 3
+                            years
                           </Typography>
                         </Grid>
                       </Grid>
 
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} sm={6}>
-                          <Typography variant="h6" gutterBottom align="left">
-                            <HourglassEmptySharpIcon /> &nbsp;&nbsp; Year1{" "}
-                            &nbsp;&nbsp;
-                            <b>{this.state.year1}</b>
-                          </Typography>
-                        </Grid>
-                      </Grid>
-
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} sm={6}>
-                          <Typography variant="h6" gutterBottom align="left">
-                            <HourglassEmptySharpIcon /> &nbsp;&nbsp; Year1{" "}
-                            &nbsp;&nbsp;
-                            <b>{this.state.year2}</b>
-                          </Typography>
-                        </Grid>
-                      </Grid>
-
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} sm={6}>
-                          <Typography variant="h6" gutterBottom align="left">
-                            <HourglassEmptySharpIcon /> &nbsp;&nbsp; Year1{" "}
-                            &nbsp;&nbsp;
-                            <b>{this.state.year3}</b>
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                      <br />
                       <Divider />
                       <br />
-
                       <Grid container spacing={2}>
-                        <Grid item xs={6} sm={6}>
-                          <Typography variant="h6" gutterBottom align="left">
-                            <PaymentOutlinedIcon /> &nbsp;&nbsp; MM Registered
-                            &nbsp;&nbsp;
-                            <b>{this.state.mmRegistered}</b>
+                        <Grid item lg={1} sm={2} xs={2}>
+                          <PaymentOutlinedIcon />
+                        </Grid>
+                        <Grid item lg={11} sm={10} xs={10}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            align="left"
+                            style={{ color: "midnightblue" }}
+                          >
+                            MM Registered{" "}
+                            <Switch
+                              checked={
+                                this.state.mmRegistered === "Yes" ? true : false
+                              }
+                              inputProps={{
+                                "aria-label": "secondary checkbox"
+                              }}
+                            />
                           </Typography>
                         </Grid>
-                      </Grid>
 
-                      <Grid container spacing={2}>
-                        <Grid item xs={6} sm={6}>
-                          <Typography variant="h6" gutterBottom align="left">
-                            <PaymentOutlinedIcon /> &nbsp;&nbsp; MM Payments
-                            &nbsp;&nbsp;
-                            <b>{this.state.mmPayment}</b>
+                        <br />
+                        <Grid item lg={1} sm={2} xs={2}>
+                          <PaymentOutlinedIcon />
+                        </Grid>
+                        <Grid item lg={11} sm={10} xs={10}>
+                          <Typography
+                            variant="h6"
+                            gutterBottom
+                            align="left"
+                            style={{ color: "midnightblue" }}
+                          >
+                            MM Payments{" "}
+                            <Switch
+                              checked={
+                                this.state.mmPayment === "Yes" ? true : false
+                              }
+                              inputProps={{
+                                "aria-label": "secondary checkbox"
+                              }}
+                            />
                           </Typography>
                         </Grid>
                       </Grid>
@@ -886,19 +966,23 @@ class FarmerDetails extends Component {
           open={this.state.open}
           aria-labelledby="form-dialog-title"
           onClose={this.handleClose}
+          style={{
+            zoom: "80%"
+          }}
         >
           <DialogTitle
             id="simple-dialog-title"
             color="default"
             style={{
-              backgroundColor: "mediumblue"
+              backgroundColor: "white",
+              borderBottom: "2px solid midnightblue"
             }}
           >
             <Typography
               variant="h4"
               align="center"
               gutterBottom
-              style={{ color: "white" }}
+              style={{ color: "midnightblue" }}
             >
               Add Procurement
             </Typography>
@@ -918,19 +1002,23 @@ class FarmerDetails extends Component {
           open={this.state.isVisible}
           aria-labelledby="form-dialog-title"
           onClose={this.handleInVisible}
+          style={{
+            zoom: "80%"
+          }}
         >
           <DialogTitle
             id="simple-dialog-title1"
             color="default"
             style={{
-              backgroundColor: "mediumblue"
+              backgroundColor: "white",
+              borderBottom: "2px solid midnightblue"
             }}
           >
             <Typography
               variant="h4"
               align="center"
               gutterBottom
-              style={{ color: "white" }}
+              style={{ color: "midnightblue" }}
             >
               Create Advance
             </Typography>

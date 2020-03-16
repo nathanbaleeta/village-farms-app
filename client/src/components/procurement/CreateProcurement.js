@@ -377,7 +377,7 @@ class CreateProcurement extends Component {
                 size="large"
                 fullWidth
                 color="primary"
-                style={{ background: "mediumblue" }}
+                style={{ background: "midnightblue" }}
               >
                 Add Procurement
               </Button>

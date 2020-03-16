@@ -1,10 +1,8 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-// import { Typography } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-
 import Grid from "@material-ui/core/Grid";
 
 import RegistrationSummary from "../analytics/RegistrationSummary";
@@ -42,113 +40,115 @@ const styles = theme => ({
   }
 });
 
-class Analytics extends React.Component {
+class Analytics extends Component {
   render() {
     //const { classes } = this.props;
 
     return (
-      <div>
-        <Typography variant="h4" align="center" gutterBottom>
-          Experimental demos
-        </Typography>
+      <Fragment>
+        <div>
+          <Typography variant="h4" align="center" gutterBottom>
+            Experimental demos
+          </Typography>
 
-        <Grid container spacing={4}>
-          <Grid item lg={4} sm={6} xs={12}>
-            <Demo1 />
-          </Grid>
-          <Grid item lg={4} sm={6} xs={12}>
-            <Demo2 />
-          </Grid>
-          <Grid item lg={4} sm={6} xs={12}>
-            <Demo3 />
-          </Grid>
+          <Grid container spacing={4}>
+            <Grid item lg={4} sm={6} xs={12}>
+              <Demo1 />
+            </Grid>
+            <Grid item lg={4} sm={6} xs={12}>
+              <Demo2 />
+            </Grid>
+            <Grid item lg={4} sm={6} xs={12}>
+              <Demo3 />
+            </Grid>
 
-          <br />
-        </Grid>
-
-        <br />
-        <br />
-        <br />
-        <br />
-        <Grid container spacing={4}>
-          <Grid item lg={4} sm={6} xs={12}>
-            <Demo4 />
-          </Grid>
-          <Grid item lg={4} sm={6} xs={12}>
-            <Demo7 />
-          </Grid>
-          <Grid item lg={4} sm={6} xs={12}>
-            <Demo3 />
+            <br />
           </Grid>
 
           <br />
-        </Grid>
-        <br />
-        <br />
-        <br />
-        <br />
-        <Typography variant="h4" align="center" gutterBottom>
-          Data Analytics
-        </Typography>
-        <br />
-        <Grid container spacing={3}>
-          <Grid item lg={3} sm={6} xs={12}>
-            <RegistrationSummary />
+          <br />
+          <br />
+          <br />
+          <Grid container spacing={4}>
+            <Grid item lg={4} sm={6} xs={12}>
+              <Demo4 />
+            </Grid>
+            <Grid item lg={4} sm={6} xs={12}>
+              <Demo7 />
+            </Grid>
+            <Grid item lg={4} sm={6} xs={12}>
+              <Demo3 />
+            </Grid>
+
+            <br />
           </Grid>
-          <Grid item lg={3} sm={6} xs={12}>
-            <FarmHistoryStatus />
-          </Grid>
-          <Grid item lg={3} sm={6} xs={12}>
-            <AdvancesSummary />
-          </Grid>
-          <Grid item lg={3} sm={6} xs={12}>
-            <TreeCountSummary />
-          </Grid>
-          {/*  <Grid item lg={3} sm={6} xs={12}>
+          <br />
+          <br />
+          <br />
+          <br />
+          <Typography variant="h4" align="center" gutterBottom>
+            Data Analytics
+          </Typography>
+          <br />
+          <Grid container spacing={3}>
+            <Grid item lg={3} sm={6} xs={12}>
+              <RegistrationSummary />
+            </Grid>
+            <Grid item lg={3} sm={6} xs={12}>
+              <FarmHistoryStatus />
+            </Grid>
+            <Grid item lg={3} sm={6} xs={12}>
+              <AdvancesSummary />
+            </Grid>
+            <Grid item lg={3} sm={6} xs={12}>
+              <TreeCountSummary />
+            </Grid>
+            {/*  <Grid item lg={3} sm={6} xs={12}>
             <SalesSummary />
           </Grid> */}
-        </Grid>
-        <br />
-        <Typography variant="h4" align="center" gutterBottom>
-          Summary Reports
-        </Typography>
-        <br />
-        <Grid container spacing={4}>
-          <Grid item lg={3} sm={6} xs={12}>
-            <FarmerRegistrationReport />
           </Grid>
-          <Grid item lg={3} sm={6} xs={12}>
-            <ProcurementSummary />
+          <br />
+          <Typography variant="h4" align="center" gutterBottom>
+            Summary Reports
+          </Typography>
+          <br />
+          <Grid container spacing={4}>
+            <Grid item lg={3} sm={6} xs={12}>
+              <FarmerRegistrationReport />
+            </Grid>
+            <Grid item lg={3} sm={6} xs={12}>
+              <ProcurementSummary />
+            </Grid>
+            <Grid item lg={3} sm={6} xs={12}>
+              <AdvancesReport />
+            </Grid>
+            <Grid item lg={3} sm={6} xs={12}>
+              <SalesReport />
+            </Grid>
+
+            <br />
           </Grid>
-          <Grid item lg={3} sm={6} xs={12}>
-            <AdvancesReport />
-          </Grid>
-          <Grid item lg={3} sm={6} xs={12}>
-            <SalesReport />
+          <br />
+          <br />
+          <br />
+          <Typography variant="h4" align="center" gutterBottom>
+            Summary Statistics
+          </Typography>
+          <br />
+          <br />
+          <Grid container spacing={4}>
+            <Grid item lg={3} sm={6} xs={12}>
+              <AdvancesMode />
+            </Grid>
+
+            <br />
           </Grid>
 
           <br />
-        </Grid>
-        <br />
-        <br />
-        <br />
-        <Typography variant="h4" align="center" gutterBottom>
-          Summary Statistics
-        </Typography>
-        <br />
-        <br />
-        <Grid container spacing={4}>
-          <Grid item lg={3} sm={6} xs={12}>
-            <AdvancesMode />
-          </Grid>
-
           <br />
-        </Grid>
-
-        <br />
-        <br />
-        <br />
-      </div>
+          <br />
+        </div>
+      </Fragment>
     );
   }
 }

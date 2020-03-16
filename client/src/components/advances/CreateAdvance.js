@@ -427,7 +427,7 @@ class CreateAdvances extends React.Component {
                 size="large"
                 fullWidth
                 color="primary"
-                style={{ background: "mediumblue" }}
+                style={{ background: "midnightblue" }}
               >
                 Save Advance
               </Button>
