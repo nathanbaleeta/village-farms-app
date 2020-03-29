@@ -15,8 +15,7 @@ import AdvancesCalculator from "../analytics/AdvancesCalculator";
 import ProcurementSummary from "../analytics/ProcurementSummary";
 
 import AdvancesReport from "../analytics/AdvancesReport";
-import SalesReport from "../analytics/SalesReport";
-import AdvancesMode from "../analytics/AdvancesMode";
+import AdvancesByMode from "../analytics/AdvancesByMode";
 import FarmerRegistrationReport from "../analytics/FarmerRegistrationReport";
 
 import Demo1 from "../analytics/Demo1";
@@ -132,9 +131,6 @@ class Analytics extends Component {
             <Grid item lg={3} sm={6} xs={12}>
               <AdvancesReport />
             </Grid>
-            <Grid item lg={3} sm={6} xs={12}>
-              <SalesReport />
-            </Grid>
 
             <br />
           </Grid>
@@ -148,7 +144,7 @@ class Analytics extends Component {
           <br />
           <Grid container spacing={4}>
             <Grid item lg={3} sm={6} xs={12}>
-              <AdvancesMode />
+              <AdvancesByMode />
             </Grid>
 
             <br />

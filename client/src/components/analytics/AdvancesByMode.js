@@ -1,60 +1,66 @@
-import React from "react";
+import React, { Component } from "react";
 import Highcharts from "highcharts";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 
-import firebase from "../common/firebase";
-
 import HighchartsReact from "highcharts-react-official";
+
+import firebase from "../common/firebase";
 
 const styles = theme => ({
   root: {
     flexGrow: 1
   },
   paper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary
   },
   icon: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     fontSize: 32,
     color: theme.palette.text.primary
   }
 });
 
-class ByMode extends React.Component {
+class AdvancesByMode extends Component {
   constructor() {
     super();
     this.state = {
       chartOptions: {
-        xAxis: {
-          title: {
-            text: "Commodities"
-          },
-          categories: [
-            "Money",
-            "Seedlings",
-            "Fertilizers",
-            "Chemicals",
-            "Polythene"
-          ]
-        },
         chart: {
-          type: "column"
-        },
-
-        yAxis: {
-          title: {
-            text: "Totals"
+          type: "pie",
+          options3d: {
+            enabled: true,
+            alpha: 45
           }
         },
         title: {
-          text: "Mode of Advances"
+          text: "Advances by Mode"
         },
-        series: [{ data: [] }]
+        subtitle: {
+          text: "Commodity count"
+        },
+        plotOptions: {
+          pie: {
+            innerSize: 100,
+            depth: 45
+          }
+        },
+        series: [
+          {
+            name: "Advance Mode Count",
+            data: [
+              ["Seeds", 0],
+              ["Fertilizers", 0],
+              ["Chemicals", 0],
+              ["Polythene", 0],
+              ["Money", 0]
+            ]
+          }
+        ]
       }
     };
   }
@@ -138,8 +144,8 @@ class ByMode extends React.Component {
   }
 }
 
-ByMode.propTypes = {
+AdvancesByMode.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ByMode);
+export default withStyles(styles)(AdvancesByMode);
