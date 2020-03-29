@@ -20,7 +20,7 @@ import FarmerRegistrationReport from "../analytics/FarmerRegistrationReport";
 
 import Demo1 from "../analytics/Demo1";
 import Demo2 from "../analytics/Demo2";
-import Demo3 from "../analytics/Demo3";
+import FarmersByGender from "../analytics/FarmersByGender";
 import Demo4 from "../analytics/Demo4";
 import Demo7 from "../analytics/Demo7";
 
@@ -59,7 +59,7 @@ class Analytics extends Component {
               <Demo2 />
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
-              <Demo3 />
+              <FarmersByGender />
             </Grid>
 
             <br />
@@ -75,9 +75,6 @@ class Analytics extends Component {
             </Grid>
             <Grid item lg={4} sm={6} xs={12}>
               <Demo7 />
-            </Grid>
-            <Grid item lg={4} sm={6} xs={12}>
-              <Demo3 />
             </Grid>
 
             <br />

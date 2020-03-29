@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Highcharts from "highcharts";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -6,6 +6,8 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 
 import HighchartsReact from "highcharts-react-official";
+
+import firebase from "../common/firebase";
 
 const styles = theme => ({
   root: {
@@ -23,7 +25,7 @@ const styles = theme => ({
   }
 });
 
-class Demo3 extends React.Component {
+class FarmersByGender extends Component {
   constructor() {
     super();
     this.state = {
@@ -36,10 +38,10 @@ class Demo3 extends React.Component {
           }
         },
         title: {
-          text: "Contents of Highsoft's weekly fruit delivery"
+          text: "Farmer's registered by Gender"
         },
         subtitle: {
-          text: "3D donut in Highcharts"
+          text: "Male vs Female Farmers'"
         },
         plotOptions: {
           pie: {
@@ -49,24 +51,55 @@ class Demo3 extends React.Component {
         },
         series: [
           {
-            name: "Delivered amount",
+            name: "Farmer count",
             data: [
-              ["Bananas", 8],
-              ["Kiwi", 3],
-              ["Mixed nuts", 1],
-              ["Oranges", 6],
-              ["Apples", 8],
-              ["Pears", 4],
-              ["Clementines", 4],
-              ["Reddish (bag)", 1],
-              ["Grapes (bunch)", 1]
+              ["Male", 0],
+              ["Female", 0]
             ]
           }
         ]
       }
     };
   }
-  componentDidMount() {}
+  componentDidMount() {
+    // Get Farmer count
+    const farmersRef = firebase.database().ref("farmers");
+    farmersRef.on("value", snapshot => {
+      const farmerCount = snapshot.numChildren();
+      this.setState({
+        numOfFarmers: farmerCount
+      });
+    });
+
+    // Get gender count
+    const query = firebase
+      .database()
+      .ref("farmers")
+      .orderByKey();
+    query.on("value", snapshot => {
+      let maleCounter = 0;
+      let femaleCounter = 0;
+      snapshot.forEach(function(childSnapshot) {
+        // Verify gender before incrementing by sex
+        const isMale = childSnapshot.child("sex").val() === "Male";
+
+        if (isMale) {
+          maleCounter += 1;
+        } else {
+          femaleCounter += 1;
+        }
+      });
+      this.setState({
+        chartOptions: {
+          series: [
+            {
+              data: [maleCounter, femaleCounter]
+            }
+          ]
+        }
+      });
+    });
+  }
   render() {
     const { classes } = this.props;
     const { chartOptions } = this.state;
@@ -83,8 +116,8 @@ class Demo3 extends React.Component {
   }
 }
 
-Demo3.propTypes = {
+FarmersByGender.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Demo3);
+export default withStyles(styles)(FarmersByGender);

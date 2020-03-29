@@ -404,19 +404,32 @@ class FarmerDetails extends Component {
                             fontSize: 18
                           }}
                         >
-                          Edit Account
+                          Edit Photo
                         </Link>
                       </Typography>
                     </Grid>
                     <Grid item lg={9} sm={12} xs={12}>
-                      <Typography
-                        variant="h3"
-                        component="h4"
-                        style={{ fontWeight: "normal", color: "midnightblue" }}
-                      >
-                        {this.state.title}.{" "}
-                        {this.state.firstname + " " + this.state.lastname}
-                      </Typography>
+                      <Grid container spacing={2}>
+                        <Grid item lg={9} sm={12} xs={12}>
+                          <Typography
+                            variant="h3"
+                            component="h4"
+                            style={{
+                              fontWeight: "normal",
+                              color: "midnightblue"
+                            }}
+                          >
+                            {this.state.title}.{" "}
+                            {this.state.firstname + " " + this.state.lastname}
+                          </Typography>
+                        </Grid>
+                        <Grid item lg={3} sm={12} xs={12}>
+                          <br />
+                          <Button variant="outlined" color="primary" fullWidth>
+                            Edit Farmer
+                          </Button>
+                        </Grid>
+                      </Grid>
                       <br />
                       <Grid container spacing={2}>
                         <Grid item lg={1} sm={2} xs={2}>
