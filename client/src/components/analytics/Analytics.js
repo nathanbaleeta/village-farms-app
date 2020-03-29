@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
-import RegistrationSummary from "../analytics/RegistrationSummary";
+import FarmerCount from "../analytics/FarmerCount";
 import ProcurementSummary from "../analytics/ProcurementSummary";
 import AdvancesSummary from "../analytics/AdvancesSummary";
 import TreeCountSummary from "../analytics/TreeCountSummary";
@@ -48,6 +48,34 @@ class Analytics extends Component {
       <Fragment>
         <div>
           <Typography variant="h4" align="center" gutterBottom>
+            Data Analytics
+          </Typography>
+          <br />
+          <Grid container spacing={2}>
+            <Grid item lg={2} sm={6} xs={12}>
+              <FarmerCount />
+            </Grid>
+            <Grid item lg={2} sm={6} xs={12}>
+              <FarmerCount />
+            </Grid>
+            <Grid item lg={2} sm={6} xs={12}>
+              <FarmerCount />
+            </Grid>
+
+            <Grid item lg={2} sm={6} xs={12}>
+              <FarmerCount />
+            </Grid>
+
+            <Grid item lg={2} sm={6} xs={12}>
+              <FarmerCount />
+            </Grid>
+
+            <Grid item lg={2} sm={6} xs={12}>
+              <FarmerCount />
+            </Grid>
+          </Grid>
+          <br />
+          <Typography variant="h4" align="center" gutterBottom>
             Experimental demos
           </Typography>
 
@@ -88,9 +116,6 @@ class Analytics extends Component {
           </Typography>
           <br />
           <Grid container spacing={3}>
-            <Grid item lg={3} sm={6} xs={12}>
-              <RegistrationSummary />
-            </Grid>
             <Grid item lg={3} sm={6} xs={12}>
               <FarmHistoryStatus />
             </Grid>

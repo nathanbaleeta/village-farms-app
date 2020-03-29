@@ -14,12 +14,12 @@ const styles = theme => ({
     flexGrow: 1
   },
   paper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary
   },
   icon: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     fontSize: 32,
     color: theme.palette.text.primary
   }
