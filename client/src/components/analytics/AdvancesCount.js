@@ -5,28 +5,27 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 
-//import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 
 import firebase from "../common/firebase";
 
 const styles = theme => ({});
 
-class FarmerCount extends Component {
+class AdvancesCount extends Component {
   constructor() {
     super();
     this.state = {
-      numOfFarmers: 0
+      received: 0
     };
   }
 
   componentDidMount() {
-    // Get Farmer count
-    const farmersRef = firebase.database().ref("farmers");
+    // Get count of farmers who have received advances
+    const farmersRef = firebase.database().ref("advances");
     farmersRef.on("value", snapshot => {
       const farmerCount = snapshot.numChildren();
       this.setState({
-        numOfFarmers: farmerCount
+        received: farmerCount
       });
     });
   }
@@ -39,11 +38,11 @@ class FarmerCount extends Component {
           <Card
             className={classes.card}
             elevation={1}
-            style={{ borderLeft: "4px solid #20B2AA" }}
+            style={{ borderLeft: "4px solid orange" }}
           >
             <CardContent align="center">
               <Typography variant="h5" align="center" gutterBottom>
-                Farmers
+                Advances
               </Typography>
               <Typography
                 variant="h3"
@@ -52,7 +51,7 @@ class FarmerCount extends Component {
                 gutterBottom
                 style={{ fontWeight: "normal" }}
               >
-                {this.state.numOfFarmers}
+                {this.state.received}
               </Typography>
             </CardContent>
           </Card>
@@ -62,4 +61,4 @@ class FarmerCount extends Component {
   }
 }
 
-export default withStyles(styles)(FarmerCount);
+export default withStyles(styles)(AdvancesCount);

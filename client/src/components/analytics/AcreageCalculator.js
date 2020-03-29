@@ -46,8 +46,8 @@ class AcreageCalculator extends Component {
         <Grid item xs={12} sm={12}>
           <Card
             className={classes.card}
-            elevation={0}
-            style={{ border: "1px solid #d4d4d4" }}
+            elevation={1}
+            style={{ borderLeft: "4px solid #1E90FF" }}
           >
             <CardContent align="center">
               <Typography variant="h5" align="center" gutterBottom>
