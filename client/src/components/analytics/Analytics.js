@@ -9,10 +9,11 @@ import FarmerCount from "../analytics/FarmerCount";
 import AdvancesCount from "../analytics/AdvancesCount";
 
 import AcreageCalculator from "../analytics/AcreageCalculator";
+
+import AdvancesCalculator from "../analytics/AdvancesCalculator";
 import ProcurementSummary from "../analytics/ProcurementSummary";
 import AdvancesSummary from "../analytics/AdvancesSummary";
 import TreeCountSummary from "../analytics/TreeCountSummary";
-//import SalesSummary from "../analytics/SalesSummary";
 
 import AdvancesReport from "../analytics/AdvancesReport";
 import SalesReport from "../analytics/SalesReport";
@@ -64,7 +65,7 @@ class Analytics extends Component {
             </Grid>
 
             <Grid item lg={2} sm={6} xs={12}>
-              <FarmerCount />
+              <AdvancesCalculator />
             </Grid>
 
             <Grid item lg={2} sm={6} xs={12}>
