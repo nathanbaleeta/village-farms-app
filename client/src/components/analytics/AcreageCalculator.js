@@ -54,7 +54,7 @@ class AcreageCalculator extends Component {
                 Acreage
               </Typography>
               <Typography
-                variant="h3"
+                variant="h1"
                 align="center"
                 color="default"
                 gutterBottom

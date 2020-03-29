@@ -18,19 +18,6 @@ class AdvancesCalculator extends Component {
     };
   }
 
-  nFormatter(num) {
-    if (num >= 1000000000) {
-      return (num / 1000000000).toFixed(1).replace(/\.0$/, "") + "G";
-    }
-    if (num >= 1000000) {
-      return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
-    }
-    if (num >= 1000) {
-      return (num / 1000).toFixed(1).replace(/\.0$/, "") + "K";
-    }
-    return num;
-  }
-
   componentDidMount() {
     // Get value of advances provided
     const query = firebase
@@ -56,6 +43,21 @@ class AdvancesCalculator extends Component {
       });
     });
   }
+
+  // Number formatter for high values greater than a thousand
+  nFormatter = num => {
+    if (num >= 1000000000) {
+      return (num / 1000000000).toFixed(1).replace(/\.0$/, "") + "G";
+    }
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+    }
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+    }
+    return num;
+  };
+
   render() {
     const { classes } = this.props;
     const { advanceValue } = this.state;
@@ -73,7 +75,7 @@ class AdvancesCalculator extends Component {
                 Advance value
               </Typography>
               <Typography
-                variant="h3"
+                variant="h1"
                 align="center"
                 color="default"
                 gutterBottom

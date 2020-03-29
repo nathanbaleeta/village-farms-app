@@ -7,13 +7,12 @@ import Grid from "@material-ui/core/Grid";
 
 import FarmerCount from "../analytics/FarmerCount";
 import AdvancesCount from "../analytics/AdvancesCount";
+import TreeCount from "../analytics/TreeCount";
 
 import AcreageCalculator from "../analytics/AcreageCalculator";
 
 import AdvancesCalculator from "../analytics/AdvancesCalculator";
 import ProcurementSummary from "../analytics/ProcurementSummary";
-import AdvancesSummary from "../analytics/AdvancesSummary";
-import TreeCountSummary from "../analytics/TreeCountSummary";
 
 import AdvancesReport from "../analytics/AdvancesReport";
 import SalesReport from "../analytics/SalesReport";
@@ -68,12 +67,8 @@ class Analytics extends Component {
               <AdvancesCalculator />
             </Grid>
 
-            <Grid item lg={2} sm={6} xs={12}>
-              <FarmerCount />
-            </Grid>
-
-            <Grid item lg={2} sm={6} xs={12}>
-              <FarmerCount />
+            <Grid item lg={4} sm={6} xs={12}>
+              <TreeCount />
             </Grid>
           </Grid>
           <br />
@@ -118,12 +113,6 @@ class Analytics extends Component {
           </Typography>
           <br />
           <Grid container spacing={3}>
-            <Grid item lg={3} sm={6} xs={12}>
-              <AdvancesSummary />
-            </Grid>
-            <Grid item lg={3} sm={6} xs={12}>
-              <TreeCountSummary />
-            </Grid>
             {/*  <Grid item lg={3} sm={6} xs={12}>
             <SalesSummary />
           </Grid> */}
