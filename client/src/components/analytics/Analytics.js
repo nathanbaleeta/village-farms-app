@@ -6,12 +6,12 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
 import FarmerCount from "../analytics/FarmerCount";
+
+import AcreageCalculator from "../analytics/AcreageCalculator";
 import ProcurementSummary from "../analytics/ProcurementSummary";
 import AdvancesSummary from "../analytics/AdvancesSummary";
 import TreeCountSummary from "../analytics/TreeCountSummary";
 //import SalesSummary from "../analytics/SalesSummary";
-
-import FarmHistoryStatus from "../analytics/FarmHistoryStatus";
 
 import AdvancesReport from "../analytics/AdvancesReport";
 import SalesReport from "../analytics/SalesReport";
@@ -56,7 +56,7 @@ class Analytics extends Component {
               <FarmerCount />
             </Grid>
             <Grid item lg={2} sm={6} xs={12}>
-              <FarmerCount />
+              <AcreageCalculator />
             </Grid>
             <Grid item lg={2} sm={6} xs={12}>
               <FarmerCount />
@@ -116,9 +116,6 @@ class Analytics extends Component {
           </Typography>
           <br />
           <Grid container spacing={3}>
-            <Grid item lg={3} sm={6} xs={12}>
-              <FarmHistoryStatus />
-            </Grid>
             <Grid item lg={3} sm={6} xs={12}>
               <AdvancesSummary />
             </Grid>

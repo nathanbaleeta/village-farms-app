@@ -16,17 +16,25 @@ class AcreageCalculator extends Component {
   constructor() {
     super();
     this.state = {
-      numOfFarmers: 0
+      acreage: 0
     };
   }
 
   componentDidMount() {
-    // Get Farmer count
-    const farmersRef = firebase.database().ref("farmers");
-    farmersRef.on("value", snapshot => {
-      const farmerCount = snapshot.numChildren();
+    // Get mature & immature trees count
+    const query = firebase
+      .database()
+      .ref("farmers")
+      .orderByKey();
+    query.on("value", snapshot => {
+      let acreageCounter = 0;
+      snapshot.forEach(function(childSnapshot) {
+        // Hectarage counter; convert string to int
+        acreageCounter =
+          acreageCounter + parseFloat(childSnapshot.child("acreage").val());
+      });
       this.setState({
-        numOfFarmers: farmerCount
+        acreage: acreageCounter.toFixed(2) // Round off to 2 decimal places
       });
     });
   }
@@ -43,7 +51,7 @@ class AcreageCalculator extends Component {
           >
             <CardContent align="center">
               <Typography variant="h5" align="center" gutterBottom>
-                Farmers
+                Acreage
               </Typography>
               <Typography
                 variant="h3"
@@ -52,7 +60,7 @@ class AcreageCalculator extends Component {
                 gutterBottom
                 style={{ fontWeight: "normal" }}
               >
-                {this.state.numOfFarmers}
+                {this.state.acreage}
               </Typography>
             </CardContent>
           </Card>
