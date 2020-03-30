@@ -22,6 +22,8 @@ import Demo1 from "../analytics/Demo1";
 import Demo2 from "../analytics/Demo2";
 import FarmersByGender from "../analytics/FarmersByGender";
 import FarmersByDistrict from "../analytics/FarmersByDistrict";
+
+import FarmSummaryStatisticsTabular from "../analytics/FarmSummaryStatisticsTabular";
 import Demo4 from "../analytics/Demo4";
 import Demo7 from "../analytics/Demo7";
 
@@ -108,6 +110,10 @@ class Analytics extends Component {
             </Grid>
             <Grid item lg={3} sm={6} xs={12}>
               <AdvancesReport />
+            </Grid>
+
+            <Grid item lg={3} sm={6} xs={12}>
+              <FarmSummaryStatisticsTabular />
             </Grid>
 
             <br />

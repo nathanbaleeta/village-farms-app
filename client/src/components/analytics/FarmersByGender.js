@@ -41,7 +41,7 @@ class FarmersByGender extends Component {
           text: "Farmer's registered by Gender"
         },
         subtitle: {
-          text: "Male vs Female Farmers'"
+          text: "Gender statistics'"
         },
         plotOptions: {
           pie: {
