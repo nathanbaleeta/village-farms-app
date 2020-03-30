@@ -59,7 +59,9 @@ class FarmPerformanceReport extends Component {
 
   componentWillMount() {
     this.getFarmerStats();
+    this.getAdvanceStats();
   }
+
   getFarmerStats() {
     const query = firebase
       .database()
@@ -163,6 +165,128 @@ class FarmPerformanceReport extends Component {
             }
           ]
         }
+      });
+    });
+  }
+
+  getAdvanceStats() {
+    const query = firebase
+      .database()
+      .ref("advances")
+      .orderByKey();
+
+    query.on("value", snapshot => {
+      let todayCounter = 0;
+      let weekCounter = 0;
+      let monthCounter = 0;
+      let cummulativeCounter = 0;
+
+      snapshot.forEach(childSnapshot => {
+        // Get values for day, month and cummulative
+
+        childSnapshot.forEach(grandChildSnapshot => {
+          const created = grandChildSnapshot.child("created").val();
+          const isToday = moment(created, "DD/MM/YYYY").isSame(
+            Date.now(),
+            "day"
+          );
+          const isWeek = moment(created, "DD/MM/YYYY").isSame(
+            Date.now(),
+            "week"
+          );
+          const isMonth = moment(created, "DD/MM/YYYY").isSame(
+            Date.now(),
+            "month"
+          );
+
+          isToday
+            ? (todayCounter =
+                todayCounter +
+                parseInt(grandChildSnapshot.child("advanceAmount").val()))
+            : (todayCounter = todayCounter + 0);
+
+          isWeek
+            ? (weekCounter =
+                weekCounter +
+                parseInt(grandChildSnapshot.child("advanceAmount").val()))
+            : (weekCounter = weekCounter + 0);
+
+          isMonth
+            ? (monthCounter =
+                monthCounter +
+                parseInt(grandChildSnapshot.child("advanceAmount").val()))
+            : (monthCounter = monthCounter + 0);
+
+          // Cummulative counter
+          cummulativeCounter =
+            (cummulativeCounter +
+              parseInt(grandChildSnapshot.child("advanceAmount").val())) |
+            parseInt(grandChildSnapshot.child("commodityValue").val());
+        });
+
+        this.setState({
+          chartOptions: {
+            series: [
+              {
+                type: "column",
+                name: "Farmers",
+                data: []
+              },
+              {
+                type: "column",
+                name: "Advances",
+                data: [
+                  todayCounter,
+                  weekCounter,
+                  monthCounter,
+                  cummulativeCounter
+                ]
+              },
+              {
+                type: "column",
+                name: "Procurements",
+                data: [4, 3, 3, 9]
+              },
+              {
+                type: "spline",
+                name: "Average Advances",
+                data: [3, 2.67, 3, 6.33],
+                marker: {
+                  lineWidth: 2,
+                  lineColor: Highcharts.getOptions().colors[3],
+                  fillColor: "white"
+                }
+              },
+              {
+                type: "pie",
+                name: "Total consumption",
+                data: [
+                  {
+                    name: "Jane",
+                    y: 13,
+                    color: Highcharts.getOptions().colors[0] // Jane's color
+                  },
+                  {
+                    name: "John",
+                    y: 23,
+                    color: Highcharts.getOptions().colors[1] // John's color
+                  },
+                  {
+                    name: "Joe",
+                    y: 19,
+                    color: Highcharts.getOptions().colors[2] // Joe's color
+                  }
+                ],
+                center: [100, 80],
+                size: 100,
+                showInLegend: false,
+                dataLabels: {
+                  enabled: false
+                }
+              }
+            ]
+          }
+        });
       });
     });
   }
