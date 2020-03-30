@@ -72,6 +72,8 @@ class Analytics extends Component {
           <br />
           <br />
 
+          <br />
+
           <Grid container spacing={4}>
             <Grid item lg={4} sm={6} xs={12}>
               <FarmersByGender />
@@ -86,19 +88,16 @@ class Analytics extends Component {
             <br />
           </Grid>
           <br />
-          <Typography variant="h4" align="center" gutterBottom>
-            Summary Reports
-          </Typography>
           <br />
 
           <Grid container spacing={4}>
-            <Grid item lg={3} sm={6} xs={12}>
+            <Grid item lg={4} sm={6} xs={12}>
               <FarmerRegistrationReport />
             </Grid>
-            <Grid item lg={3} sm={6} xs={12}>
+            <Grid item lg={4} sm={6} xs={12}>
               <AdvancesReport />
             </Grid>
-            <Grid item lg={3} sm={6} xs={12}>
+            <Grid item lg={4} sm={6} xs={12}>
               <ProcurementSummary />
             </Grid>
 

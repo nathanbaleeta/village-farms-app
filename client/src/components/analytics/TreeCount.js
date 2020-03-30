@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 //import { Typography } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import CardActionArea from "@material-ui/core/CardActionArea";
 
-//import Avatar from "@material-ui/core/Avatar";
+import NatureIcon from "@material-ui/icons/Nature";
 import Grid from "@material-ui/core/Grid";
 
 import firebase from "../common/firebase";
@@ -71,62 +71,109 @@ class TreeCount extends Component {
     const { year1, year2, year3 } = this.state;
 
     return (
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12}>
-          <Card
-            className={classes.card}
-            elevation={1}
-            style={{ borderLeft: "4px solid indigo" }}
-          >
-            <CardContent align="center">
-              <Typography variant="h5" align="center" gutterBottom>
-                Trees
-              </Typography>
-              <Grid container spacing={24}>
-                <Grid item xs={4} sm={4}>
-                  <Typography
-                    variant="h3"
-                    align="center"
-                    color="default"
-                    gutterBottom
-                  >
-                    {this.nFormatter(year1)}
-                  </Typography>
-                  <Typography variant="h5" align="center" gutterBottom>
-                    Y1
-                  </Typography>
+      <Fragment>
+        <div className={classes.root}>
+          <Card className={classes.card}>
+            <CardActionArea>
+              <div
+                style={{
+                  padding: "20px",
+                  background: "#00CED1",
+                  color: "white"
+                }}
+              >
+                <Grid container spacing={1}>
+                  <Grid item lg={8} sm={6} xs={12}>
+                    <Typography
+                      variant="subtitle2"
+                      color="default"
+                      gutterBottom
+                      style={{ fontWeight: "bold", color: "black" }}
+                    >
+                      TREE COUNT
+                    </Typography>
+
+                    <Grid container spacing={24}>
+                      <Grid item xs={4} sm={4}>
+                        <Typography
+                          variant="h4"
+                          align="left"
+                          color="default"
+                          gutterBottom
+                          style={{ fontWeight: "bold", color: "black" }}
+                        >
+                          {this.nFormatter(year1)}
+                        </Typography>
+                        <Typography
+                          variant="h5"
+                          align="left"
+                          color="inherit"
+                          gutterBottom
+                          style={{ fontWeight: "bold", color: "black" }}
+                        >
+                          Y1
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4} sm={4}>
+                        <Typography
+                          variant="h4"
+                          align="left"
+                          color="default"
+                          gutterBottom
+                          style={{ fontWeight: "bold", color: "black" }}
+                        >
+                          {this.nFormatter(year2)}
+                        </Typography>
+                        <Typography
+                          variant="h5"
+                          align="left"
+                          gutterBottom
+                          style={{ fontWeight: "bold", color: "black" }}
+                        >
+                          Y2
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4} sm={4}>
+                        <Typography
+                          variant="h4"
+                          align="left"
+                          color="default"
+                          gutterBottom
+                          style={{ fontWeight: "bold", color: "black" }}
+                        >
+                          {this.nFormatter(year3)}
+                        </Typography>
+                        <Typography
+                          variant="h5"
+                          align="left"
+                          gutterBottom
+                          style={{ fontWeight: "bold", color: "black" }}
+                        >
+                          Y2
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item lg={4} sm={6} xs={12}>
+                    <Typography
+                      variant="subtitle2"
+                      align="right"
+                      gutterBottom
+                      style={{ fontSize: "62px" }}
+                    >
+                      <NatureIcon
+                        color="inherit"
+                        fontSize="inherit"
+                        style={{ color: "black" }}
+                      />
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={4} sm={4}>
-                  <Typography
-                    variant="h2"
-                    align="center"
-                    color="default"
-                    gutterBottom
-                  >
-                    {this.nFormatter(year2)}
-                  </Typography>
-                  <Typography variant="h4" align="center" gutterBottom>
-                    Y2
-                  </Typography>
-                </Grid>
-                <Grid item xs={4} sm={4}>
-                  <Typography
-                    variant="h3"
-                    align="center"
-                    color="default"
-                    gutterBottom
-                  >
-                    {this.nFormatter(year3)}
-                  </Typography>
-                  <Typography variant="h5" align="center" gutterBottom>
-                    Y3
-                  </Typography>
-                </Grid>
-              </Grid>
-            </CardContent>
+              </div>
+            </CardActionArea>
           </Card>
-        </Grid>
-      </Grid>
+        </div>
+      </Fragment>
     );
   }
 }

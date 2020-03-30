@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 
-import NatureIcon from "@material-ui/icons/Nature";
+import LandscapeIcon from "@material-ui/icons/Landscape";
 
 import Grid from "@material-ui/core/Grid";
 
@@ -79,7 +79,7 @@ class AcreageCalculator extends Component {
                     gutterBottom
                     style={{ fontSize: "62px" }}
                   >
-                    <NatureIcon
+                    <LandscapeIcon
                       color="inherit"
                       fontSize="inherit"
                       style={{ color: "black" }}
