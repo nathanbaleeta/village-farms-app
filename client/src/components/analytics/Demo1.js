@@ -30,10 +30,6 @@ class FarmPerformanceReport extends Component {
   constructor() {
     super();
     this.state = {
-      dailyFarmerCount: 0,
-      weeklyFarmerCount: 0,
-      monthlyFarmerCount: 0,
-      totalFarmerCount: 0,
       chartOptions: {
         title: {
           text: "Farm Peformance Report"

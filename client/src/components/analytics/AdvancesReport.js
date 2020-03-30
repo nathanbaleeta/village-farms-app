@@ -101,14 +101,11 @@ class AdvancesReport extends React.Component {
                 parseInt(grandChildSnapshot.child("advanceAmount").val()))
             : (monthCounter = monthCounter + 0);
 
-          console.log(isToday);
-
-          //console.log(moment(created, "DD/MM/YYYY").fromNow());
-
           // Cummulative counter
           cummulativeCounter =
-            cummulativeCounter +
-            parseInt(grandChildSnapshot.child("advanceAmount").val());
+            (cummulativeCounter +
+              parseInt(grandChildSnapshot.child("advanceAmount").val())) |
+            parseInt(grandChildSnapshot.child("commodityValue").val());
         });
       });
 

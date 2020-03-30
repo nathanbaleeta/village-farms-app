@@ -16,16 +16,12 @@ import ProcurementSummary from "../analytics/ProcurementSummary";
 
 import AdvancesReport from "../analytics/AdvancesReport";
 import AdvancesByMode from "../analytics/AdvancesByMode";
-import FarmerRegistrationReport from "../analytics/FarmerRegistrationReport";
 
 import Demo1 from "../analytics/Demo1";
-import Demo2 from "../analytics/Demo2";
 import FarmersByGender from "../analytics/FarmersByGender";
 import FarmersByDistrict from "../analytics/FarmersByDistrict";
 
 import FarmSummaryStatisticsTabular from "../analytics/FarmSummaryStatisticsTabular";
-import Demo4 from "../analytics/Demo4";
-import Demo7 from "../analytics/Demo7";
 
 const styles = theme => ({
   root: {
@@ -102,9 +98,6 @@ class Analytics extends Component {
           <br />
 
           <Grid container spacing={4}>
-            <Grid item lg={3} sm={6} xs={12}>
-              <FarmerRegistrationReport />
-            </Grid>
             <Grid item lg={3} sm={6} xs={12}>
               <ProcurementSummary />
             </Grid>
