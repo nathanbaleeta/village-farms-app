@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Highcharts from "highcharts";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -15,32 +15,32 @@ const styles = theme => ({
     flexGrow: 1
   },
   paper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary
   },
   icon: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     fontSize: 32,
     color: theme.palette.text.primary
   }
 });
 
-class AdvancesReport extends React.Component {
+class FarmPerformanceReport extends Component {
   constructor() {
     super();
     this.state = {
       chartOptions: {
         title: {
-          text: "Combination chart"
+          text: "Farm Peformance Report"
         },
         xAxis: {
-          categories: ["Daily", "Weekly", "Monthly", "Quartely", "Annually"]
+          categories: ["Daily", "Weekly", "Monthly", "Quartely", "Total"]
         },
         labels: {
           items: [
             {
-              html: "Total fruit consumption",
+              html: "Advances vs Procurement Chart",
               style: {
                 left: "50px",
                 top: "18px",
@@ -52,8 +52,13 @@ class AdvancesReport extends React.Component {
               }
             }
           ]
-        },
-
+        }
+      }
+    };
+  }
+  componentDidMount() {
+    this.setState({
+      chartOptions: {
         series: [
           {
             type: "column",
@@ -68,7 +73,7 @@ class AdvancesReport extends React.Component {
           {
             type: "column",
             name: "Joe",
-            data: [4, 3, 3, 9, 0]
+            data: [4, 3, 3, 9, 4]
           },
           {
             type: "spline",
@@ -109,9 +114,8 @@ class AdvancesReport extends React.Component {
           }
         ]
       }
-    };
+    });
   }
-  componentDidMount() {}
   render() {
     const { classes } = this.props;
     const { chartOptions } = this.state;
@@ -128,8 +132,8 @@ class AdvancesReport extends React.Component {
   }
 }
 
-AdvancesReport.propTypes = {
+FarmPerformanceReport.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(AdvancesReport);
+export default withStyles(styles)(FarmPerformanceReport);
