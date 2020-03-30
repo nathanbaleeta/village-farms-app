@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+
 import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import CardActionArea from "@material-ui/core/CardActionArea";
+
+import NatureIcon from "@material-ui/icons/Nature";
 
 import Grid from "@material-ui/core/Grid";
 
@@ -39,31 +42,55 @@ class AcreageCalculator extends Component {
   render() {
     const { classes } = this.props;
 
+    const { acreage } = this.state;
+
     return (
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12}>
-          <Card
-            className={classes.card}
-            elevation={1}
-            style={{ borderLeft: "4px solid #1E90FF" }}
-          >
-            <CardContent align="center">
-              <Typography variant="h5" align="center" gutterBottom>
-                Acreage
-              </Typography>
-              <Typography
-                variant="h1"
-                align="center"
-                color="default"
-                gutterBottom
-                style={{ fontWeight: "normal" }}
-              >
-                {this.state.acreage}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
+      <div className={classes.root}>
+        <Card className={classes.card}>
+          <CardActionArea>
+            <div
+              style={{
+                padding: "20px",
+                background: "orange",
+                color: "white"
+              }}
+            >
+              <Grid container spacing={1}>
+                <Grid item lg={8} sm={6} xs={12}>
+                  <Typography
+                    variant="subtitle2"
+                    color="default"
+                    gutterBottom
+                    style={{ fontWeight: "bold", color: "black" }}
+                  >
+                    ACREAGE
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    gutterBottom
+                    style={{ fontWeight: "bold", color: "black" }}
+                  >
+                    {acreage}
+                  </Typography>
+                </Grid>
+                <Grid item lg={4} sm={6} xs={12}>
+                  <Typography
+                    variant="subtitle2"
+                    gutterBottom
+                    style={{ fontSize: "62px" }}
+                  >
+                    <NatureIcon
+                      color="inherit"
+                      fontSize="inherit"
+                      style={{ color: "black" }}
+                    />
+                  </Typography>
+                </Grid>
+              </Grid>
+            </div>
+          </CardActionArea>
+        </Card>
+      </div>
     );
   }
 }

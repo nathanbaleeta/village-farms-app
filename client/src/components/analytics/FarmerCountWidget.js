@@ -1,69 +1,54 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+
 import Typography from "@material-ui/core/Typography";
-
-import MoneyIcon from "@material-ui/icons/Money";
-
 import Grid from "@material-ui/core/Grid";
-
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 
+import GroupIcon from "@material-ui/icons/Group";
+
+import HighchartsReact from "highcharts-react-official";
+
 import firebase from "../common/firebase";
 
-const styles = theme => ({});
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary
+  },
+  icon: {
+    margin: theme.spacing(1),
+    fontSize: 32,
+    color: theme.palette.text.primary
+  }
+});
 
-class AdvancesCalculator extends Component {
+class FarmerCountWidget extends Component {
   constructor() {
     super();
     this.state = {
-      advanceValue: 0
+      numOfFarmers: 0
     };
   }
-
   componentDidMount() {
-    // Get value of advances provided
-    const query = firebase
-      .database()
-      .ref("advances")
-      .orderByKey();
-    query.on("value", snapshot => {
-      let valueCounter = 0;
-
-      snapshot.forEach(childSnapshot => {
-        // Get values
-
-        childSnapshot.forEach(grandChildSnapshot => {
-          // Advance Value counter; convert string to int
-          valueCounter =
-            (valueCounter +
-              parseInt(grandChildSnapshot.child("advanceAmount").val())) |
-            parseInt(grandChildSnapshot.child("commodityValue").val());
-        });
-      });
+    // Get Farmer count
+    const farmersRef = firebase.database().ref("farmers");
+    farmersRef.on("value", snapshot => {
+      const farmerCount = snapshot.numChildren();
       this.setState({
-        advanceValue: valueCounter
+        numOfFarmers: farmerCount
       });
     });
   }
-
-  // Number formatter for high values greater than a thousand
-  nFormatter = num => {
-    if (num >= 1000000000) {
-      return (num / 1000000000).toFixed(1).replace(/\.0$/, "") + "G";
-    }
-    if (num >= 1000000) {
-      return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
-    }
-    if (num >= 1000) {
-      return (num / 1000).toFixed(1).replace(/\.0$/, "") + "K";
-    }
-    return num;
-  };
-
   render() {
     const { classes } = this.props;
-    const { advanceValue } = this.state;
+    const { numOfFarmers } = this.state;
 
     return (
       <div className={classes.root}>
@@ -72,7 +57,7 @@ class AdvancesCalculator extends Component {
             <div
               style={{
                 padding: "20px",
-                background: "Indigo",
+                background: "mediumblue",
                 color: "white"
               }}
             >
@@ -83,14 +68,14 @@ class AdvancesCalculator extends Component {
                     gutterBottom
                     style={{ fontWeight: "bold" }}
                   >
-                    ADVANCE VALUE
+                    FARMERS
                   </Typography>
                   <Typography
                     variant="h4"
                     gutterBottom
                     style={{ fontWeight: "bold" }}
                   >
-                    {this.nFormatter(advanceValue)}
+                    {numOfFarmers}
                   </Typography>
                 </Grid>
                 <Grid item lg={4} sm={6} xs={12}>
@@ -99,7 +84,11 @@ class AdvancesCalculator extends Component {
                     gutterBottom
                     style={{ fontSize: "62px" }}
                   >
-                    <MoneyIcon color="default" fontSize="inherit" />
+                    <GroupIcon
+                      color="default"
+                      fontSize="inherit"
+                      //style={{ color: "orange" }}
+                    />
                   </Typography>
                 </Grid>
               </Grid>
@@ -111,4 +100,8 @@ class AdvancesCalculator extends Component {
   }
 }
 
-export default withStyles(styles)(AdvancesCalculator);
+FarmerCountWidget.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(FarmerCountWidget);

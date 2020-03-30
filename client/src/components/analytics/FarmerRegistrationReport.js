@@ -26,7 +26,7 @@ const styles = theme => ({
   }
 });
 
-class AdvancesReport extends React.Component {
+class FarmerRegistrationReport extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -35,7 +35,7 @@ class AdvancesReport extends React.Component {
           title: {
             text: "Timeline"
           },
-          categories: ["Today", "Week", "Month", "Cummulative"]
+          categories: ["Today", "Week", "Month", "Total"]
         },
         chart: {
           type: "column"
@@ -47,18 +47,19 @@ class AdvancesReport extends React.Component {
           }
         },
         title: {
-          text: "Advances Report"
+          text: "Farmer Registration Report"
         },
-        series: [{ data: [] }]
+        series: [{ name: "Farmers", data: [] }]
       }
     };
   }
   componentDidMount() {
-    // Get value of procurement provided
+    // Get value of sales provided
     const query = firebase
       .database()
-      .ref("advances")
+      .ref("farmers")
       .orderByKey();
+
     query.on("value", snapshot => {
       let todayCounter = 0;
       let weekCounter = 0;
@@ -68,52 +69,36 @@ class AdvancesReport extends React.Component {
       snapshot.forEach(childSnapshot => {
         // Get values for day, month and cummulative
 
-        childSnapshot.forEach(grandChildSnapshot => {
-          const created = grandChildSnapshot.child("created").val();
-          const isToday = moment(created, "DD/MM/YYYY").isSame(
-            Date.now(),
-            "day"
-          );
-          const isWeek = moment(created, "DD/MM/YYYY").isSame(
-            Date.now(),
-            "week"
-          );
-          const isMonth = moment(created, "DD/MM/YYYY").isSame(
-            Date.now(),
-            "month"
-          );
+        const created = childSnapshot.child("created").val();
+        const isToday = moment(created, "DD/MM/YYYY").isSame(Date.now(), "day");
+        const isWeek = moment(created, "DD/MM/YYYY").isSame(Date.now(), "week");
+        const isMonth = moment(created, "DD/MM/YYYY").isSame(
+          Date.now(),
+          "month"
+        );
 
-          isToday
-            ? (todayCounter =
-                todayCounter +
-                parseInt(grandChildSnapshot.child("advanceAmount").val()))
-            : (todayCounter = todayCounter + 0);
+        isToday
+          ? (todayCounter = todayCounter + 1)
+          : (todayCounter = todayCounter + 0);
 
-          isWeek
-            ? (weekCounter =
-                weekCounter +
-                parseInt(grandChildSnapshot.child("advanceAmount").val()))
-            : (weekCounter = weekCounter + 0);
+        isWeek
+          ? (weekCounter = weekCounter + 1)
+          : (weekCounter = weekCounter + 0);
 
-          isMonth
-            ? (monthCounter =
-                monthCounter +
-                parseInt(grandChildSnapshot.child("advanceAmount").val()))
-            : (monthCounter = monthCounter + 0);
+        isMonth
+          ? (monthCounter = monthCounter + 1)
+          : (monthCounter = monthCounter + 0);
 
-          // Cummulative counter
-          cummulativeCounter =
-            (cummulativeCounter +
-              parseInt(grandChildSnapshot.child("advanceAmount").val())) |
-            parseInt(grandChildSnapshot.child("commodityValue").val());
-        });
+        // Cummulative counter
+        created
+          ? (cummulativeCounter = cummulativeCounter + 1)
+          : (cummulativeCounter = cummulativeCounter + 0);
       });
 
       this.setState({
         chartOptions: {
           series: [
             {
-              name: "Advances",
               data: [
                 todayCounter,
                 weekCounter,
@@ -142,8 +127,8 @@ class AdvancesReport extends React.Component {
   }
 }
 
-AdvancesReport.propTypes = {
+FarmerRegistrationReport.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(AdvancesReport);
+export default withStyles(styles)(FarmerRegistrationReport);

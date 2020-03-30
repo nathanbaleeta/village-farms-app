@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
 import FarmerCount from "../analytics/FarmerCount";
+import FarmerCountWidget from "../analytics/FarmerCountWidget";
 import AdvancesCount from "../analytics/AdvancesCount";
 import TreeCount from "../analytics/TreeCount";
 
@@ -17,11 +18,10 @@ import ProcurementSummary from "../analytics/ProcurementSummary";
 import AdvancesReport from "../analytics/AdvancesReport";
 import AdvancesByMode from "../analytics/AdvancesByMode";
 
-import Demo1 from "../analytics/Demo1";
+import FarmerRegistrationReport from "../analytics/FarmerRegistrationReport";
+
 import FarmersByGender from "../analytics/FarmersByGender";
 import FarmersByDistrict from "../analytics/FarmersByDistrict";
-
-import FarmSummaryStatisticsTabular from "../analytics/FarmSummaryStatisticsTabular";
 
 const styles = theme => ({
   root: {
@@ -52,7 +52,7 @@ class Analytics extends Component {
           <br />
           <Grid container spacing={2}>
             <Grid item lg={2} sm={6} xs={12}>
-              <FarmerCount />
+              <FarmerCountWidget />
             </Grid>
             <Grid item lg={2} sm={6} xs={12}>
               <AcreageCalculator />
@@ -71,21 +71,15 @@ class Analytics extends Component {
           </Grid>
           <br />
           <br />
-          <Typography variant="h4" align="center" gutterBottom>
-            Data Analytics
-          </Typography>
 
           <Grid container spacing={4}>
-            <Grid item lg={3} sm={6} xs={12}>
-              <Demo1 />
-            </Grid>
-            <Grid item lg={3} sm={6} xs={12}>
+            <Grid item lg={4} sm={6} xs={12}>
               <FarmersByGender />
             </Grid>
-            <Grid item lg={3} sm={6} xs={12}>
+            <Grid item lg={4} sm={6} xs={12}>
               <FarmersByDistrict />
             </Grid>
-            <Grid item lg={3} sm={6} xs={12}>
+            <Grid item lg={4} sm={6} xs={12}>
               <AdvancesByMode />
             </Grid>
 
@@ -99,14 +93,13 @@ class Analytics extends Component {
 
           <Grid container spacing={4}>
             <Grid item lg={3} sm={6} xs={12}>
-              <ProcurementSummary />
+              <FarmerRegistrationReport />
             </Grid>
             <Grid item lg={3} sm={6} xs={12}>
               <AdvancesReport />
             </Grid>
-
             <Grid item lg={3} sm={6} xs={12}>
-              <FarmSummaryStatisticsTabular />
+              <ProcurementSummary />
             </Grid>
 
             <br />
