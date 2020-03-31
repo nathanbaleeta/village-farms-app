@@ -83,7 +83,7 @@ class TreeCount extends Component {
                 }}
               >
                 <Grid container spacing={1}>
-                  <Grid item lg={8} sm={6} xs={12}>
+                  <Grid item lg={8} sm={12} xs={12}>
                     <Typography
                       variant="subtitle2"
                       color="default"
@@ -149,7 +149,7 @@ class TreeCount extends Component {
                           gutterBottom
                           style={{ fontWeight: "bold", color: "black" }}
                         >
-                          Y2
+                          Y3
                         </Typography>
                       </Grid>
                     </Grid>

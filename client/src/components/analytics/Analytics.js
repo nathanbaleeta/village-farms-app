@@ -5,7 +5,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
-import FarmerCount from "../analytics/FarmerCount";
 import FarmerCountWidget from "../analytics/FarmerCountWidget";
 import AdvancesCount from "../analytics/AdvancesCount";
 import TreeCount from "../analytics/TreeCount";
@@ -65,7 +64,7 @@ class Analytics extends Component {
               <AdvancesCalculator />
             </Grid>
 
-            <Grid item lg={4} sm={6} xs={12}>
+            <Grid item lg={4} sm={12} xs={12}>
               <TreeCount />
             </Grid>
           </Grid>

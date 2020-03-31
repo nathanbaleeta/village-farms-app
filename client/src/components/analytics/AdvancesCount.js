@@ -47,13 +47,13 @@ class AdvancesCount extends Component {
               }}
             >
               <Grid container spacing={1}>
-                <Grid item lg={8} sm={6} xs={12}>
+                <Grid item lg={8} sm={6} xs={8}>
                   <Typography
                     variant="subtitle2"
                     gutterBottom
                     style={{ fontWeight: "bold" }}
                   >
-                    ADVANCE RECEPIENTS
+                    ADVANCE RECIPIENTS
                   </Typography>
                   <Typography
                     variant="h4"
@@ -63,10 +63,11 @@ class AdvancesCount extends Component {
                     {received}
                   </Typography>
                 </Grid>
-                <Grid item lg={4} sm={6} xs={12}>
+                <Grid item lg={4} sm={6} xs={4}>
                   <Typography
                     variant="subtitle2"
                     gutterBottom
+                    align="right"
                     style={{ fontSize: "62px" }}
                   >
                     <PersonIcon

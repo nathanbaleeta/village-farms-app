@@ -9,8 +9,6 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 
 import GroupIcon from "@material-ui/icons/Group";
 
-import HighchartsReact from "highcharts-react-official";
-
 import firebase from "../common/firebase";
 
 const styles = theme => ({
@@ -62,7 +60,7 @@ class FarmerCountWidget extends Component {
               }}
             >
               <Grid container spacing={1}>
-                <Grid item lg={8} sm={6} xs={12}>
+                <Grid item lg={8} sm={6} xs={8}>
                   <Typography
                     variant="subtitle2"
                     gutterBottom
@@ -78,10 +76,11 @@ class FarmerCountWidget extends Component {
                     {numOfFarmers}
                   </Typography>
                 </Grid>
-                <Grid item lg={4} sm={6} xs={12}>
+                <Grid item lg={4} sm={6} xs={4}>
                   <Typography
                     variant="subtitle2"
                     gutterBottom
+                    align="right"
                     style={{ fontSize: "62px" }}
                   >
                     <GroupIcon
