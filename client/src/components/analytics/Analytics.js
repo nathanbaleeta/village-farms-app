@@ -50,13 +50,13 @@ class Analytics extends Component {
           </Typography>
           <br />
           <Grid container spacing={2}>
-            <Grid item lg={2} sm={6} xs={12}>
+            <Grid item lg={2} sm={4} xs={12}>
               <FarmerCountWidget />
             </Grid>
-            <Grid item lg={2} sm={6} xs={12}>
+            <Grid item lg={2} sm={4} xs={12}>
               <AcreageCalculator />
             </Grid>
-            <Grid item lg={2} sm={6} xs={12}>
+            <Grid item lg={2} sm={4} xs={12}>
               <AdvancesCount />
             </Grid>
 
@@ -64,13 +64,11 @@ class Analytics extends Component {
               <AdvancesCalculator />
             </Grid>
 
-            <Grid item lg={4} sm={12} xs={12}>
+            <Grid item lg={4} sm={6} xs={12}>
               <TreeCount />
             </Grid>
           </Grid>
           <br />
-          <br />
-
           <br />
 
           <Grid container spacing={4}>
@@ -80,7 +78,7 @@ class Analytics extends Component {
             <Grid item lg={4} sm={6} xs={12}>
               <FarmersByDistrict />
             </Grid>
-            <Grid item lg={4} sm={6} xs={12}>
+            <Grid item lg={4} sm={12} xs={12}>
               <AdvancesByMode />
             </Grid>
 
@@ -96,7 +94,7 @@ class Analytics extends Component {
             <Grid item lg={4} sm={6} xs={12}>
               <AdvancesReport />
             </Grid>
-            <Grid item lg={4} sm={6} xs={12}>
+            <Grid item lg={4} sm={12} xs={12}>
               <ProcurementSummary />
             </Grid>
 

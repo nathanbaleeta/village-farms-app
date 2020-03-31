@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 
-import PersonIcon from "@material-ui/icons/Person";
+import GroupIcon from "@material-ui/icons/Group";
 
 import Grid from "@material-ui/core/Grid";
 
@@ -53,7 +53,7 @@ class AdvancesCount extends Component {
                     gutterBottom
                     style={{ fontWeight: "bold" }}
                   >
-                    ADVANCE RECIPIENTS
+                    DEBITORS
                   </Typography>
                   <Typography
                     variant="h4"
@@ -70,7 +70,7 @@ class AdvancesCount extends Component {
                     align="right"
                     style={{ fontSize: "62px" }}
                   >
-                    <PersonIcon
+                    <GroupIcon
                       color="default"
                       fontSize="inherit"
                       //style={{ color: "orange" }}

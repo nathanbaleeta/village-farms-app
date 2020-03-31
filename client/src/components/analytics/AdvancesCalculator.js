@@ -83,7 +83,7 @@ class AdvancesCalculator extends Component {
                     gutterBottom
                     style={{ fontWeight: "bold" }}
                   >
-                    ADVANCE VALUE
+                    DEBT
                   </Typography>
                   <Typography
                     variant="h4"

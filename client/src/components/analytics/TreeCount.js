@@ -77,89 +77,89 @@ class TreeCount extends Component {
             <CardActionArea>
               <div
                 style={{
-                  padding: "20px",
+                  paddingTop: "20px",
+                  paddingLeft: "20px",
+                  paddingRight: "20px",
                   background: "#00CED1",
                   color: "white"
                 }}
               >
-                <Grid container spacing={1}>
-                  <Grid item lg={8} sm={12} xs={12}>
+                <Typography
+                  variant="subtitle2"
+                  align="left"
+                  color="default"
+                  gutterBottom
+                  style={{
+                    fontWeight: "bold",
+                    color: "black",
+                    paddingBottom: 0
+                  }}
+                >
+                  TREE COUNT
+                </Typography>
+
+                <Grid container spacing={2}>
+                  <Grid item lg={2} sm={3} xs={3}>
                     <Typography
-                      variant="subtitle2"
-                      color="default"
+                      variant="h6"
                       gutterBottom
+                      align="center"
                       style={{ fontWeight: "bold", color: "black" }}
                     >
-                      TREE COUNT
+                      {this.nFormatter(year1)}
                     </Typography>
 
-                    <Grid container spacing={24}>
-                      <Grid item xs={4} sm={4}>
-                        <Typography
-                          variant="h4"
-                          align="left"
-                          color="default"
-                          gutterBottom
-                          style={{ fontWeight: "bold", color: "black" }}
-                        >
-                          {this.nFormatter(year1)}
-                        </Typography>
-                        <Typography
-                          variant="h5"
-                          align="left"
-                          color="inherit"
-                          gutterBottom
-                          style={{ fontWeight: "bold", color: "black" }}
-                        >
-                          Y1
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4} sm={4}>
-                        <Typography
-                          variant="h4"
-                          align="left"
-                          color="default"
-                          gutterBottom
-                          style={{ fontWeight: "bold", color: "black" }}
-                        >
-                          {this.nFormatter(year2)}
-                        </Typography>
-                        <Typography
-                          variant="h5"
-                          align="left"
-                          gutterBottom
-                          style={{ fontWeight: "bold", color: "black" }}
-                        >
-                          Y2
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={4} sm={4}>
-                        <Typography
-                          variant="h4"
-                          align="left"
-                          color="default"
-                          gutterBottom
-                          style={{ fontWeight: "bold", color: "black" }}
-                        >
-                          {this.nFormatter(year3)}
-                        </Typography>
-                        <Typography
-                          variant="h5"
-                          align="left"
-                          gutterBottom
-                          style={{ fontWeight: "bold", color: "black" }}
-                        >
-                          Y3
-                        </Typography>
-                      </Grid>
-                    </Grid>
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      align="center"
+                      style={{ fontWeight: "bold", color: "black" }}
+                    >
+                      Y1
+                    </Typography>
                   </Grid>
-                  <Grid item lg={4} sm={6} xs={12}>
+                  <Grid item lg={2} sm={3} xs={3}>
+                    <Typography
+                      variant="h6"
+                      gutterBottom
+                      align="center"
+                      style={{ fontWeight: "bold", color: "black" }}
+                    >
+                      {this.nFormatter(year2)}
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      align="center"
+                      style={{ fontWeight: "bold", color: "black" }}
+                    >
+                      Y2
+                    </Typography>
+                  </Grid>
+                  <Grid item lg={2} sm={3} xs={3}>
+                    <Typography
+                      variant="h6"
+                      gutterBottom
+                      align="center"
+                      style={{ fontWeight: "bold", color: "black" }}
+                    >
+                      {this.nFormatter(year3)}
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      align="center"
+                      style={{ fontWeight: "bold", color: "black" }}
+                    >
+                      Y3
+                    </Typography>
+                  </Grid>
+                  <Grid item lg={6} sm={3} xs={3}>
                     <Typography
                       variant="subtitle2"
                       align="right"
                       gutterBottom
-                      style={{ fontSize: "62px" }}
+                      style={{ fontSize: "59px" }}
                     >
                       <NatureIcon
                         color="inherit"
