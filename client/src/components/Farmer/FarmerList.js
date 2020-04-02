@@ -94,18 +94,15 @@ const columns = [
 
 const styles = {
   avatar: {
-    margin: 10
+    height: "50px",
+    width: "50px"
   },
   orangeAvatar: {
     margin: 10,
     color: "#fff",
     backgroundColor: deepOrange[500]
   },
-  purpleAvatar: {
-    margin: 10,
-    color: "#fff",
-    backgroundColor: "#FFA500"
-  },
+
   updateFarmerButton: {
     background: "midnightblue"
   }
@@ -168,7 +165,8 @@ class FarmerList extends Component {
           year1: items[item].year1,
           year2: items[item].year2,
           year3: items[item].year3,
-          acreage: items[item].acreage
+          acreage: items[item].acreage,
+          url: items[item].url
         });
       }
 
@@ -381,10 +379,11 @@ class FarmerList extends Component {
           title={"Farmers' list"}
           data={data.map((farmer, index) => {
             return [
-              <Avatar className={classes.purpleAvatar}>
-                {this.CapitalizeInitial(farmer.firstname) +
-                  this.CapitalizeInitial(farmer.lastname)}
-              </Avatar>,
+              <Avatar
+                alt="Profile photo"
+                src={farmer.url || "/static/images/avatar/1.png"}
+                className={classes.avatar}
+              />,
               <Link
                 to={`/show/${farmer.id}`}
                 style={{

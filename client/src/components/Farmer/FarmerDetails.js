@@ -281,6 +281,8 @@ class FarmerDetails extends Component {
       const year3 = snapshot.child("year3").val();
       const acreage = snapshot.child("acreage").val();
 
+      const url = snapshot.child("url").val();
+
       this.setState({
         id: key,
         firstname: firstname,
@@ -298,6 +300,7 @@ class FarmerDetails extends Component {
         year2: year2,
         year3: year3,
         acreage: acreage,
+        url: url,
 
         //Dialog box
         open: false
@@ -489,6 +492,12 @@ class FarmerDetails extends Component {
       })
       .then(url => {
         this.setState({ url: url });
+        //Update farmer URL
+        const key = this.state.id;
+        firebase
+          .database()
+          .ref(`farmers/${key}/url`)
+          .set(url);
       });
   }
 
@@ -551,7 +560,6 @@ class FarmerDetails extends Component {
                         />
                         <label htmlFor="icon-button-file">
                           <Avatar
-                            //onClick={this.onChangePhoto}
                             alt="Profile photo"
                             src={
                               this.state.url || "/static/images/avatar/1.png"
