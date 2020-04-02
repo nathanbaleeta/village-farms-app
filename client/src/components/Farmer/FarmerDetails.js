@@ -4,8 +4,13 @@ import { Typography, Divider } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Switch from "@material-ui/core/Switch";
+import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import { Link } from "react-router-dom";
+
+import NumberFormat from "react-number-format";
+import InputMask from "react-input-mask";
 
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
@@ -44,10 +49,23 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+
 import CreateAdvance from "../advances/CreateAdvance";
 
 import firebase from "../common/firebase";
 import numeral from "numeral";
+
+import { titles } from "../common/titleList";
+import { genders } from "../common/genderList";
+import { maritalStatuses } from "../common/maritalStatusList";
+import { mmOptions } from "../common/mobileMoneyOptions";
+import { mmPayments } from "../common/mobileMoneyPayments";
+import { lookup } from "../common/traditionalAuthorityList";
 
 function TabContainer(props) {
   return (
@@ -124,6 +142,13 @@ class FarmerDetails extends Component {
       todayValueSale: "",
       valueOfSaleLiability: "",
 
+      districts: [],
+
+      dataValue: "Chitipa",
+
+      // Farmer dialog settings
+      show: false,
+
       // Procurement edit & listing
       procurementData: [],
       advanceCounter: "",
@@ -140,6 +165,8 @@ class FarmerDetails extends Component {
   }
 
   componentDidMount() {
+    this.populateDistricts();
+
     const key = this.props.match.params.id;
     //console.log(key);
     /********************** Retrieve advance balance *********************/
@@ -275,6 +302,30 @@ class FarmerDetails extends Component {
     });
   }
 
+  populateDistricts = () => {
+    const districtsRef = firebase
+      .database()
+      .ref("settings")
+      .child("districts");
+
+    districtsRef.on("value", snapshot => {
+      let items = snapshot.val();
+      let newState = [];
+      for (let item in items) {
+        newState.push({
+          id: item,
+          district: items[item].district
+        });
+      }
+
+      //console.log(newState);
+      this.setState({
+        districts: newState
+      });
+      //console.log(this.state.districts);
+    });
+  };
+
   onEdit = e => {
     this.setState({
       isEditing: true
@@ -285,10 +336,6 @@ class FarmerDetails extends Component {
     this.setState({ value });
   };
 
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
-
   handleVisible = () => {
     this.setState({ isVisible: true });
   };
@@ -296,6 +343,11 @@ class FarmerDetails extends Component {
   handleInVisible = () => {
     this.setState({ isVisible: false });
   };
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
   handleClose = () => {
     this.setState({
       open: false,
@@ -336,11 +388,81 @@ class FarmerDetails extends Component {
       .remove();
   };
 
-  handleSubmit = event => {};
+  openDialog = () => {
+    this.setState({ show: true });
+  };
+
+  closeDialog = () => {
+    this.setState({ show: false });
+  };
+
+  updateFarmer(id) {
+    console.log(id);
+
+    this.openDialog();
+  }
+
+  onSaveFarmer = event => {
+    event.preventDefault();
+
+    // get our form data out of state
+    const farmer = {
+      firstname: this.toTitleCase(this.state.firstname),
+      lastname: this.toTitleCase(this.state.lastname),
+      title: this.state.title,
+      sex: this.state.sex,
+      maritalStatus: this.state.maritalStatus,
+      phone: this.state.phone,
+      mmRegistered: this.state.mmRegistered,
+      mmPayment: this.state.mmPayment,
+      district: this.state.district,
+      traditionalAuthority: this.state.traditionalAuthority,
+
+      yearOpened: this.state.yearOpened,
+
+      year1: !this.state.year1 ? 0 : this.removeCommas(this.state.year1),
+      year2: !this.state.year2 ? 0 : this.removeCommas(this.state.year2),
+      year3: !this.state.year3 ? 0 : this.removeCommas(this.state.year3),
+      acreage: !this.state.acreage ? 0 : this.removeCommas(this.state.acreage)
+    };
+
+    //Update farmer module
+    const key = this.state.id;
+    const farmersRef = firebase.database().ref(`farmers/${key}`);
+    farmersRef
+      .update(farmer)
+      .then(function() {
+        console.log("Synchronization succeeded");
+        console.log(this.state);
+      })
+      .catch(function(error) {
+        console.log("Synchronization failed");
+      });
+  };
+
+  toTitleCase = phrase => {
+    return phrase
+      .toLowerCase()
+      .split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
+  // remove commas before saving to firebase
+  removeCommas = num => {
+    //Convert number to string before attempting string manipulation
+    let str = num.toString();
+
+    // Check if string contains comma before attempting to sanitize
+    let result = str.includes(",") ? str.replace(/,/g, "") : str;
+    return Number(result);
+  };
 
   render() {
     const { classes } = this.props;
-    const { value } = this.state;
+    const { districts, dataValue, value } = this.state;
+
+    const tradAuthorities = lookup[dataValue];
 
     return (
       <Fragment>
@@ -425,7 +547,15 @@ class FarmerDetails extends Component {
                         </Grid>
                         <Grid item lg={3} sm={12} xs={12}>
                           <br />
-                          <Button variant="outlined" color="primary" fullWidth>
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            fullWidth
+                            onClick={this.updateFarmer.bind(
+                              this,
+                              this.state.id
+                            )}
+                          >
                             Edit Farmer
                           </Button>
                         </Grid>
@@ -973,6 +1103,373 @@ class FarmerDetails extends Component {
             </Paper>
           </Grid>
         </Grid>
+
+        {/* Edit Farmer Dialog */}
+
+        <Dialog
+          id="myDialog"
+          maxWidth="sm"
+          open={this.state.show}
+          aria-labelledby="form-dialog-title"
+          onClose={this.closeDialog}
+          style={{
+            zoom: "80%"
+          }}
+        >
+          <DialogTitle
+            id="simple-dialog-title"
+            color="default"
+            style={{
+              backgroundColor: "white",
+              color: "black",
+              borderBottom: "2px solid midnightblue"
+            }}
+          >
+            <Typography
+              variant="h4"
+              align="center"
+              gutterBottom
+              style={{ color: "midnightblue" }}
+            >
+              Edit Farmer
+            </Typography>
+          </DialogTitle>
+          <DialogContent>
+            <form onSubmit={this.onSaveFarmer}>
+              <Typography variant="h5" gutterBottom>
+                Autobiography
+              </Typography>
+              <br />
+              <Grid container spacing={2}>
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    required
+                    id="firstname"
+                    name="firstname"
+                    value={this.state.firstname}
+                    onChange={this.onChange}
+                    label="Firstname"
+                    fullWidth
+                    autoComplete="off"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    required
+                    id="lastname"
+                    name="lastname"
+                    value={this.state.lastname}
+                    onChange={this.onChange}
+                    label="Lastname"
+                    fullWidth
+                    autoComplete="off"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    id="title"
+                    select
+                    name="title"
+                    value={this.state.title}
+                    onChange={this.onChange}
+                    label="Title*"
+                    fullWidth
+                    helperText="Please select title"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  >
+                    {titles.map(option => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    id="sex"
+                    select
+                    name="sex"
+                    value={this.state.sex}
+                    onChange={this.onChange}
+                    label="Sex*"
+                    fullWidth
+                    helperText="Please select gender"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  >
+                    {genders.map(option => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    id="maritalStatus"
+                    select
+                    name="maritalStatus"
+                    value={this.state.maritalStatus}
+                    onChange={this.onChange}
+                    label="Marital Status*"
+                    fullWidth
+                    helperText="Please select marital status"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  >
+                    {maritalStatuses.map(option => (
+                      <MenuItem
+                        key={option.value}
+                        value={option.value}
+                        style={{
+                          zoom: "70%"
+                        }}
+                      >
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                  <InputMask
+                    mask="265999999999"
+                    value={this.state.phone}
+                    onChange={this.onChange}
+                  >
+                    {() => (
+                      <TextField
+                        id="phone"
+                        name="phone"
+                        label="Phone"
+                        fullWidth
+                        helperText="For example: 772 123 456"
+                        autoComplete="phone"
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                      />
+                    )}
+                  </InputMask>
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    id="mmRegistered"
+                    select
+                    name="mmRegistered"
+                    value={this.state.mmRegistered}
+                    onChange={this.onChange}
+                    label="Mobile Money Registered*"
+                    fullWidth
+                    helperText="Please select option"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  >
+                    {mmOptions.map(option => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    id="mmPayment"
+                    select
+                    name="mmPayment"
+                    value={this.state.mmPayment}
+                    onChange={this.onChange}
+                    label="Receive payments on MM*"
+                    fullWidth
+                    helperText="Please select option"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  >
+                    {mmPayments.map(option => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    required
+                    id="district"
+                    select
+                    name="district"
+                    value={this.state.district}
+                    onChange={this.onChangeDistrict}
+                    label="District"
+                    fullWidth
+                    helperText="Please select district"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  >
+                    {districts.map(option => (
+                      <MenuItem key={option.id} value={option.district}>
+                        {option.district}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                  <TextField
+                    required
+                    id="traditionalAuthority"
+                    name="traditionalAuthority"
+                    value={this.state.traditionalAuthority}
+                    select
+                    onChange={this.onChange}
+                    label="Traditional Authority"
+                    fullWidth
+                    helperText="Please select Traditional Authority"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  >
+                    {tradAuthorities.map(ta => (
+                      <MenuItem key={ta.id} value={ta.text}>
+                        {ta.text}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <Typography variant="h5" gutterBottom>
+                    Farm History and Status
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                      required
+                      //margin="normal"
+                      id="date-picker-dialog"
+                      label="Year Farm opened"
+                      format="dd-MM-yyyy"
+                      fullWidth
+                      value={this.state.yearOpened}
+                      defaultValue="dd-MM-yyyy"
+                      onChange={this.handleDateChange}
+                      maxDate={new Date(Date.now() - 7776000000)} // Disables dates less than 3 months
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+
+                      //InputAdornmentProps={{ position: "end" }}
+                    />
+                  </MuiPickersUtilsProvider>
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <NumberFormat
+                    value={this.state.year1}
+                    thousandSeparator={true}
+                    onValueChange={values => {
+                      const { formattedValue } = values;
+
+                      this.setState({ year1: formattedValue });
+                    }}
+                    customInput={TextField}
+                    label="Year 1"
+                    helperText="Tree count which are 1 year"
+                    fullWidth
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                  <NumberFormat
+                    value={this.state.year2}
+                    thousandSeparator={true}
+                    onValueChange={values => {
+                      const { formattedValue } = values;
+
+                      this.setState({ year2: formattedValue });
+                    }}
+                    customInput={TextField}
+                    label="Year 2"
+                    helperText="Tree count which are 2 years"
+                    fullWidth
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <NumberFormat
+                    value={this.state.year3}
+                    thousandSeparator={true}
+                    onValueChange={values => {
+                      const { formattedValue } = values;
+
+                      this.setState({ year3: formattedValue });
+                    }}
+                    customInput={TextField}
+                    label="Year 3"
+                    helperText="Tree count above 3 years"
+                    fullWidth
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={6} sm={6}>
+                  <NumberFormat
+                    value={this.state.acreage}
+                    thousandSeparator={true}
+                    onValueChange={values => {
+                      const { formattedValue } = values;
+
+                      this.setState({ acreage: formattedValue });
+                    }}
+                    customInput={TextField}
+                    label="Acreage under cultivation"
+                    helperText="(Enter in Acres)"
+                    fullWidth
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <br />
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    size="large"
+                    fullWidth
+                    color="secondary"
+                    className={classes.updateFarmerButton}
+                  >
+                    Update Farmer
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Edit Farmer Dialog */}
 
         <Dialog
           id="myDialog"

@@ -325,10 +325,9 @@ class FarmerList extends Component {
   }
 
   render() {
-    const { data, districts } = this.state;
+    const { data, districts, dataValue } = this.state;
     const { classes } = this.props;
 
-    const { dataValue } = this.state;
     const tradAuthorities = lookup[dataValue];
 
     const options = {
