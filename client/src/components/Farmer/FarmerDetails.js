@@ -127,6 +127,9 @@ class FarmerDetails extends Component {
       year3: "",
       immatureTrees: "",
       acreage: "",
+      passport_photo: "",
+      url: "",
+      progress: 0,
 
       // Dashboard registration summary
       value: 0,
@@ -458,6 +461,37 @@ class FarmerDetails extends Component {
     return Number(result);
   };
 
+  onChangePhoto(e) {
+    e.preventDefault();
+
+    // Save image in variable
+    const file = e.target.files[0];
+
+    // create a random id
+    const randomId = Math.random()
+      .toString(36)
+      .substring(2);
+
+    // Upload passport photo to firebase
+    const uploadTask = firebase
+      .storage()
+      .ref(`/passport-photos/${randomId}`)
+      .put(file);
+
+    uploadTask
+      .then(snapshot => {
+        // progress function ...
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        //this.setState({ progress });
+        return snapshot.ref.getDownloadURL();
+      })
+      .then(url => {
+        this.setState({ url: url });
+      });
+  }
+
   render() {
     const { classes } = this.props;
     const { districts, dataValue, value } = this.state;
@@ -511,15 +545,17 @@ class FarmerDetails extends Component {
                           color="primary"
                           accept="image/*"
                           type="file"
-                          //onChange={onChangeCoverPhoto}
+                          onChange={e => this.onChangePhoto(e)}
                           id="icon-button-file"
                           style={{ display: "none" }}
                         />
                         <label htmlFor="icon-button-file">
                           <Avatar
-                            //onClick={this.handleOpen}
+                            //onClick={this.onChangePhoto}
                             alt="Profile photo"
-                            src="/static/images/avatar/1.png"
+                            src={
+                              this.state.url || "/static/images/avatar/1.png"
+                            }
                             className={classes.bigAvatar}
                           />
                         </label>
