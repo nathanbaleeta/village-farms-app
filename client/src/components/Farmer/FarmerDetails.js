@@ -506,14 +506,27 @@ class FarmerDetails extends Component {
                 <TabContainer>
                   <Grid container spacing={4}>
                     <Grid item lg={3} sm={6} xs={12}>
-                      <Avatar
-                        alt="Avatar icon"
-                        src="/static/images/avatar/1.png"
-                        className={classes.bigAvatar}
-                      />
+                      <Fragment>
+                        <input
+                          color="primary"
+                          accept="image/*"
+                          type="file"
+                          //onChange={onChangeCoverPhoto}
+                          id="icon-button-file"
+                          style={{ display: "none" }}
+                        />
+                        <label htmlFor="icon-button-file">
+                          <Avatar
+                            //onClick={this.handleOpen}
+                            alt="Profile photo"
+                            src="/static/images/avatar/1.png"
+                            className={classes.bigAvatar}
+                          />
+                        </label>
+                      </Fragment>
 
                       <Typography
-                        variant="h6"
+                        variant="subtitle2"
                         gutterBottom
                         color="primary"
                         align="center"
@@ -523,10 +536,10 @@ class FarmerDetails extends Component {
                           style={{
                             color: "darkblue",
                             textDecoration: "none",
-                            fontSize: 18
+                            fontSize: 13
                           }}
                         >
-                          Edit Photo
+                          Tap photo to change
                         </Link>
                       </Typography>
                     </Grid>
@@ -1453,8 +1466,8 @@ class FarmerDetails extends Component {
                     variant="contained"
                     size="large"
                     fullWidth
-                    color="secondary"
-                    className={classes.updateFarmerButton}
+                    color="primary"
+                    //className={classes.updateFarmerButton}
                   >
                     Update Farmer
                   </Button>
