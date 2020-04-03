@@ -487,6 +487,7 @@ class FarmerDetails extends Component {
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
+        console.log(progress)
         //this.setState({ progress });
         return snapshot.ref.getDownloadURL();
       })

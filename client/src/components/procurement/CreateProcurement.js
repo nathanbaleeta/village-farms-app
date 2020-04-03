@@ -101,7 +101,9 @@ class CreateProcurement extends Component {
       snapshot.forEach(function(childSnapshot) {
         // Mature trees counter; convert string to int
         advanceCounter =
-          advanceCounter + parseInt(childSnapshot.child("advanceAmount").val());
+          (advanceCounter +
+            parseInt(childSnapshot.child("advanceAmount").val())) |
+          parseInt(childSnapshot.child("commodityValue").val());
       });
       this.setState({
         advanceBalance: advanceCounter

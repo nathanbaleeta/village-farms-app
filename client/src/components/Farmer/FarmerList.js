@@ -26,6 +26,12 @@ import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 
+import "react-notifications/lib/notifications.css";
+import {
+  NotificationContainer,
+  NotificationManager
+} from "react-notifications";
+
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
@@ -177,6 +183,16 @@ class FarmerList extends Component {
       //console.log(this.state.data);
     });
   }
+
+  createNotification = type => {
+    return () => {
+      NotificationManager.success(
+        "Farmer successfully updated",
+        "Farmer Edit",
+        2000
+      );
+    };
+  };
 
   handleOpen = () => {
     this.setState({ open: true });
@@ -792,6 +808,7 @@ class FarmerList extends Component {
                     size="large"
                     fullWidth
                     color="secondary"
+                    onClick={this.createNotification("info")}
                     className={classes.updateFarmerButton}
                   >
                     Update Farmer
@@ -806,6 +823,8 @@ class FarmerList extends Component {
             </Button>
           </DialogActions>
         </Dialog>
+
+        <NotificationContainer />
       </Fragment>
     );
   }
