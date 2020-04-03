@@ -4,8 +4,9 @@ import TextField from "@material-ui/core/TextField";
 import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-
 import MenuItem from "@material-ui/core/MenuItem";
+
+import NumberFormat from "react-number-format";
 
 import Snackbar from "../Farmer/Snackbar";
 
@@ -197,19 +198,22 @@ class CreateProcurement extends Component {
             </Grid>
 
             <Grid item xs={12} sm={12}>
-              <TextField
-                required
-                id="advanceBalance"
-                name="advanceBalance"
+              <NumberFormat
                 value={this.state.advanceBalance}
-                onChange={this.onChange}
-                label="Advance Balance"
-                type="number"
-                inputProps={{
-                  readOnly: Boolean(this.state.readOnly),
-                  disabled: Boolean(this.state.readOnly)
+                thousandSeparator={true}
+                disabled={true}
+                allowNegative={false}
+                onValueChange={values => {
+                  const { floatValue } = values;
+
+                  this.setState({
+                    advanceBalance: floatValue
+                  });
                 }}
+                customInput={TextField}
+                label="Advance Balance"
                 fullWidth
+                margin="normal"
                 autoComplete="off"
               />
             </Grid>
