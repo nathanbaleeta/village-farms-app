@@ -487,7 +487,7 @@ class FarmerDetails extends Component {
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
-        console.log(progress)
+        console.log(progress);
         //this.setState({ progress });
         return snapshot.ref.getDownloadURL();
       })
@@ -1552,11 +1552,14 @@ class FarmerDetails extends Component {
               gutterBottom
               style={{ color: "midnightblue" }}
             >
-              Add Procurement
+              Add Procurements
             </Typography>
           </DialogTitle>
           <DialogContent>
-            <CreateProcurement id={this.state.id} />
+            <CreateProcurement
+              id={this.state.id}
+              district={this.state.district}
+            />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">

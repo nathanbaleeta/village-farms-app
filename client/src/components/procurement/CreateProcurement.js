@@ -58,7 +58,7 @@ class CreateProcurement extends Component {
       advanceBalance: "",
       cashAvailabletoday: "",
       coffeeType: "",
-      pricePerKg: "",
+      pricePerKg: 0,
       todayValueSale: "",
       valueOfSaleLiability: "",
       weight: "",
@@ -73,22 +73,8 @@ class CreateProcurement extends Component {
   }
 
   componentWillMount() {
-    // Global procurement price setting.
-    const priceRef = firebase
-      .database()
-      .ref("settings")
-      .orderByKey();
-    priceRef.on("value", snapshot => {
-      let priceConfig = "";
-      snapshot.forEach(function(childSnapshot) {
-        //console.log(childSnapshot.child("pricePerKg").val());
-        priceConfig = childSnapshot.child("pricePerKg").val();
-      });
-      this.setState({
-        pricePerKg: priceConfig
-      });
-      //console.log(this.state.pricePerKg);
-    });
+    //Get price catalog for districts
+    this.getPriceByDistrict();
 
     //Retrieve advance balance
     const key = this.props.id;
@@ -112,6 +98,42 @@ class CreateProcurement extends Component {
       console.log(this.state.advanceBalance);
     });
   }
+
+  // Retrieve price data from firebase
+  getPriceByDistrict = () => {
+    const pricesRef = firebase
+      .database()
+      .ref("settings")
+      .child("prices");
+
+    pricesRef.on("value", snapshot => {
+      let items = snapshot.val();
+      let newState = [];
+      for (let item in items) {
+        newState.push({
+          id: item,
+          district: items[item].district,
+          pricePerKg: items[item].pricePerKg,
+          dateConfigured: items[item].dateConfigured
+        });
+      }
+
+      // Filter row which matches farmer district and generate resultset
+      const resultset = newState.filter(row => {
+        return row.district === this.props.district;
+      });
+
+      //console.log(resultset);
+
+      resultset.length > 0
+        ? this.setState({
+            pricePerKg: resultset[0].pricePerKg
+          })
+        : this.setState({
+            pricePerKg: 0
+          });
+    });
+  };
 
   onChange = e => {
     /*
@@ -252,20 +274,22 @@ class CreateProcurement extends Component {
                 autoComplete="off"
               />
             </Grid>
-            <Grid item xs={6} sm={6}>
-              <TextField
-                required
-                id="pricePerKg"
-                name="pricePerKg"
+            <Grid item xs={12} sm={12}>
+              <NumberFormat
+                disabled={true}
                 value={this.state.pricePerKg}
-                onChange={this.onChange}
-                label="Price Per Kg"
-                type="number"
-                inputProps={{
-                  readOnly: Boolean(this.state.readOnly),
-                  disabled: Boolean(this.state.readOnly)
+                thousandSeparator={true}
+                allowNegative={false}
+                onValueChange={values => {
+                  const { floatValue } = values;
+                  this.setState({
+                    pricePerKg: floatValue
+                  });
                 }}
+                customInput={TextField}
+                label="Price Per Kg"
                 fullWidth
+                margin="normal"
                 autoComplete="off"
               />
             </Grid>
@@ -297,6 +321,13 @@ class CreateProcurement extends Component {
                 autoComplete="off"
               />
             </Grid>
+
+            <Grid item xs={12} sm={12}>
+              <Typography variant="h5" gutterBottom>
+                Payment of Farmer
+              </Typography>
+            </Grid>
+
             <Grid item xs={6} sm={6}>
               <TextField
                 id="cashAvailabletoday"
@@ -317,12 +348,6 @@ class CreateProcurement extends Component {
                   </MenuItem>
                 ))}
               </TextField>
-            </Grid>
-
-            <Grid item xs={12} sm={12}>
-              <Typography variant="h5" gutterBottom>
-                Payment of Farmer
-              </Typography>
             </Grid>
 
             <Grid item xs={6} sm={6}>
@@ -360,7 +385,7 @@ class CreateProcurement extends Component {
                 autoComplete="off"
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <TextField
                 required
                 id="outstandingBalance"

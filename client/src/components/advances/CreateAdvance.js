@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Typography } from "@material-ui/core";
@@ -52,7 +52,7 @@ const paymentModes = [
     label: "Coffee"
   }
 ];
-class CreateAdvances extends React.Component {
+class CreateAdvances extends Component {
   constructor() {
     super();
     this.state = {
