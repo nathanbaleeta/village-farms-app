@@ -374,7 +374,7 @@ class CreateProcurement extends Component {
               </TextField>
             </Grid>
             <Grid item xs={6} sm={6}>
-              <TextField
+              {/* <TextField
                 required
                 id="amountPaid"
                 name="amountPaid"
@@ -384,19 +384,44 @@ class CreateProcurement extends Component {
                 type="number"
                 fullWidth
                 autoComplete="off"
+              /> */}
+
+              <NumberFormat
+                disabled={false}
+                value={this.state.amountPaid}
+                thousandSeparator={true}
+                allowNegative={true}
+                onValueChange={values => {
+                  const { floatValue } = values;
+                  this.setState({
+                    amountPaid: floatValue,
+                    outstandingBalance:
+                      this.state.valueOfSaleLiability - floatValue
+                  });
+                }}
+                customInput={TextField}
+                label="Amount paid"
+                fullWidth
+                margin="normal"
+                autoComplete="off"
               />
             </Grid>
             <Grid item xs={6} sm={6}>
-              <TextField
-                required
-                id="outstandingBalance"
-                name="outstandingBalance"
+              <NumberFormat
+                disabled={true}
                 value={this.state.outstandingBalance}
-                onClick={this.handleCalculateOutstandingBalance}
-                //onChange={this.onChange}
+                thousandSeparator={true}
+                allowNegative={true}
+                onValueChange={values => {
+                  const { floatValue } = values;
+                  this.setState({
+                    outstandingBalance: floatValue
+                  });
+                }}
+                customInput={TextField}
                 label="Outstanding balance"
-                type="number"
                 fullWidth
+                margin="normal"
                 autoComplete="off"
               />
             </Grid>
