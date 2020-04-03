@@ -55,7 +55,7 @@ class CreateProcurement extends Component {
     super();
     this.state = {
       id: "",
-      advanceBalance: "",
+      advanceBalance: 0,
       cashAvailabletoday: "",
       coffeeType: "",
       pricePerKg: 0,
@@ -83,7 +83,6 @@ class CreateProcurement extends Component {
       .ref(`advances/${key}`)
       .orderByKey();
     advanceRef.on("value", snapshot => {
-      //let advanceConfig = "";
       let advanceCounter = 0;
       snapshot.forEach(function(childSnapshot) {
         // Mature trees counter; convert string to int
@@ -92,10 +91,10 @@ class CreateProcurement extends Component {
             parseInt(childSnapshot.child("advanceAmount").val())) |
           parseInt(childSnapshot.child("commodityValue").val());
       });
+      // Convert advanceBalance into negative to represent debt owed
       this.setState({
-        advanceBalance: advanceCounter
+        advanceBalance: -Math.abs(advanceCounter)
       });
-      console.log(this.state.advanceBalance);
     });
   }
 
@@ -137,13 +136,6 @@ class CreateProcurement extends Component {
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-  };
-
-  handleCalculateOutstandingBalance = () => {
-    this.setState({
-      outstandingBalance:
-        this.state.valueOfSaleLiability - this.state.amountPaid
-    });
   };
 
   handleSubmit = event => {
@@ -206,7 +198,7 @@ class CreateProcurement extends Component {
                 value={this.state.advanceBalance}
                 thousandSeparator={true}
                 disabled={true}
-                allowNegative={false}
+                allowNegative={true}
                 onValueChange={values => {
                   const { floatValue } = values;
 
@@ -374,18 +366,6 @@ class CreateProcurement extends Component {
               </TextField>
             </Grid>
             <Grid item xs={6} sm={6}>
-              {/* <TextField
-                required
-                id="amountPaid"
-                name="amountPaid"
-                value={this.state.amountPaid}
-                onChange={this.onChange}
-                label="Amount paid"
-                type="number"
-                fullWidth
-                autoComplete="off"
-              /> */}
-
               <NumberFormat
                 disabled={false}
                 value={this.state.amountPaid}
