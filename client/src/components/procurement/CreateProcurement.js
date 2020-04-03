@@ -136,25 +136,7 @@ class CreateProcurement extends Component {
   };
 
   onChange = e => {
-    /*
-          Because we named the inputs to match their
-          corresponding values in state, it's
-          super easy to update the state
-        */
     this.setState({ [e.target.name]: e.target.value });
-  };
-
-  handleCalculateValueSaleLiability = () => {
-    this.setState({
-      valueOfSaleLiability:
-        this.state.todayValueSale - this.state.advanceBalance
-    });
-  };
-
-  handleCalculateTodayValueSale = () => {
-    this.setState({
-      todayValueSale: this.state.pricePerKg * this.state.weight
-    });
   };
 
   handleCalculateOutstandingBalance = () => {
@@ -301,19 +283,6 @@ class CreateProcurement extends Component {
               />
             </Grid>
             <Grid item xs={6} sm={6}>
-              {/*  <TextField
-                required
-                id="todayValueSale"
-                name="todayValueSale"
-                value={this.state.todayValueSale}
-                onClick={this.handleCalculateTodayValueSale}
-                helperText="Click to display Today Value sale"
-                label="Today Value Sale"
-                type="number"
-                fullWidth
-                autoComplete="off"
-              />
- */}
               <NumberFormat
                 disabled={true}
                 value={this.state.todayValueSale}
@@ -322,7 +291,8 @@ class CreateProcurement extends Component {
                 onValueChange={values => {
                   const { floatValue } = values;
                   this.setState({
-                    todayValueSale: floatValue
+                    todayValueSale: floatValue,
+                    valueOfSaleLiability: floatValue - this.state.advanceBalance
                   });
                 }}
                 customInput={TextField}
@@ -334,15 +304,21 @@ class CreateProcurement extends Component {
             </Grid>
 
             <Grid item xs={6} sm={6}>
-              <TextField
-                required
-                id="valueOfSaleLiability"
-                name="valueOfSaleLiability"
+              <NumberFormat
+                disabled={true}
                 value={this.state.valueOfSaleLiability}
-                onClick={this.handleCalculateValueSaleLiability}
+                thousandSeparator={true}
+                allowNegative={true}
+                onValueChange={values => {
+                  const { floatValue } = values;
+                  this.setState({
+                    valueOfSaleLiability: floatValue
+                  });
+                }}
+                customInput={TextField}
                 label="Value of sale liability"
-                type="number"
                 fullWidth
+                margin="normal"
                 autoComplete="off"
               />
             </Grid>
