@@ -240,7 +240,7 @@ class CreateProcurement extends Component {
               />
             </Grid>
 
-            <Grid item xs={6} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 id="coffeeType"
                 select
@@ -262,19 +262,26 @@ class CreateProcurement extends Component {
               </TextField>
             </Grid>
             <Grid item xs={6} sm={6}>
-              <TextField
-                required
-                id="weight"
-                name="weight"
+              <NumberFormat
+                disabled={false}
                 value={this.state.weight}
-                onChange={this.onChange}
+                thousandSeparator={true}
+                allowNegative={false}
+                onValueChange={values => {
+                  const { floatValue } = values;
+                  this.setState({
+                    weight: floatValue,
+                    todayValueSale: this.state.pricePerKg * floatValue
+                  });
+                }}
+                customInput={TextField}
                 label="Weight"
-                type="number"
                 fullWidth
+                margin="normal"
                 autoComplete="off"
               />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={6} sm={6}>
               <NumberFormat
                 disabled={true}
                 value={this.state.pricePerKg}
@@ -294,7 +301,7 @@ class CreateProcurement extends Component {
               />
             </Grid>
             <Grid item xs={6} sm={6}>
-              <TextField
+              {/*  <TextField
                 required
                 id="todayValueSale"
                 name="todayValueSale"
@@ -304,6 +311,24 @@ class CreateProcurement extends Component {
                 label="Today Value Sale"
                 type="number"
                 fullWidth
+                autoComplete="off"
+              />
+ */}
+              <NumberFormat
+                disabled={true}
+                value={this.state.todayValueSale}
+                thousandSeparator={true}
+                allowNegative={false}
+                onValueChange={values => {
+                  const { floatValue } = values;
+                  this.setState({
+                    todayValueSale: floatValue
+                  });
+                }}
+                customInput={TextField}
+                label="Today Value Sale"
+                fullWidth
+                margin="normal"
                 autoComplete="off"
               />
             </Grid>
