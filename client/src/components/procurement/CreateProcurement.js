@@ -160,15 +160,18 @@ class CreateProcurement extends Component {
   };
 
   // Validate input
-  onValidate = (amountPaid) => {
+  onValidate = (amountPaid, coffeeType, weight) => {
     // Store errors for all fields in a single array
     const errors = [];
 
-    if (amountPaid === "") {
-      errors.push("Amount paid can't be empty");
+    if (coffeeType === "") {
+      errors.push("Coffee type can't be empty");
     }
-    if (amountPaid < 1) {
-      errors.push("Amount paid must be greater than zero");
+    if (amountPaid === "" || amountPaid < 1) {
+      errors.push("Amount paid can't be empty or less than one");
+    }
+    if (weight === "" || weight < 1) {
+      errors.push("Weight paid can't be empty or less than one");
     }
     return errors;
   };
@@ -176,14 +179,17 @@ class CreateProcurement extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const errors = this.onValidate(this.state.amountPaid);
+    const errors = this.onValidate(
+      this.state.amountPaid,
+      this.state.coffeeType,
+      this.state.weight
+    );
     if (errors.length > 0) {
       this.setState({ errors });
       return;
     }
     // target ID retrieved from another component using onClick event listener
     const key = this.props.id;
-    event.preventDefault();
 
     // get our form data out of state
     const procurement = {
