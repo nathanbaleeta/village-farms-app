@@ -6,6 +6,8 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Alert, AlertTitle } from "@material-ui/lab";
+import { display } from "@material-ui/system";
+import Box from "@material-ui/core/Box";
 
 import NumberFormat from "react-number-format";
 
@@ -79,14 +81,13 @@ class CreateAdvances extends Component {
 
       //errors
       errors: [],
+      show: "none",
     };
   }
 
   componentDidMount() {
     // targetID retrieved from another component using onClick event listener
     //console.log(this.props.id);
-
-    //console.log(this.props.district);
 
     this.getPriceByDistrict();
   }
@@ -178,9 +179,17 @@ class CreateAdvances extends Component {
     return value == null || value.length === 0;
   }
 
+  openAlert = () => {
+    this.setState({ show: "block" });
+  };
+
+  closeAlert = () => {
+    this.setState({ show: "none" });
+  };
+
   // Validate input
   onValidate = (advanceType, paymentMode, pricePerKg, totalCoffeeWeight) => {
-    // Store errors for all fields in a single array
+    // Store errors for all fields in an array
     const errors = [];
 
     if (advanceType.length === 0) {
@@ -191,9 +200,6 @@ class CreateAdvances extends Component {
     }
     if (pricePerKg.length < 1) {
       errors.push("Price per Kg can't be empty");
-    }
-    if (totalCoffeeWeight.length < 1) {
-      errors.push("Total coffee weight can't be empty");
     }
 
     return errors;
@@ -210,8 +216,11 @@ class CreateAdvances extends Component {
     );
     if (errors.length > 0) {
       this.setState({ errors });
+      this.openAlert();
       return;
     }
+
+    console.log(this.state.errors);
 
     // target ID retrieved from another component using onClick event listener
     const key = this.props.id;
@@ -250,23 +259,33 @@ class CreateAdvances extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    //const { classes } = this.props;
     const {
       advanceAmount,
       commodityValue,
       pricePerKg,
       totalCoffeeWeight,
+      errors,
     } = this.state;
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <br />
-          <Grid container spacing={2}>
+          <Grid container spacing={1}>
             <Grid item xs={12} sm={12}>
-              <Alert variant="standard" severity="error">
-                <AlertTitle>Error</AlertTitle>
-                <p>This is an error alert — check it out! </p>
-              </Alert>
+              <Box component="span" display={this.state.show}>
+                <Alert
+                  variant="standard"
+                  severity="error"
+                  onClose={this.closeAlert}
+                >
+                  <AlertTitle>Error</AlertTitle>
+                  <ul>
+                    {errors.map((msg, index) => (
+                      <li key={index}> {msg} </li>
+                    ))}
+                  </ul>
+                </Alert>
+              </Box>
               <br />
               <Typography variant="h5" gutterBottom>
                 Advances
