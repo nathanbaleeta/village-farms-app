@@ -196,7 +196,6 @@ class FarmerDetails extends Component {
     procurementRef.on("value", (snapshot) => {
       let procurementInfo = {};
       let newState = [];
-      let advanceBalance = this.state.advanceCounter;
       snapshot.forEach(function (childSnapshot) {
         // handle read data.
         var p = childSnapshot.val();
@@ -204,7 +203,7 @@ class FarmerDetails extends Component {
 
         procurementInfo = {
           procurementID: childSnapshot.key,
-          advanceBalance: advanceBalance,
+          advanceBalance: p.advanceBalance,
           cashAvailabletoday: p.cashAvailabletoday,
           coffeeType: p.coffeeType,
           pricePerKg: p.pricePerKg,
