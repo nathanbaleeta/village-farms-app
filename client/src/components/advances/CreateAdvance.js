@@ -5,12 +5,20 @@ import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
+import { Alert, AlertTitle } from "@material-ui/lab";
 
 import NumberFormat from "react-number-format";
 
 import firebase from "../common/firebase";
 
-const styles = (theme) => ({});
+const styles = (theme) => ({
+  root: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(1),
+    },
+  },
+});
 
 const advanceTypes = [
   {
@@ -52,6 +60,7 @@ const paymentModes = [
     label: "Coffee",
   },
 ];
+
 class CreateAdvances extends Component {
   constructor() {
     super();
@@ -241,6 +250,7 @@ class CreateAdvances extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     const {
       advanceAmount,
       commodityValue,
@@ -251,15 +261,19 @@ class CreateAdvances extends Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <br />
-
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
+              <Alert variant="standard" severity="error">
+                <AlertTitle>Error</AlertTitle>
+                <p>This is an error alert — check it out! </p>
+              </Alert>
+              <br />
               <Typography variant="h5" gutterBottom>
                 Advances
               </Typography>
             </Grid>
 
-            <Grid item xs={12} sm={12}>
+            <Grid item lg={6} sm={12}>
               <TextField
                 required
                 id="advanceType"
@@ -275,6 +289,28 @@ class CreateAdvances extends Component {
                 }}
               >
                 {advanceTypes.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+
+            <Grid item lg={6} sm={12}>
+              <TextField
+                id="paymentMode"
+                select
+                name="paymentMode"
+                value={this.state.paymentMode}
+                onChange={this.onChange}
+                label="Mode of payment"
+                fullWidth
+                helperText="Please select mode of payment"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              >
+                {paymentModes.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -346,28 +382,6 @@ class CreateAdvances extends Component {
                 margin="normal"
                 autoComplete="off"
               />
-            </Grid>
-
-            <Grid item xs={12} sm={12}>
-              <TextField
-                id="paymentMode"
-                select
-                name="paymentMode"
-                value={this.state.paymentMode}
-                onChange={this.onChange}
-                label="Mode of payment"
-                fullWidth
-                helperText="Please select mode of payment"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              >
-                {paymentModes.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
             </Grid>
 
             <Grid item xs={12} sm={6}>
