@@ -942,7 +942,7 @@ class FarmerDetails extends Component {
                             <TableCell align="left">{row.coffeeType}</TableCell>
                             <TableCell align="left">{row.pricePerKg}</TableCell>
                             <TableCell align="left">
-                              {row.totalValueSale}
+                              {row.todayValueSale}
                             </TableCell>
                             <TableCell align="left">{row.payNow}</TableCell>
                             <TableCell align="left">{row.amountPaid}</TableCell>
