@@ -160,7 +160,7 @@ class CreateProcurement extends Component {
   };
 
   // Validate input
-  onValidate = (amountPaid, coffeeType, weight) => {
+  onValidate = (amountPaid, coffeeType, weight, cashAvailabletoday, payNow) => {
     // Store errors for all fields in a single array
     const errors = [];
 
@@ -173,6 +173,12 @@ class CreateProcurement extends Component {
     if (weight === "" || weight < 1) {
       errors.push("Weight paid can't be empty or less than one");
     }
+    if (cashAvailabletoday === "") {
+      errors.push("Cash availabity field can't be empty");
+    }
+    if (payNow === "") {
+      errors.push("Pay now field can't be empty");
+    }
     return errors;
   };
 
@@ -182,7 +188,9 @@ class CreateProcurement extends Component {
     const errors = this.onValidate(
       this.state.amountPaid,
       this.state.coffeeType,
-      this.state.weight
+      this.state.weight,
+      this.state.cashAvailabletoday,
+      this.state.payNow
     );
     if (errors.length > 0) {
       this.setState({ errors });
