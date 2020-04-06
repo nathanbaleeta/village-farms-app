@@ -12,43 +12,43 @@ import Snackbar from "../Farmer/Snackbar";
 
 import firebase from "../common/firebase";
 
-const styles = theme => ({});
+const styles = (theme) => ({});
 
 const coffeeTypes = [
   {
     value: "Cherry",
-    label: "Cherry"
+    label: "Cherry",
   },
   {
     value: "Parchment",
-    label: "Parchment"
+    label: "Parchment",
   },
   {
     value: "Mbuni",
-    label: "Mbuni"
-  }
+    label: "Mbuni",
+  },
 ];
 
 const cashAvailability = [
   {
     value: "Yes",
-    label: "Yes"
+    label: "Yes",
   },
   {
     value: "No",
-    label: "No"
-  }
+    label: "No",
+  },
 ];
 
 const payNowOptions = [
   {
     value: "Yes",
-    label: "Yes"
+    label: "Yes",
   },
   {
     value: "No",
-    label: "No"
-  }
+    label: "No",
+  },
 ];
 class CreateProcurement extends Component {
   constructor() {
@@ -68,7 +68,7 @@ class CreateProcurement extends Component {
       outstandingBalance: "",
 
       // Price per kg readOnly property
-      readOnly: true
+      readOnly: true,
     };
   }
 
@@ -78,13 +78,10 @@ class CreateProcurement extends Component {
 
     //Retrieve advance balance
     const key = this.props.id;
-    const advanceRef = firebase
-      .database()
-      .ref(`advances/${key}`)
-      .orderByKey();
-    advanceRef.on("value", snapshot => {
+    const advanceRef = firebase.database().ref(`advances/${key}`).orderByKey();
+    advanceRef.on("value", (snapshot) => {
       let advanceCounter = 0;
-      snapshot.forEach(function(childSnapshot) {
+      snapshot.forEach(function (childSnapshot) {
         // Mature trees counter; convert string to int
         advanceCounter =
           (advanceCounter +
@@ -93,19 +90,16 @@ class CreateProcurement extends Component {
       });
       // Convert advanceBalance into negative to represent debt owed
       this.setState({
-        advanceBalance: -Math.abs(advanceCounter)
+        advanceBalance: -Math.abs(advanceCounter),
       });
     });
   }
 
   // Retrieve price data from firebase
   getPriceByDistrict = () => {
-    const pricesRef = firebase
-      .database()
-      .ref("settings")
-      .child("prices");
+    const pricesRef = firebase.database().ref("settings").child("prices");
 
-    pricesRef.on("value", snapshot => {
+    pricesRef.on("value", (snapshot) => {
       let items = snapshot.val();
       let newState = [];
       for (let item in items) {
@@ -113,12 +107,12 @@ class CreateProcurement extends Component {
           id: item,
           district: items[item].district,
           pricePerKg: items[item].pricePerKg,
-          dateConfigured: items[item].dateConfigured
+          dateConfigured: items[item].dateConfigured,
         });
       }
 
       // Filter row which matches farmer district and generate resultset
-      const resultset = newState.filter(row => {
+      const resultset = newState.filter((row) => {
         return row.district === this.props.district;
       });
 
@@ -126,19 +120,19 @@ class CreateProcurement extends Component {
 
       resultset.length > 0
         ? this.setState({
-            pricePerKg: resultset[0].pricePerKg
+            pricePerKg: resultset[0].pricePerKg,
           })
         : this.setState({
-            pricePerKg: 0
+            pricePerKg: 0,
           });
     });
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     // target ID retrieved from another component using onClick event listener
     const key = this.props.id;
     event.preventDefault();
@@ -157,8 +151,8 @@ class CreateProcurement extends Component {
       amountPaid: this.state.amountPaid,
       outstandingBalance: this.state.outstandingBalance,
       created: new Date().toLocaleString("en-GB", {
-        timeZone: "Africa/Maputo"
-      })
+        timeZone: "Africa/Maputo",
+      }),
     };
 
     const procurementRef = firebase.database().ref(`procurement/${key}`);
@@ -175,7 +169,7 @@ class CreateProcurement extends Component {
 
       payNow: "",
       amountPaid: "",
-      outstandingBalance: ""
+      outstandingBalance: "",
     });
   };
 
@@ -199,11 +193,11 @@ class CreateProcurement extends Component {
                 thousandSeparator={true}
                 disabled={true}
                 allowNegative={true}
-                onValueChange={values => {
+                onValueChange={(values) => {
                   const { floatValue } = values;
 
                   this.setState({
-                    advanceBalance: floatValue
+                    advanceBalance: floatValue,
                   });
                 }}
                 customInput={TextField}
@@ -225,15 +219,35 @@ class CreateProcurement extends Component {
                 fullWidth
                 helperText="Please select coffee type"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
               >
-                {coffeeTypes.map(option => (
+                {coffeeTypes.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
                 ))}
               </TextField>
+            </Grid>
+
+            <Grid item xs={6} sm={6}>
+              <NumberFormat
+                disabled={true}
+                value={this.state.pricePerKg}
+                thousandSeparator={true}
+                allowNegative={false}
+                onValueChange={(values) => {
+                  const { floatValue } = values;
+                  this.setState({
+                    pricePerKg: floatValue,
+                  });
+                }}
+                customInput={TextField}
+                label="Price Per Kg"
+                fullWidth
+                margin="normal"
+                autoComplete="off"
+              />
             </Grid>
             <Grid item xs={6} sm={6}>
               <NumberFormat
@@ -241,11 +255,11 @@ class CreateProcurement extends Component {
                 value={this.state.weight}
                 thousandSeparator={true}
                 allowNegative={false}
-                onValueChange={values => {
+                onValueChange={(values) => {
                   const { floatValue } = values;
                   this.setState({
                     weight: floatValue,
-                    todayValueSale: this.state.pricePerKg * floatValue
+                    todayValueSale: this.state.pricePerKg * floatValue,
                   });
                 }}
                 customInput={TextField}
@@ -258,33 +272,15 @@ class CreateProcurement extends Component {
             <Grid item xs={6} sm={6}>
               <NumberFormat
                 disabled={true}
-                value={this.state.pricePerKg}
-                thousandSeparator={true}
-                allowNegative={false}
-                onValueChange={values => {
-                  const { floatValue } = values;
-                  this.setState({
-                    pricePerKg: floatValue
-                  });
-                }}
-                customInput={TextField}
-                label="Price Per Kg"
-                fullWidth
-                margin="normal"
-                autoComplete="off"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6}>
-              <NumberFormat
-                disabled={true}
                 value={this.state.todayValueSale}
                 thousandSeparator={true}
                 allowNegative={false}
-                onValueChange={values => {
+                onValueChange={(values) => {
                   const { floatValue } = values;
                   this.setState({
                     todayValueSale: floatValue,
-                    valueOfSaleLiability: floatValue - this.state.advanceBalance
+                    valueOfSaleLiability:
+                      Math.abs(this.state.advanceBalance) - floatValue,
                   });
                 }}
                 customInput={TextField}
@@ -301,10 +297,10 @@ class CreateProcurement extends Component {
                 value={this.state.valueOfSaleLiability}
                 thousandSeparator={true}
                 allowNegative={true}
-                onValueChange={values => {
+                onValueChange={(values) => {
                   const { floatValue } = values;
                   this.setState({
-                    valueOfSaleLiability: floatValue
+                    valueOfSaleLiability: floatValue,
                   });
                 }}
                 customInput={TextField}
@@ -332,10 +328,10 @@ class CreateProcurement extends Component {
                 fullWidth
                 helperText="Please select option"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
               >
-                {cashAvailability.map(option => (
+                {cashAvailability.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -355,10 +351,10 @@ class CreateProcurement extends Component {
                 fullWidth
                 helperText="Please select option"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
               >
-                {payNowOptions.map(option => (
+                {payNowOptions.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -371,12 +367,12 @@ class CreateProcurement extends Component {
                 value={this.state.amountPaid}
                 thousandSeparator={true}
                 allowNegative={true}
-                onValueChange={values => {
+                onValueChange={(values) => {
                   const { floatValue } = values;
                   this.setState({
                     amountPaid: floatValue,
                     outstandingBalance:
-                      this.state.valueOfSaleLiability - floatValue
+                      this.state.valueOfSaleLiability - floatValue,
                   });
                 }}
                 customInput={TextField}
@@ -392,10 +388,10 @@ class CreateProcurement extends Component {
                 value={this.state.outstandingBalance}
                 thousandSeparator={true}
                 allowNegative={true}
-                onValueChange={values => {
+                onValueChange={(values) => {
                   const { floatValue } = values;
                   this.setState({
-                    outstandingBalance: floatValue
+                    outstandingBalance: floatValue,
                   });
                 }}
                 customInput={TextField}

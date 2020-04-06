@@ -51,7 +51,7 @@ import TableRow from "@material-ui/core/TableRow";
 
 import {
   MuiPickersUtilsProvider,
-  KeyboardDatePicker
+  KeyboardDatePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
@@ -74,36 +74,36 @@ function TabContainer(props) {
     </Typography>
   );
 }
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
 
-    flexGrow: 1
+    flexGrow: 1,
   },
 
   smallAvatar: {
     width: 60,
-    height: 60
+    height: 60,
   },
   bigAvatar: {
     width: 220,
     height: 220,
-    margin: "auto"
+    margin: "auto",
   },
   fab: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
   },
 
   tableRoot: {
     width: "100%",
     marginTop: theme.spacing(3),
-    overflowX: "auto"
+    overflowX: "auto",
   },
   table: {
-    minWidth: 700
-  }
+    minWidth: 700,
+  },
 });
 
 class FarmerDetails extends Component {
@@ -163,7 +163,7 @@ class FarmerDetails extends Component {
       isVisible: false,
 
       // Editing settings
-      isEditing: false
+      isEditing: false,
     };
   }
 
@@ -173,21 +173,18 @@ class FarmerDetails extends Component {
     const key = this.props.match.params.id;
     //console.log(key);
     /********************** Retrieve advance balance *********************/
-    const advanceRef = firebase
-      .database()
-      .ref(`advances/${key}`)
-      .orderByKey();
-    advanceRef.on("value", snapshot => {
+    const advanceRef = firebase.database().ref(`advances/${key}`).orderByKey();
+    advanceRef.on("value", (snapshot) => {
       let advanceCounter = 0;
       //console.log(advanceCounter);
-      snapshot.forEach(function(childSnapshot) {
+      snapshot.forEach(function (childSnapshot) {
         // Mature trees counter; convert string to int
         advanceCounter =
           advanceCounter + parseInt(childSnapshot.child("advanceAmount").val());
         //console.log(advanceCounter);
       });
       this.setState({
-        advanceCounter: advanceCounter
+        advanceCounter: advanceCounter,
       });
 
       //console.log(this.state.advanceCounter);
@@ -196,17 +193,17 @@ class FarmerDetails extends Component {
 
     // Farmer procurement data.
     const procurementRef = firebase.database().ref(`procurement/${key}`);
-    procurementRef.on("value", snapshot => {
+    procurementRef.on("value", (snapshot) => {
       let procurementInfo = {};
       let newState = [];
       let advanceBalance = this.state.advanceCounter;
-      snapshot.forEach(function(childSnapshot) {
+      snapshot.forEach(function (childSnapshot) {
         // handle read data.
         var p = childSnapshot.val();
         //console.log(childSnapshot.key);
 
         procurementInfo = {
-          id: childSnapshot.key,
+          procurementID: childSnapshot.key,
           advanceBalance: advanceBalance,
           cashAvailabletoday: p.cashAvailabletoday,
           coffeeType: p.coffeeType,
@@ -216,13 +213,13 @@ class FarmerDetails extends Component {
           weight: p.weight,
           payNow: p.payNow,
           amountPaid: p.amountPaid,
-          outstandingBalance: p.outstandingBalance
+          outstandingBalance: p.outstandingBalance,
         };
         // Add procurement objecet to array
         newState.push(procurementInfo);
       });
       this.setState({
-        procurementData: newState
+        procurementData: newState,
       });
 
       //console.log(this.state.procurementData);
@@ -230,10 +227,10 @@ class FarmerDetails extends Component {
 
     // Farmer advances data.
     const advancesRef = firebase.database().ref(`advances/${key}`);
-    advancesRef.on("value", snapshot => {
+    advancesRef.on("value", (snapshot) => {
       let advanceInfo = {};
       let newState = [];
-      snapshot.forEach(function(childSnapshot) {
+      snapshot.forEach(function (childSnapshot) {
         // handle read data.
         var a = childSnapshot.val();
         //console.log(childSnapshot.key);
@@ -246,13 +243,13 @@ class FarmerDetails extends Component {
           commodityValue: a.commodityValue,
           paymentMode: a.paymentMode,
           pricePerKg: a.pricePerKg,
-          totalCoffeeWeight: a.totalCoffeeWeight
+          totalCoffeeWeight: a.totalCoffeeWeight,
         };
         // Add advance object to array
         newState.push(advanceInfo);
       });
       this.setState({
-        advancesData: newState
+        advancesData: newState,
       });
 
       //console.log(this.state.advancesData);
@@ -260,7 +257,7 @@ class FarmerDetails extends Component {
 
     // Farmer registration data.
     const farmersRef = firebase.database().ref(`farmers/${key}`);
-    farmersRef.on("value", snapshot => {
+    farmersRef.on("value", (snapshot) => {
       // handle read data.
       const firstname = snapshot.child("firstname").val();
       const lastname = snapshot.child("lastname").val();
@@ -303,38 +300,35 @@ class FarmerDetails extends Component {
         url: url,
 
         //Dialog box
-        open: false
+        open: false,
       });
     });
   }
 
   populateDistricts = () => {
-    const districtsRef = firebase
-      .database()
-      .ref("settings")
-      .child("districts");
+    const districtsRef = firebase.database().ref("settings").child("districts");
 
-    districtsRef.on("value", snapshot => {
+    districtsRef.on("value", (snapshot) => {
       let items = snapshot.val();
       let newState = [];
       for (let item in items) {
         newState.push({
           id: item,
-          district: items[item].district
+          district: items[item].district,
         });
       }
 
       //console.log(newState);
       this.setState({
-        districts: newState
+        districts: newState,
       });
       //console.log(this.state.districts);
     });
   };
 
-  onEdit = e => {
+  onEdit = (e) => {
     this.setState({
-      isEditing: true
+      isEditing: true,
     });
   };
 
@@ -364,11 +358,11 @@ class FarmerDetails extends Component {
       weight: "",
       pricePerKg: "",
       todayValueSale: "",
-      valueOfSaleLiability: ""
+      valueOfSaleLiability: "",
     });
   };
 
-  onChange = e => {
+  onChange = (e) => {
     /*
           Because we named the inputs to match their
           corresponding values in state, it's
@@ -379,11 +373,11 @@ class FarmerDetails extends Component {
 
   handleChangeTodayValueSale = () => {
     this.setState({
-      todayValueSale: this.state.pricePerKg * this.state.weight
+      todayValueSale: this.state.pricePerKg * this.state.weight,
     });
   };
 
-  onDeleteAdvance = row => {
+  onDeleteAdvance = (row) => {
     //console.log(row.advanceID);
 
     firebase
@@ -391,6 +385,15 @@ class FarmerDetails extends Component {
       .ref("advances")
       .child(this.props.match.params.id)
       .child(row.advanceID)
+      .remove();
+  };
+
+  onDeleteProcurement = (row) => {
+    firebase
+      .database()
+      .ref("procurement")
+      .child(this.props.match.params.id)
+      .child(row.procurementID)
       .remove();
   };
 
@@ -408,7 +411,7 @@ class FarmerDetails extends Component {
     this.openDialog();
   }
 
-  onSaveFarmer = event => {
+  onSaveFarmer = (event) => {
     event.preventDefault();
 
     // get our form data out of state
@@ -429,7 +432,7 @@ class FarmerDetails extends Component {
       year1: !this.state.year1 ? 0 : this.removeCommas(this.state.year1),
       year2: !this.state.year2 ? 0 : this.removeCommas(this.state.year2),
       year3: !this.state.year3 ? 0 : this.removeCommas(this.state.year3),
-      acreage: !this.state.acreage ? 0 : this.removeCommas(this.state.acreage)
+      acreage: !this.state.acreage ? 0 : this.removeCommas(this.state.acreage),
     };
 
     //Update farmer module
@@ -437,25 +440,25 @@ class FarmerDetails extends Component {
     const farmersRef = firebase.database().ref(`farmers/${key}`);
     farmersRef
       .update(farmer)
-      .then(function() {
+      .then(function () {
         console.log("Synchronization succeeded");
         console.log(this.state);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log("Synchronization failed");
       });
   };
 
-  toTitleCase = phrase => {
+  toTitleCase = (phrase) => {
     return phrase
       .toLowerCase()
       .split(" ")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   };
 
   // remove commas before saving to firebase
-  removeCommas = num => {
+  removeCommas = (num) => {
     //Convert number to string before attempting string manipulation
     let str = num.toString();
 
@@ -471,9 +474,7 @@ class FarmerDetails extends Component {
     const file = e.target.files[0];
 
     // create a random id
-    const randomId = Math.random()
-      .toString(36)
-      .substring(2);
+    const randomId = Math.random().toString(36).substring(2);
 
     // Upload passport photo to firebase
     const uploadTask = firebase
@@ -482,7 +483,7 @@ class FarmerDetails extends Component {
       .put(file);
 
     uploadTask
-      .then(snapshot => {
+      .then((snapshot) => {
         // progress function ...
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
@@ -491,14 +492,11 @@ class FarmerDetails extends Component {
         //this.setState({ progress });
         return snapshot.ref.getDownloadURL();
       })
-      .then(url => {
+      .then((url) => {
         this.setState({ url: url });
         //Update farmer URL
         const key = this.state.id;
-        firebase
-          .database()
-          .ref(`farmers/${key}/url`)
-          .set(url);
+        firebase.database().ref(`farmers/${key}/url`).set(url);
       });
   }
 
@@ -525,7 +523,7 @@ class FarmerDetails extends Component {
                   label="PROFILE"
                   style={{
                     fontWeight: "bold",
-                    fontSize: 18
+                    fontSize: 18,
                   }}
                 />
                 <Tab
@@ -533,7 +531,7 @@ class FarmerDetails extends Component {
                   label="PROCUREMENTS"
                   style={{
                     fontWeight: "bold",
-                    fontSize: 18
+                    fontSize: 18,
                   }}
                 />
                 <Tab
@@ -541,7 +539,7 @@ class FarmerDetails extends Component {
                   label="ADVANCES"
                   style={{
                     fontWeight: "bold",
-                    fontSize: 18
+                    fontSize: 18,
                   }}
                 />
                 {/* <Tab icon={<PollIcon />} label="REPORTS" /> */}
@@ -555,7 +553,7 @@ class FarmerDetails extends Component {
                           color="primary"
                           accept="image/*"
                           type="file"
-                          onChange={e => this.onChangePhoto(e)}
+                          onChange={(e) => this.onChangePhoto(e)}
                           id="icon-button-file"
                           style={{ display: "none" }}
                         />
@@ -581,7 +579,7 @@ class FarmerDetails extends Component {
                           style={{
                             color: "darkblue",
                             textDecoration: "none",
-                            fontSize: 13
+                            fontSize: 13,
                           }}
                         >
                           Tap photo to change
@@ -596,7 +594,7 @@ class FarmerDetails extends Component {
                             component="h4"
                             style={{
                               fontWeight: "normal",
-                              color: "midnightblue"
+                              color: "midnightblue",
                             }}
                           >
                             {this.state.title}.{" "}
@@ -777,7 +775,7 @@ class FarmerDetails extends Component {
                                 this.state.mmRegistered === "Yes" ? true : false
                               }
                               inputProps={{
-                                "aria-label": "secondary checkbox"
+                                "aria-label": "secondary checkbox",
                               }}
                             />
                           </Typography>
@@ -800,7 +798,7 @@ class FarmerDetails extends Component {
                                 this.state.mmPayment === "Yes" ? true : false
                               }
                               inputProps={{
-                                "aria-label": "secondary checkbox"
+                                "aria-label": "secondary checkbox",
                               }}
                             />
                           </Typography>
@@ -820,7 +818,7 @@ class FarmerDetails extends Component {
                     onClick={this.handleOpen.bind(this)}
                     style={{
                       backgroundColor: "#FFBF00",
-                      color: "black"
+                      color: "black",
                     }}
                   >
                     <AddIcon className={classes.extendedIcon} />
@@ -837,7 +835,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Advance balance
@@ -848,7 +846,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Cash available today
@@ -859,7 +857,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Coffee type
@@ -870,7 +868,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Price per Kg
@@ -881,7 +879,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Total value sale
@@ -892,7 +890,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Pay now
@@ -903,7 +901,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Amount paid
@@ -914,15 +912,26 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Outstanding balance
                           </TableCell>
+                          <TableCell
+                            align="left"
+                            style={{
+                              color: "white",
+                              background: "midnightblue",
+                              fontWeight: "bold",
+                              fontSize: 18,
+                            }}
+                          >
+                            Action
+                          </TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {this.state.procurementData.map(row => (
+                        {this.state.procurementData.map((row) => (
                           <TableRow key={row.id}>
                             <TableCell component="th" scope="row">
                               {row.advanceBalance}
@@ -940,6 +949,26 @@ class FarmerDetails extends Component {
                             <TableCell align="left">{row.amountPaid}</TableCell>
                             <TableCell align="left">
                               {row.outstandingBalance}
+                            </TableCell>
+                            <TableCell
+                              align="left"
+                              style={{
+                                color: "black",
+                                fontSize: 16,
+                              }}
+                            >
+                              <Typography
+                                variant="subheading"
+                                align="center"
+                                color="default"
+                              >
+                                <DeleteIcon
+                                  onClick={this.onDeleteProcurement.bind(
+                                    this,
+                                    row
+                                  )}
+                                />
+                              </Typography>
                             </TableCell>
                           </TableRow>
                         ))}
@@ -960,7 +989,7 @@ class FarmerDetails extends Component {
                     onClick={this.handleVisible.bind(this)}
                     style={{
                       backgroundColor: "#FFBF00",
-                      color: "black"
+                      color: "black",
                     }}
                   >
                     <AddIcon className={classes.extendedIcon} />
@@ -978,7 +1007,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Advance type
@@ -989,7 +1018,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Advance amount
@@ -1000,7 +1029,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Commodity
@@ -1011,7 +1040,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Commodity Value
@@ -1022,7 +1051,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Mode of payment
@@ -1033,7 +1062,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Price per kg
@@ -1044,7 +1073,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Total Coffee Weight
@@ -1055,7 +1084,7 @@ class FarmerDetails extends Component {
                               color: "white",
                               background: "midnightblue",
                               fontWeight: "bold",
-                              fontSize: 18
+                              fontSize: 18,
                             }}
                           >
                             Action
@@ -1063,14 +1092,14 @@ class FarmerDetails extends Component {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {this.state.advancesData.map(row => (
+                        {this.state.advancesData.map((row) => (
                           <TableRow key={row.id}>
                             <TableCell
                               component="th"
                               scope="row"
                               style={{
                                 color: "black",
-                                fontSize: 16
+                                fontSize: 16,
                               }}
                             >
                               {row.advanceType}
@@ -1079,7 +1108,7 @@ class FarmerDetails extends Component {
                               align="left"
                               style={{
                                 color: "black",
-                                fontSize: 16
+                                fontSize: 16,
                               }}
                             >
                               {numeral(row.advanceAmount).format("0,0[.]00")}
@@ -1088,7 +1117,7 @@ class FarmerDetails extends Component {
                               align="left"
                               style={{
                                 color: "black",
-                                fontSize: 16
+                                fontSize: 16,
                               }}
                             >
                               {row.commodityAdvanced}
@@ -1097,7 +1126,7 @@ class FarmerDetails extends Component {
                               align="left"
                               style={{
                                 color: "black",
-                                fontSize: 16
+                                fontSize: 16,
                               }}
                             >
                               {numeral(row.commodityValue).format("0,0[.]00")}
@@ -1106,7 +1135,7 @@ class FarmerDetails extends Component {
                               align="left"
                               style={{
                                 color: "black",
-                                fontSize: 16
+                                fontSize: 16,
                               }}
                             >
                               {row.paymentMode}
@@ -1115,7 +1144,7 @@ class FarmerDetails extends Component {
                               align="left"
                               style={{
                                 color: "black",
-                                fontSize: 16
+                                fontSize: 16,
                               }}
                             >
                               {numeral(row.pricePerKg).format("0,0[.]00")}
@@ -1124,7 +1153,7 @@ class FarmerDetails extends Component {
                               align="left"
                               style={{
                                 color: "black",
-                                fontSize: 16
+                                fontSize: 16,
                               }}
                             >
                               {numeral(row.totalCoffeeWeight).format(
@@ -1135,7 +1164,7 @@ class FarmerDetails extends Component {
                               align="left"
                               style={{
                                 color: "black",
-                                fontSize: 16
+                                fontSize: 16,
                               }}
                             >
                               <Typography
@@ -1171,7 +1200,7 @@ class FarmerDetails extends Component {
           aria-labelledby="form-dialog-title"
           onClose={this.closeDialog}
           style={{
-            zoom: "80%"
+            zoom: "80%",
           }}
         >
           <DialogTitle
@@ -1180,7 +1209,7 @@ class FarmerDetails extends Component {
             style={{
               backgroundColor: "white",
               color: "black",
-              borderBottom: "2px solid midnightblue"
+              borderBottom: "2px solid midnightblue",
             }}
           >
             <Typography
@@ -1210,7 +1239,7 @@ class FarmerDetails extends Component {
                     fullWidth
                     autoComplete="off"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   />
                 </Grid>
@@ -1225,7 +1254,7 @@ class FarmerDetails extends Component {
                     fullWidth
                     autoComplete="off"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   />
                 </Grid>
@@ -1240,10 +1269,10 @@ class FarmerDetails extends Component {
                     fullWidth
                     helperText="Please select title"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {titles.map(option => (
+                    {titles.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -1261,10 +1290,10 @@ class FarmerDetails extends Component {
                     fullWidth
                     helperText="Please select gender"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {genders.map(option => (
+                    {genders.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -1283,15 +1312,15 @@ class FarmerDetails extends Component {
                     fullWidth
                     helperText="Please select marital status"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {maritalStatuses.map(option => (
+                    {maritalStatuses.map((option) => (
                       <MenuItem
                         key={option.value}
                         value={option.value}
                         style={{
-                          zoom: "70%"
+                          zoom: "70%",
                         }}
                       >
                         {option.label}
@@ -1314,7 +1343,7 @@ class FarmerDetails extends Component {
                         helperText="For example: 772 123 456"
                         autoComplete="phone"
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
                       />
                     )}
@@ -1332,10 +1361,10 @@ class FarmerDetails extends Component {
                     fullWidth
                     helperText="Please select option"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {mmOptions.map(option => (
+                    {mmOptions.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -1353,10 +1382,10 @@ class FarmerDetails extends Component {
                     fullWidth
                     helperText="Please select option"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {mmPayments.map(option => (
+                    {mmPayments.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -1376,10 +1405,10 @@ class FarmerDetails extends Component {
                     fullWidth
                     helperText="Please select district"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {districts.map(option => (
+                    {districts.map((option) => (
                       <MenuItem key={option.id} value={option.district}>
                         {option.district}
                       </MenuItem>
@@ -1398,10 +1427,10 @@ class FarmerDetails extends Component {
                     fullWidth
                     helperText="Please select Traditional Authority"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {tradAuthorities.map(ta => (
+                    {tradAuthorities.map((ta) => (
                       <MenuItem key={ta.id} value={ta.text}>
                         {ta.text}
                       </MenuItem>
@@ -1429,7 +1458,7 @@ class FarmerDetails extends Component {
                       onChange={this.handleDateChange}
                       maxDate={new Date(Date.now() - 7776000000)} // Disables dates less than 3 months
                       InputLabelProps={{
-                        shrink: true
+                        shrink: true,
                       }}
 
                       //InputAdornmentProps={{ position: "end" }}
@@ -1441,7 +1470,7 @@ class FarmerDetails extends Component {
                   <NumberFormat
                     value={this.state.year1}
                     thousandSeparator={true}
-                    onValueChange={values => {
+                    onValueChange={(values) => {
                       const { formattedValue } = values;
 
                       this.setState({ year1: formattedValue });
@@ -1457,7 +1486,7 @@ class FarmerDetails extends Component {
                   <NumberFormat
                     value={this.state.year2}
                     thousandSeparator={true}
-                    onValueChange={values => {
+                    onValueChange={(values) => {
                       const { formattedValue } = values;
 
                       this.setState({ year2: formattedValue });
@@ -1474,7 +1503,7 @@ class FarmerDetails extends Component {
                   <NumberFormat
                     value={this.state.year3}
                     thousandSeparator={true}
-                    onValueChange={values => {
+                    onValueChange={(values) => {
                       const { formattedValue } = values;
 
                       this.setState({ year3: formattedValue });
@@ -1491,7 +1520,7 @@ class FarmerDetails extends Component {
                   <NumberFormat
                     value={this.state.acreage}
                     thousandSeparator={true}
-                    onValueChange={values => {
+                    onValueChange={(values) => {
                       const { formattedValue } = values;
 
                       this.setState({ acreage: formattedValue });
@@ -1535,7 +1564,7 @@ class FarmerDetails extends Component {
           aria-labelledby="form-dialog-title"
           onClose={this.handleClose}
           style={{
-            zoom: "80%"
+            zoom: "80%",
           }}
         >
           <DialogTitle
@@ -1543,7 +1572,7 @@ class FarmerDetails extends Component {
             color="default"
             style={{
               backgroundColor: "white",
-              borderBottom: "2px solid midnightblue"
+              borderBottom: "2px solid midnightblue",
             }}
           >
             <Typography
@@ -1574,7 +1603,7 @@ class FarmerDetails extends Component {
           aria-labelledby="form-dialog-title"
           onClose={this.handleInVisible}
           style={{
-            zoom: "80%"
+            zoom: "80%",
           }}
         >
           <DialogTitle
@@ -1582,7 +1611,7 @@ class FarmerDetails extends Component {
             color="default"
             style={{
               backgroundColor: "white",
-              borderBottom: "2px solid midnightblue"
+              borderBottom: "2px solid midnightblue",
             }}
           >
             <Typography
