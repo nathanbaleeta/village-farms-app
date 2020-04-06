@@ -189,7 +189,6 @@ class FarmerDetails extends Component {
 
       //console.log(this.state.advanceCounter);
     });
-    /********************** Retrieve advance balance *********************/
 
     // Farmer procurement data.
     const procurementRef = firebase.database().ref(`procurement/${key}`);
@@ -362,23 +361,11 @@ class FarmerDetails extends Component {
   };
 
   onChange = (e) => {
-    /*
-          Because we named the inputs to match their
-          corresponding values in state, it's
-          super easy to update the state
-        */
     this.setState({ [e.target.name]: e.target.value });
-  };
-
-  handleChangeTodayValueSale = () => {
-    this.setState({
-      todayValueSale: this.state.pricePerKg * this.state.weight,
-    });
   };
 
   onDeleteAdvance = (row) => {
     //console.log(row.advanceID);
-
     firebase
       .database()
       .ref("advances")
@@ -933,7 +920,7 @@ class FarmerDetails extends Component {
                         {this.state.procurementData.map((row) => (
                           <TableRow key={row.id}>
                             <TableCell component="th" scope="row">
-                              {row.advanceBalance}
+                              {numeral(row.advanceBalance).format("0,0[.]00")}
                             </TableCell>
                             <TableCell align="left">
                               {row.cashAvailabletoday}
@@ -942,12 +929,16 @@ class FarmerDetails extends Component {
                             <TableCell align="left">{row.coffeeType}</TableCell>
                             <TableCell align="left">{row.pricePerKg}</TableCell>
                             <TableCell align="left">
-                              {row.todayValueSale}
+                              {numeral(row.todayValueSale).format("0,0[.]00")}
                             </TableCell>
                             <TableCell align="left">{row.payNow}</TableCell>
-                            <TableCell align="left">{row.amountPaid}</TableCell>
                             <TableCell align="left">
-                              {row.outstandingBalance}
+                              {numeral(row.amountPaid).format("0,0[.]00")}
+                            </TableCell>
+                            <TableCell align="left">
+                              {numeral(row.outstandingBalance).format(
+                                "0,0[.]00"
+                              )}
                             </TableCell>
                             <TableCell
                               align="left"

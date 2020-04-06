@@ -67,6 +67,8 @@ class CreateProcurement extends Component {
       amountPaid: "",
       outstandingBalance: "",
 
+      totalAmountPaid: 0,
+
       // Price per kg readOnly property
       readOnly: true,
     };
@@ -76,23 +78,8 @@ class CreateProcurement extends Component {
     //Get price catalog for districts
     this.getPriceByDistrict();
 
-    //Retrieve advance balance
-    const key = this.props.id;
-    const advanceRef = firebase.database().ref(`advances/${key}`).orderByKey();
-    advanceRef.on("value", (snapshot) => {
-      let advanceCounter = 0;
-      snapshot.forEach(function (childSnapshot) {
-        // Mature trees counter; convert string to int
-        advanceCounter =
-          (advanceCounter +
-            parseInt(childSnapshot.child("advanceAmount").val())) |
-          parseInt(childSnapshot.child("commodityValue").val());
-      });
-      // Convert advanceBalance into negative to represent debt owed
-      this.setState({
-        advanceBalance: -Math.abs(advanceCounter),
-      });
-    });
+    // Get advance balance
+    this.getAdvanceBalance();
   }
 
   // Retrieve price data from firebase
@@ -127,6 +114,43 @@ class CreateProcurement extends Component {
           });
     });
   };
+
+  /********************** Retrieve Advance Balance *********************/
+
+  getAdvanceBalance = () => {
+    //Retrieve total amount paid
+    const key = this.props.id;
+    let amountPaidCounter = 0;
+    const procureRef = firebase
+      .database()
+      .ref(`procurement/${key}`)
+      .orderByKey();
+    procureRef.on("value", (snapshot) => {
+      snapshot.forEach(function (childSnapshot) {
+        // Mature trees counter; convert string to int
+        amountPaidCounter =
+          amountPaidCounter + parseInt(childSnapshot.child("amountPaid").val());
+      });
+    });
+
+    //Retrieve advance amount and subtract amount paid to get advance balance
+    const advanceRef = firebase.database().ref(`advances/${key}`).orderByKey();
+    advanceRef.on("value", (snapshot) => {
+      let advanceCounter = 0;
+      snapshot.forEach(function (childSnapshot) {
+        // Mature trees counter; convert string to int
+        advanceCounter =
+          (advanceCounter +
+            parseInt(childSnapshot.child("advanceAmount").val())) |
+          parseInt(childSnapshot.child("commodityValue").val());
+      });
+      // Convert advanceBalance into negative to represent debt owed
+      this.setState({
+        advanceBalance: -Math.abs(advanceCounter) + amountPaidCounter,
+      });
+    });
+  };
+  /********************** Retrieve Advance Balance *********************/
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
