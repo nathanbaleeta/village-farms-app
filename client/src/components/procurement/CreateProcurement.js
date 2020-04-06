@@ -71,6 +71,9 @@ class CreateProcurement extends Component {
 
       // Price per kg readOnly property
       readOnly: true,
+
+      //errors
+      errors: [],
     };
   }
 
@@ -156,7 +159,28 @@ class CreateProcurement extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  // Validate input
+  onValidate = (amountPaid) => {
+    // Store errors for all fields in a single array
+    const errors = [];
+
+    if (amountPaid === "") {
+      errors.push("Amount paid can't be empty");
+    }
+    if (amountPaid < 1) {
+      errors.push("Amount paid must be greater than zero");
+    }
+    return errors;
+  };
+
   handleSubmit = (event) => {
+    event.preventDefault();
+
+    const errors = this.onValidate(this.state.amountPaid);
+    if (errors.length > 0) {
+      this.setState({ errors });
+      return;
+    }
     // target ID retrieved from another component using onClick event listener
     const key = this.props.id;
     event.preventDefault();

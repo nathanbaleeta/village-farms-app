@@ -12,7 +12,7 @@ import NumberFormat from "react-number-format";
 
 import {
   MuiPickersUtilsProvider,
-  KeyboardDatePicker
+  KeyboardDatePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
@@ -25,10 +25,10 @@ import { mmPayments } from "../common/mobileMoneyPayments";
 import { lookup } from "../common/traditionalAuthorityList";
 import firebase from "../common/firebase";
 
-const styles = theme => ({
+const styles = (theme) => ({
   saveFarmerButton: {
-    background: "midnightblue"
-  }
+    background: "midnightblue",
+  },
 });
 
 class CreateFarmer extends React.Component {
@@ -53,7 +53,7 @@ class CreateFarmer extends React.Component {
 
       districts: [],
 
-      dataValue: "Chitipa"
+      dataValue: "Chitipa",
     };
   }
 
@@ -62,39 +62,36 @@ class CreateFarmer extends React.Component {
   }
 
   populateDistricts = () => {
-    const districtsRef = firebase
-      .database()
-      .ref("settings")
-      .child("districts");
+    const districtsRef = firebase.database().ref("settings").child("districts");
 
-    districtsRef.on("value", snapshot => {
+    districtsRef.on("value", (snapshot) => {
       let items = snapshot.val();
       let newState = [];
       for (let item in items) {
         newState.push({
           id: item,
-          district: items[item].district
+          district: items[item].district,
         });
       }
 
       //console.log(newState);
       this.setState({
-        districts: newState
+        districts: newState,
       });
       //console.log(this.state.districts);
     });
   };
 
-  toTitleCase = phrase => {
+  toTitleCase = (phrase) => {
     return phrase
       .toLowerCase()
       .split(" ")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   };
 
   // remove commas before saving to firebase
-  removeCommas = num => {
+  removeCommas = (num) => {
     //Convert number to string before attempting string manipulation
     let str = num.toString();
 
@@ -103,31 +100,26 @@ class CreateFarmer extends React.Component {
     return Number(result);
   };
 
-  onChangeDistrict = e => {
+  onChangeDistrict = (e) => {
     this.setState({
       dataValue: e.target.value,
       district: e.target.value,
-      traditionalAuthority: ""
+      traditionalAuthority: "",
     });
     console.log(e.target.value);
   };
 
-  handleDateChange = date => {
+  handleDateChange = (date) => {
     this.setState({
-      yearOpened: date.toISOString().substr(0, 10) // trim timestamp using regular expression
+      yearOpened: date.toISOString().substr(0, 10), // trim timestamp using regular expression
     });
   };
 
-  onChange = e => {
-    /*
-          Because we named the inputs to match their
-          corresponding values in state, it's
-          super easy to update the state
-        */
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
 
     // get our form data out of state
@@ -148,8 +140,8 @@ class CreateFarmer extends React.Component {
       year3: !this.state.year3 ? 0 : this.removeCommas(this.state.year3),
       acreage: !this.state.acreage ? 0 : this.removeCommas(this.state.acreage),
       created: new Date().toLocaleString("en-GB", {
-        timeZone: "Africa/Maputo"
-      })
+        timeZone: "Africa/Maputo",
+      }),
     };
 
     console.log(farmer);
@@ -174,7 +166,7 @@ class CreateFarmer extends React.Component {
       year1: "",
       year2: "",
       year3: "",
-      acreage: ""
+      acreage: "",
     });
   };
 
@@ -195,7 +187,7 @@ class CreateFarmer extends React.Component {
       year2,
       year3,
       acreage,
-      districts
+      districts,
     } = this.state;
 
     const { dataValue } = this.state;
@@ -245,10 +237,10 @@ class CreateFarmer extends React.Component {
                 fullWidth
                 helperText="Please select title"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
               >
-                {titles.map(option => (
+                {titles.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -267,10 +259,10 @@ class CreateFarmer extends React.Component {
                 fullWidth
                 helperText="Please select gender"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
               >
-                {genders.map(option => (
+                {genders.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -289,10 +281,10 @@ class CreateFarmer extends React.Component {
                 fullWidth
                 helperText="Please select marital status"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
               >
-                {maritalStatuses.map(option => (
+                {maritalStatuses.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -329,10 +321,10 @@ class CreateFarmer extends React.Component {
                 fullWidth
                 helperText="Please select option"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
               >
-                {mmOptions.map(option => (
+                {mmOptions.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -351,10 +343,10 @@ class CreateFarmer extends React.Component {
                 fullWidth
                 helperText="Please select option"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
               >
-                {mmPayments.map(option => (
+                {mmPayments.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -373,10 +365,10 @@ class CreateFarmer extends React.Component {
                 fullWidth
                 helperText="Please select district"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
               >
-                {districts.map(option => (
+                {districts.map((option) => (
                   <MenuItem key={option.id} value={option.district}>
                     {option.district}
                   </MenuItem>
@@ -395,10 +387,10 @@ class CreateFarmer extends React.Component {
                 fullWidth
                 helperText="Please select Traditional Authority"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
               >
-                {options.map(option => (
+                {options.map((option) => (
                   <MenuItem key={option.id} value={option.text}>
                     {option.text}
                   </MenuItem>
@@ -426,7 +418,7 @@ class CreateFarmer extends React.Component {
                   onChange={this.handleDateChange}
                   maxDate={Date.now() - 7776000000} // Disables dates less than 3 months
                   InputLabelProps={{
-                    shrink: true
+                    shrink: true,
                   }}
 
                   //InputAdornmentProps={{ position: "end" }}
@@ -437,7 +429,7 @@ class CreateFarmer extends React.Component {
               <NumberFormat
                 value={year1}
                 thousandSeparator={true}
-                onValueChange={values => {
+                onValueChange={(values) => {
                   const { formattedValue } = values;
 
                   this.setState({ year1: formattedValue });
@@ -453,7 +445,7 @@ class CreateFarmer extends React.Component {
               <NumberFormat
                 value={year2}
                 thousandSeparator={true}
-                onValueChange={values => {
+                onValueChange={(values) => {
                   const { formattedValue } = values;
 
                   this.setState({ year2: formattedValue });
@@ -469,7 +461,7 @@ class CreateFarmer extends React.Component {
               <NumberFormat
                 value={year3}
                 thousandSeparator={true}
-                onValueChange={values => {
+                onValueChange={(values) => {
                   const { formattedValue } = values;
 
                   this.setState({ year3: formattedValue });
@@ -485,7 +477,7 @@ class CreateFarmer extends React.Component {
               <NumberFormat
                 value={acreage}
                 thousandSeparator={true}
-                onValueChange={values => {
+                onValueChange={(values) => {
                   const { formattedValue } = values;
 
                   this.setState({ acreage: formattedValue });

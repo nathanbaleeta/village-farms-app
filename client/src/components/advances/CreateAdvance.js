@@ -10,47 +10,47 @@ import NumberFormat from "react-number-format";
 
 import firebase from "../common/firebase";
 
-const styles = theme => ({});
+const styles = (theme) => ({});
 
 const advanceTypes = [
   {
     value: "Cash",
-    label: "Cash"
+    label: "Cash",
   },
   {
     value: "Commodity",
-    label: "Commodity"
-  }
+    label: "Commodity",
+  },
 ];
 
 const commodities = [
   {
     value: "Seedlings",
-    label: "Seedlings"
+    label: "Seedlings",
   },
   {
     value: "Fertilizer",
-    label: "Fertilizer"
+    label: "Fertilizer",
   },
   {
     value: "Chemicals",
-    label: "Chemicals"
+    label: "Chemicals",
   },
   {
     value: "Polythene tubes",
-    label: "Polythene tubes"
-  }
+    label: "Polythene tubes",
+  },
 ];
 
 const paymentModes = [
   {
     value: "Cash",
-    label: "Cash"
+    label: "Cash",
   },
   {
     value: "Coffee",
-    label: "Coffee"
-  }
+    label: "Coffee",
+  },
 ];
 class CreateAdvances extends Component {
   constructor() {
@@ -69,7 +69,7 @@ class CreateAdvances extends Component {
       commodity: false,
 
       //errors
-      errors: []
+      errors: [],
     };
   }
 
@@ -84,12 +84,9 @@ class CreateAdvances extends Component {
 
   // Retrieve price data from firebase
   getPriceByDistrict = () => {
-    const pricesRef = firebase
-      .database()
-      .ref("settings")
-      .child("prices");
+    const pricesRef = firebase.database().ref("settings").child("prices");
 
-    pricesRef.on("value", snapshot => {
+    pricesRef.on("value", (snapshot) => {
       let items = snapshot.val();
       let newState = [];
       for (let item in items) {
@@ -97,12 +94,12 @@ class CreateAdvances extends Component {
           id: item,
           district: items[item].district,
           pricePerKg: items[item].pricePerKg,
-          dateConfigured: items[item].dateConfigured
+          dateConfigured: items[item].dateConfigured,
         });
       }
 
       // Filter row which matches farmer district and generate resultset
-      const resultset = newState.filter(row => {
+      const resultset = newState.filter((row) => {
         return row.district === this.props.district;
       });
 
@@ -110,16 +107,16 @@ class CreateAdvances extends Component {
 
       resultset.length > 0
         ? this.setState({
-            pricePerKg: resultset[0].pricePerKg
+            pricePerKg: resultset[0].pricePerKg,
           })
         : this.setState({
-            pricePerKg: 0
+            pricePerKg: 0,
           });
     });
   };
 
   // remove commas before saving to firebase
-  removeCommas = num => {
+  removeCommas = (num) => {
     //Convert number to string before attempting string manipulation
     let str = num.toString();
 
@@ -128,7 +125,7 @@ class CreateAdvances extends Component {
     return Number(result);
   };
 
-  handleActivation = event => {
+  handleActivation = (event) => {
     if (event.target.value !== "Cash") {
       // Clear form before proceeding
       this.setState({
@@ -136,7 +133,7 @@ class CreateAdvances extends Component {
         commodityAdvanced: "",
         commodityValue: "",
         paymentMode: "",
-        totalCoffeeWeight: ""
+        totalCoffeeWeight: "",
       });
       this.handleCashInput();
       this.setState({ [event.target.name]: event.target.value });
@@ -147,7 +144,7 @@ class CreateAdvances extends Component {
         commodityAdvanced: "",
         commodityValue: "",
         paymentMode: "",
-        totalCoffeeWeight: ""
+        totalCoffeeWeight: "",
       });
       this.handleCommodityInput();
       this.setState({ [event.target.name]: event.target.value });
@@ -157,18 +154,13 @@ class CreateAdvances extends Component {
   handleCashInput() {
     this.setState({
       amount: true,
-      commodity: false
+      commodity: false,
     });
   }
   handleCommodityInput() {
     this.setState({ amount: false, commodity: true });
   }
-  onChange = e => {
-    /*
-          Because we named the inputs to match their
-          corresponding values in state, it's
-          super easy to update the state
-        */
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -198,7 +190,7 @@ class CreateAdvances extends Component {
     return errors;
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
 
     const errors = this.onValidate(
@@ -230,8 +222,8 @@ class CreateAdvances extends Component {
       pricePerKg: this.removeCommas(this.state.pricePerKg),
       totalCoffeeWeight: this.removeCommas(this.state.totalCoffeeWeight),
       created: new Date().toLocaleString("en-GB", {
-        timeZone: "Africa/Maputo"
-      })
+        timeZone: "Africa/Maputo",
+      }),
     };
 
     const advanceRef = firebase.database().ref(`advances/${key}`);
@@ -244,7 +236,7 @@ class CreateAdvances extends Component {
       commodityValue: "",
       paymentMode: "",
       pricePerKg: "",
-      totalCoffeeWeight: ""
+      totalCoffeeWeight: "",
     });
   };
 
@@ -253,7 +245,7 @@ class CreateAdvances extends Component {
       advanceAmount,
       commodityValue,
       pricePerKg,
-      totalCoffeeWeight
+      totalCoffeeWeight,
     } = this.state;
     return (
       <div>
@@ -274,15 +266,15 @@ class CreateAdvances extends Component {
                 select
                 name="advanceType"
                 value={this.state.advanceType}
-                onChange={event => this.handleActivation(event)}
+                onChange={(event) => this.handleActivation(event)}
                 label="Advance type*"
                 fullWidth
                 helperText="Please select advance type"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
               >
-                {advanceTypes.map(option => (
+                {advanceTypes.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -296,12 +288,12 @@ class CreateAdvances extends Component {
                 thousandSeparator={true}
                 disabled={this.state.amount}
                 allowNegative={false}
-                onValueChange={values => {
+                onValueChange={(values) => {
                   const { floatValue } = values;
 
                   this.setState({
                     advanceAmount: floatValue,
-                    totalCoffeeWeight: floatValue / pricePerKg
+                    totalCoffeeWeight: floatValue / pricePerKg,
                   });
                 }}
                 customInput={TextField}
@@ -323,10 +315,10 @@ class CreateAdvances extends Component {
                 fullWidth
                 helperText="Please select commodity advanced"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
               >
-                {commodities.map(option => (
+                {commodities.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -340,12 +332,12 @@ class CreateAdvances extends Component {
                 thousandSeparator={true}
                 allowNegative={false}
                 decimalScale={2}
-                onValueChange={values => {
+                onValueChange={(values) => {
                   const { floatValue } = values;
 
                   this.setState({
                     commodityValue: floatValue,
-                    totalCoffeeWeight: floatValue / pricePerKg
+                    totalCoffeeWeight: floatValue / pricePerKg,
                   });
                 }}
                 customInput={TextField}
@@ -367,10 +359,10 @@ class CreateAdvances extends Component {
                 fullWidth
                 helperText="Please select mode of payment"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
                 }}
               >
-                {paymentModes.map(option => (
+                {paymentModes.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
@@ -384,13 +376,13 @@ class CreateAdvances extends Component {
                 value={pricePerKg}
                 thousandSeparator={true}
                 allowNegative={false}
-                onValueChange={values => {
+                onValueChange={(values) => {
                   const { floatValue } = values;
                   this.setState({
                     pricePerKg: floatValue,
                     totalCoffeeWeight:
                       (advanceAmount / floatValue) |
-                      (commodityValue / floatValue)
+                      (commodityValue / floatValue),
                   });
                 }}
                 customInput={TextField}
@@ -408,7 +400,7 @@ class CreateAdvances extends Component {
                 thousandSeparator={true}
                 allowNegative={false}
                 decimalScale={2}
-                onValueChange={values => {
+                onValueChange={(values) => {
                   const { floatValue } = values;
                   this.setState({ totalCoffeeWeight: floatValue });
                 }}
