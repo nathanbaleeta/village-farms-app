@@ -264,9 +264,11 @@ class CreateAdvances extends Component {
     // get our form data out of state
     const advance = {
       advanceType: this.state.advanceType,
-      advanceAmount: this.state.advanceAmount,
+      advanceAmount: !this.state.advanceAmount ? 0 : this.state.advanceAmount,
       commodityAdvanced: this.state.commodityAdvanced,
-      commodityValue: this.state.commodityValue,
+      commodityValue: !this.state.commodityValue
+        ? 0
+        : this.state.commodityValue,
       paymentMode: this.state.paymentMode,
       pricePerKg: this.state.pricePerKg,
       totalCoffeeWeight: this.state.totalCoffeeWeight,

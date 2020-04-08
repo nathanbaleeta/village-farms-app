@@ -11,44 +11,41 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 
 import firebase from "../common/firebase";
 
-const styles = theme => ({});
+const styles = (theme) => ({});
 
 class AdvancesCalculator extends Component {
   constructor() {
     super();
     this.state = {
-      advanceValue: 0
+      advanceValue: 0,
     };
   }
 
   componentDidMount() {
     // Get value of advances provided
-    const query = firebase
-      .database()
-      .ref("advances")
-      .orderByKey();
-    query.on("value", snapshot => {
+    const query = firebase.database().ref("advances").orderByKey();
+    query.on("value", (snapshot) => {
       let valueCounter = 0;
 
-      snapshot.forEach(childSnapshot => {
+      snapshot.forEach((childSnapshot) => {
         // Get values
 
-        childSnapshot.forEach(grandChildSnapshot => {
+        childSnapshot.forEach((grandChildSnapshot) => {
           // Advance Value counter; convert string to int
           valueCounter =
-            (valueCounter +
-              parseInt(grandChildSnapshot.child("advanceAmount").val())) |
+            valueCounter +
+            parseInt(grandChildSnapshot.child("advanceAmount").val()) +
             parseInt(grandChildSnapshot.child("commodityValue").val());
         });
       });
       this.setState({
-        advanceValue: valueCounter
+        advanceValue: valueCounter,
       });
     });
   }
 
   // Number formatter for high values greater than a thousand
-  nFormatter = num => {
+  nFormatter = (num) => {
     if (num >= 1000000000) {
       return (num / 1000000000).toFixed(1).replace(/\.0$/, "") + "G";
     }
@@ -73,7 +70,7 @@ class AdvancesCalculator extends Component {
               style={{
                 padding: "20px",
                 background: "Indigo",
-                color: "white"
+                color: "white",
               }}
             >
               <Grid container spacing={1}>
