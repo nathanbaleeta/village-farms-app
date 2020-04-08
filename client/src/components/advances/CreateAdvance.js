@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Alert, AlertTitle } from "@material-ui/lab";
-import { display } from "@material-ui/system";
 import Box from "@material-ui/core/Box";
 
 import NumberFormat from "react-number-format";
@@ -125,16 +124,6 @@ class CreateAdvances extends Component {
     });
   };
 
-  // remove commas before saving to firebase
-  removeCommas = (num) => {
-    //Convert number to string before attempting string manipulation
-    let str = num.toString();
-
-    // Check if string contains comma before attempting to sanitize
-    let result = str.includes(",") ? str.replace(/,/g, "") : str;
-    return Number(result);
-  };
-
   handleActivation = (event) => {
     if (event.target.value !== "Cash") {
       // Clear form before proceeding
@@ -176,7 +165,12 @@ class CreateAdvances extends Component {
 
   // Check for empty fields
   isEmpty(value) {
-    return value == null || value.length === 0;
+    return (
+      value === null ||
+      value.length === 0 ||
+      value === "" ||
+      value.length === undefined
+    );
   }
 
   openAlert = () => {
@@ -198,8 +192,14 @@ class CreateAdvances extends Component {
     if (paymentMode.length === 0) {
       errors.push("Payment mode can't be empty");
     }
-    if (pricePerKg.length < 1) {
+    if (pricePerKg === "") {
       errors.push("Price per Kg can't be empty");
+    }
+    if (totalCoffeeWeight === "" || totalCoffeeWeight === undefined) {
+      errors.push("Total coffee weight can't empty");
+    }
+    if (advanceType === "Cash" && this.state.advanceAmount === "") {
+      errors.push("Advance amount is required");
     }
 
     return errors;
@@ -230,15 +230,18 @@ class CreateAdvances extends Component {
       advanceType: this.state.advanceType,
       advanceAmount: this.isEmpty(this.state.advanceAmount)
         ? 0
-        : this.removeCommas(this.state.advanceAmount),
+        : this.state.advanceAmount,
       commodityAdvanced: this.state.commodityAdvanced,
       commodityValue: this.isEmpty(this.state.commodityValue)
         ? 0
         : this.removeCommas(this.state.commodityValue),
       //commodityValue: this.state.commodityValue,
       paymentMode: this.state.paymentMode,
-      pricePerKg: this.removeCommas(this.state.pricePerKg),
-      totalCoffeeWeight: this.removeCommas(this.state.totalCoffeeWeight),
+      pricePerKg: this.state.pricePerKg,
+      totalCoffeeWeight: this.isEmpty(this.state.totalCoffeeWeight)
+        ? 0
+        : this.state.totalCoffeeWeight,
+
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Maputo",
       }),
