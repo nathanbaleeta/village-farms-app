@@ -72,7 +72,7 @@ class CreateAdvances extends Component {
       commodityValue: "",
       paymentMode: "",
       pricePerKg: 0,
-      totalCoffeeWeight: "",
+      totalCoffeeWeight: 0,
 
       // inputValues
       amount: false,
@@ -164,14 +164,14 @@ class CreateAdvances extends Component {
   };
 
   // Check for empty fields
-  isEmpty(value) {
+  isEmpty = (value) => {
     return (
       value === null ||
       value.length === 0 ||
       value === "" ||
-      value.length === undefined
+      value === undefined
     );
-  }
+  };
 
   openAlert = () => {
     this.setState({ show: "block" });
@@ -182,24 +182,56 @@ class CreateAdvances extends Component {
   };
 
   // Validate input
-  onValidate = (advanceType, paymentMode, pricePerKg, totalCoffeeWeight) => {
+  onValidate = (
+    advanceType,
+    paymentMode,
+    advanceAmount,
+    commodityValue,
+    commodityAdvanced,
+    pricePerKg,
+    totalCoffeeWeight
+  ) => {
     // Store errors for all fields in an array
     const errors = [];
 
-    if (advanceType.length === 0) {
+    if (advanceType === "") {
       errors.push("Advance type can't be empty");
     }
-    if (paymentMode.length === 0) {
+    if (paymentMode === "") {
       errors.push("Payment mode can't be empty");
     }
-    if (pricePerKg === "") {
-      errors.push("Price per Kg can't be empty");
-    }
-    if (totalCoffeeWeight === "" || totalCoffeeWeight === undefined) {
-      errors.push("Total coffee weight can't empty");
-    }
-    if (advanceType === "Cash" && this.state.advanceAmount === "") {
+    if (advanceType === "Cash" && advanceAmount === undefined) {
       errors.push("Advance amount is required");
+    }
+    if (advanceType === "Commodity" && commodityAdvanced === "") {
+      errors.push("Commodity advanced is required");
+    }
+    if (advanceType === "Commodity" && commodityValue === undefined) {
+      errors.push("Commodity value is required");
+    }
+    if (totalCoffeeWeight === undefined) {
+      errors.push(
+        "Total coffee weight missing; fill in advance amount or commodity value"
+      );
+    }
+    if (totalCoffeeWeight < 1) {
+      errors.push(
+        "Total coffee weight must not be less than 1; increment advance amount or commodity value"
+      );
+    }
+    if (advanceType === "Cash" && advanceAmount !== "" && advanceAmount < 1) {
+      errors.push("Advance amount must be greater than zero");
+    }
+    if (
+      advanceType === "Commodity" &&
+      commodityValue !== "" &&
+      commodityValue < 1
+    ) {
+      errors.push("Commodity value must be greater than zero");
+    }
+
+    if (pricePerKg === undefined) {
+      errors.push("Price per kg is required");
     }
 
     return errors;
@@ -211,6 +243,9 @@ class CreateAdvances extends Component {
     const errors = this.onValidate(
       this.state.advanceType,
       this.state.paymentMode,
+      this.state.advanceAmount,
+      this.state.commodityValue,
+      this.state.commodityAdvanced,
       this.state.pricePerKg,
       this.state.totalCoffeeWeight
     );
@@ -218,9 +253,10 @@ class CreateAdvances extends Component {
       this.setState({ errors });
       this.openAlert();
       return;
+    } else {
+      // Clear error stack if no errors; then hide error alert box
+      this.setState({ errors: [], show: "none" });
     }
-
-    console.log(this.state.errors);
 
     // target ID retrieved from another component using onClick event listener
     const key = this.props.id;
@@ -228,19 +264,12 @@ class CreateAdvances extends Component {
     // get our form data out of state
     const advance = {
       advanceType: this.state.advanceType,
-      advanceAmount: this.isEmpty(this.state.advanceAmount)
-        ? 0
-        : this.state.advanceAmount,
+      advanceAmount: this.state.advanceAmount,
       commodityAdvanced: this.state.commodityAdvanced,
-      commodityValue: this.isEmpty(this.state.commodityValue)
-        ? 0
-        : this.removeCommas(this.state.commodityValue),
-      //commodityValue: this.state.commodityValue,
+      commodityValue: this.state.commodityValue,
       paymentMode: this.state.paymentMode,
       pricePerKg: this.state.pricePerKg,
-      totalCoffeeWeight: this.isEmpty(this.state.totalCoffeeWeight)
-        ? 0
-        : this.state.totalCoffeeWeight,
+      totalCoffeeWeight: this.state.totalCoffeeWeight,
 
       created: new Date().toLocaleString("en-GB", {
         timeZone: "Africa/Maputo",
