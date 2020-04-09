@@ -18,23 +18,22 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import MUIDataTable from "mui-datatables";
 import CustomToolbar from "../mui-datatables/CustomToolbar";
-import firebase from "../common/firebase";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
 
-import "react-notifications/lib/notifications.css";
-import {
-  NotificationContainer,
-  NotificationManager
-} from "react-notifications";
+import { Alert, AlertTitle } from "@material-ui/lab";
+import Box from "@material-ui/core/Box";
+
+import Slide from "@material-ui/core/Slide";
 
 import {
   MuiPickersUtilsProvider,
-  KeyboardDatePicker
+  KeyboardDatePicker,
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
@@ -45,73 +44,79 @@ import { mmOptions } from "../common/mobileMoneyOptions";
 import { mmPayments } from "../common/mobileMoneyPayments";
 import { lookup } from "../common/traditionalAuthorityList";
 
+import firebase from "../common/firebase";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const columns = [
   "",
   {
     name: "Fullname",
     options: {
       filter: false,
-      sort: false
-    }
+      sort: false,
+    },
   },
   {
     name: "Title",
     options: {
       filter: true,
-      sort: true
-    }
+      sort: true,
+    },
   },
   {
     name: "Sex",
     options: {
       filter: true,
-      sort: true
-    }
+      sort: true,
+    },
   },
   {
     name: "Marital Status",
     options: {
       filter: true,
-      sort: true
-    }
+      sort: true,
+    },
   },
   {
     name: "Traditional Authority",
     options: {
       filter: true,
-      sort: true
-    }
+      sort: true,
+    },
   },
   {
     name: "District",
     options: {
       filter: true,
-      sort: true
-    }
+      sort: true,
+    },
   },
   {
     name: "Actions",
     options: {
       filter: false,
-      sort: false
-    }
-  }
+      sort: false,
+    },
+  },
 ];
 
 const styles = {
   avatar: {
     height: "50px",
-    width: "50px"
+    width: "50px",
   },
   orangeAvatar: {
     margin: 10,
     color: "#fff",
-    backgroundColor: deepOrange[500]
+    backgroundColor: deepOrange[500],
   },
 
   updateFarmerButton: {
-    background: "midnightblue"
-  }
+    background: "midnightblue",
+  },
 };
 
 class FarmerList extends Component {
@@ -119,7 +124,10 @@ class FarmerList extends Component {
     super(props);
     this.state = {
       data: [],
+      errors: [],
       open: false,
+      visible: false,
+      show: "none",
 
       key: "",
       firstname: "",
@@ -141,7 +149,7 @@ class FarmerList extends Component {
 
       districts: [],
 
-      dataValue: "Chitipa"
+      dataValue: "Chitipa",
     };
   }
 
@@ -150,7 +158,7 @@ class FarmerList extends Component {
 
     const farmersRef = firebase.database().ref("farmers");
 
-    farmersRef.on("value", snapshot => {
+    farmersRef.on("value", (snapshot) => {
       let items = snapshot.val();
       let newState = [];
       for (let item in items) {
@@ -172,27 +180,17 @@ class FarmerList extends Component {
           year2: items[item].year2,
           year3: items[item].year3,
           acreage: items[item].acreage,
-          url: items[item].url
+          url: items[item].url,
         });
       }
 
       //console.log(newState);
       this.setState({
-        data: newState
+        data: newState,
       });
       //console.log(this.state.data);
     });
   }
-
-  createNotification = type => {
-    return () => {
-      NotificationManager.success(
-        "Farmer successfully updated",
-        "Farmer Edit",
-        2000
-      );
-    };
-  };
 
   handleOpen = () => {
     this.setState({ open: true });
@@ -202,31 +200,36 @@ class FarmerList extends Component {
     this.setState({ open: false });
   };
 
-  handleDateChange = date => {
+  showDialog = () => {
+    this.setState({ visible: true });
+  };
+
+  closeDialog = () => {
+    this.setState({ visible: false });
+  };
+
+  handleDateChange = (date) => {
     this.setState({
-      yearOpened: date.toISOString().substr(0, 10) // trim timestamp using regular expression
+      yearOpened: date.toISOString().substr(0, 10), // trim timestamp using regular expression
     });
   };
 
   populateDistricts = () => {
-    const districtsRef = firebase
-      .database()
-      .ref("settings")
-      .child("districts");
+    const districtsRef = firebase.database().ref("settings").child("districts");
 
-    districtsRef.on("value", snapshot => {
+    districtsRef.on("value", (snapshot) => {
       let items = snapshot.val();
       let newState = [];
       for (let item in items) {
         newState.push({
           id: item,
-          district: items[item].district
+          district: items[item].district,
         });
       }
 
       //console.log(newState);
       this.setState({
-        districts: newState
+        districts: newState,
       });
       //console.log(this.state.districts);
     });
@@ -239,7 +242,7 @@ class FarmerList extends Component {
 
     const key = id;
     const farmersRef = firebase.database().ref(`farmers/${key}`);
-    farmersRef.on("value", snapshot => {
+    farmersRef.on("value", (snapshot) => {
       this.setState({
         key: snapshot.key,
         firstname: snapshot.child("firstname").val(),
@@ -257,7 +260,7 @@ class FarmerList extends Component {
         year1: snapshot.child("year1").val(),
         year2: snapshot.child("year2").val(),
         year3: snapshot.child("year3").val(),
-        acreage: snapshot.child("acreage").val()
+        acreage: snapshot.child("acreage").val(),
       });
     });
     console.log(
@@ -265,12 +268,115 @@ class FarmerList extends Component {
     );
   }
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleSubmit = event => {
+  openAlert = () => {
+    this.setState({ show: "block" });
+  };
+
+  closeAlert = () => {
+    this.setState({ show: "none" });
+  };
+
+  onValidate = (
+    firstname,
+    lastname,
+    title,
+    sex,
+    maritalStatus,
+    phone,
+    mmRegistered,
+    mmPayment,
+    district,
+    traditionalAuthority,
+    yearOpened,
+    acreage,
+    year1,
+    year2,
+    year3
+  ) => {
+    // Store errors for all fields in an array
+    const errors = [];
+
+    if (firstname === "") {
+      errors.push("Firstname is required");
+    }
+    if (lastname === "") {
+      errors.push("Lastname is required");
+    }
+    if (title === "") {
+      errors.push("Title is required");
+    }
+    if (sex === "") {
+      errors.push("Gender is required");
+    }
+    if (maritalStatus === "") {
+      errors.push("Marital status is required");
+    }
+    if (phone === "") {
+      errors.push("Phone is required");
+    }
+    if (mmRegistered === "") {
+      errors.push("Mobile Money registered field is required");
+    }
+    if (mmPayment === "") {
+      errors.push("Mobile Money Payments field is required");
+    }
+    if (district === "") {
+      errors.push("District is required");
+    }
+    if (traditionalAuthority === "") {
+      errors.push("Traditional authority is required");
+    }
+    if (yearOpened === "") {
+      errors.push("Date opened is required");
+    }
+    if (acreage === "") {
+      errors.push("Acreage is required");
+    }
+    if (year1 === "") {
+      errors.push("Year 1 tree count is required");
+    }
+    if (year2 === "") {
+      errors.push("Year 2 tree count is required");
+    }
+    if (year3 === "") {
+      errors.push("Year 3 tree count is required");
+    }
+
+    return errors;
+  };
+
+  handleSubmit = (event) => {
     event.preventDefault();
+
+    const errors = this.onValidate(
+      this.state.firstname,
+      this.state.lastname,
+      this.state.title,
+      this.state.sex,
+      this.state.maritalStatus,
+      this.state.phone,
+      this.state.mmRegistered,
+      this.state.mmPayment,
+      this.state.district,
+      this.state.traditionalAuthority,
+      this.yearOpened,
+      this.state.acreage,
+      this.state.year1,
+      this.state.year2,
+      this.state.year3
+    );
+    if (errors.length > 0) {
+      this.setState({ errors });
+      this.openAlert();
+      return;
+    } else {
+      // Clear error stack if no errors; then hide error alert box
+      this.setState({ errors: [], show: "none" });
+    }
 
     // get our form data out of state
     const farmer = {
@@ -290,7 +396,7 @@ class FarmerList extends Component {
       year1: !this.state.year1 ? 0 : this.removeCommas(this.state.year1),
       year2: !this.state.year2 ? 0 : this.removeCommas(this.state.year2),
       year3: !this.state.year3 ? 0 : this.removeCommas(this.state.year3),
-      acreage: !this.state.acreage ? 0 : this.removeCommas(this.state.acreage)
+      acreage: !this.state.acreage ? 0 : this.removeCommas(this.state.acreage),
     };
 
     //Update farmer module
@@ -298,34 +404,34 @@ class FarmerList extends Component {
     const farmersRef = firebase.database().ref(`farmers/${key}`);
     farmersRef
       .update(farmer)
-      .then(function() {
+      .then(function () {
         console.log("Synchronization succeeded");
         console.log(this.state);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log("Synchronization failed");
       });
   };
 
-  onChangeDistrict = e => {
+  onChangeDistrict = (e) => {
     this.setState({
       dataValue: e.target.value,
       district: e.target.value,
-      traditionalAuthority: ""
+      traditionalAuthority: "",
     });
     //console.log(e.target.value);
   };
 
-  toTitleCase = phrase => {
+  toTitleCase = (phrase) => {
     return phrase
       .toLowerCase()
       .split(" ")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   };
 
   // remove commas before saving to firebase
-  removeCommas = num => {
+  removeCommas = (num) => {
     //Convert number to string before attempting string manipulation
     let str = num.toString();
 
@@ -339,7 +445,7 @@ class FarmerList extends Component {
   }
 
   render() {
-    const { data, districts, dataValue } = this.state;
+    const { data, districts, dataValue, errors } = this.state;
     const { classes } = this.props;
 
     const tradAuthorities = lookup[dataValue];
@@ -356,37 +462,26 @@ class FarmerList extends Component {
       },
 
       // Update farmers
-      onRowClick: rowIndex => {
+      onRowClick: (rowIndex) => {
         //console.log(rowIndex);
         //this.handleOpen();
       },
       // Delete farmers
-      onRowsDelete: rowsDeleted => {
+      onRowsDelete: (rowsDeleted) => {
         // get the corresponding id in state
         const row = rowsDeleted.data[0].index;
         const id = this.state.data[row]["id"];
-        console.log(id);
+
+        this.showDialog();
 
         // Perform farmer deletion and all related objects(advances & procurments)
-        firebase
-          .database()
-          .ref("farmers")
-          .child(id)
-          .remove();
+        //firebase.database().ref("farmers").child(id).remove();
 
-        firebase
-          .database()
-          .ref("advances")
-          .child(id)
-          .remove();
+        //firebase.database().ref("advances").child(id).remove();
 
-        firebase
-          .database()
-          .ref("procurement")
-          .child(id)
-          .remove();
+        //firebase.database().ref("procurement").child(id).remove();
         // Perform farmer deletion and all related objects(advances & procurments)
-      }
+      },
     };
 
     return (
@@ -405,42 +500,42 @@ class FarmerList extends Component {
                 style={{
                   color: "darkblue",
                   textDecoration: "none",
-                  fontSize: 18
+                  fontSize: 18,
                 }}
               >
                 {farmer.firstname + " " + farmer.lastname}
               </Link>,
               <div
                 style={{
-                  fontSize: 18
+                  fontSize: 18,
                 }}
               >
                 {farmer.title}
               </div>,
               <div
                 style={{
-                  fontSize: 18
+                  fontSize: 18,
                 }}
               >
                 {farmer.sex}
               </div>,
               <div
                 style={{
-                  fontSize: 18
+                  fontSize: 18,
                 }}
               >
                 {farmer.maritalStatus}
               </div>,
               <div
                 style={{
-                  fontSize: 18
+                  fontSize: 18,
                 }}
               >
                 {farmer.traditionalAuthority}
               </div>,
               <div
                 style={{
-                  fontSize: 18
+                  fontSize: 18,
                 }}
               >
                 {farmer.district}
@@ -453,7 +548,7 @@ class FarmerList extends Component {
                 onClick={this.updateFarmer.bind(this, farmer.id)}
               >
                 <EditIcon color="primary" />
-              </IconButton>
+              </IconButton>,
             ];
           })}
           columns={columns}
@@ -467,7 +562,7 @@ class FarmerList extends Component {
           aria-labelledby="form-dialog-title"
           onClose={this.handleClose}
           style={{
-            zoom: "80%"
+            zoom: "80%",
           }}
         >
           <DialogTitle
@@ -476,7 +571,7 @@ class FarmerList extends Component {
             style={{
               backgroundColor: "white",
               color: "black",
-              borderBottom: "2px solid midnightblue"
+              borderBottom: "2px solid midnightblue",
             }}
           >
             <Typography
@@ -490,6 +585,22 @@ class FarmerList extends Component {
           </DialogTitle>
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
+              <Box component="span" display={this.state.show}>
+                <Alert
+                  variant="standard"
+                  severity="error"
+                  onClose={this.closeAlert}
+                >
+                  <AlertTitle>Error</AlertTitle>
+                  <ul>
+                    {this.state.errors.map((msg, index) => (
+                      <li key={index}> {msg} </li>
+                    ))}
+                  </ul>
+                </Alert>
+              </Box>
+              <br />
+
               <Typography variant="h5" gutterBottom>
                 Autobiography
               </Typography>
@@ -497,7 +608,6 @@ class FarmerList extends Component {
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={6}>
                   <TextField
-                    required
                     id="firstname"
                     name="firstname"
                     value={this.state.firstname}
@@ -506,13 +616,12 @@ class FarmerList extends Component {
                     fullWidth
                     autoComplete="off"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   />
                 </Grid>
                 <Grid item xs={6} sm={6}>
                   <TextField
-                    required
                     id="lastname"
                     name="lastname"
                     value={this.state.lastname}
@@ -521,7 +630,7 @@ class FarmerList extends Component {
                     fullWidth
                     autoComplete="off"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   />
                 </Grid>
@@ -536,10 +645,10 @@ class FarmerList extends Component {
                     fullWidth
                     helperText="Please select title"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {titles.map(option => (
+                    {titles.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -557,10 +666,10 @@ class FarmerList extends Component {
                     fullWidth
                     helperText="Please select gender"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {genders.map(option => (
+                    {genders.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -579,15 +688,15 @@ class FarmerList extends Component {
                     fullWidth
                     helperText="Please select marital status"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {maritalStatuses.map(option => (
+                    {maritalStatuses.map((option) => (
                       <MenuItem
                         key={option.value}
                         value={option.value}
                         style={{
-                          zoom: "70%"
+                          zoom: "70%",
                         }}
                       >
                         {option.label}
@@ -610,7 +719,7 @@ class FarmerList extends Component {
                         helperText="For example: 772 123 456"
                         autoComplete="phone"
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
                       />
                     )}
@@ -628,10 +737,10 @@ class FarmerList extends Component {
                     fullWidth
                     helperText="Please select option"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {mmOptions.map(option => (
+                    {mmOptions.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -649,10 +758,10 @@ class FarmerList extends Component {
                     fullWidth
                     helperText="Please select option"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {mmPayments.map(option => (
+                    {mmPayments.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -662,7 +771,6 @@ class FarmerList extends Component {
 
                 <Grid item xs={6} sm={6}>
                   <TextField
-                    required
                     id="district"
                     select
                     name="district"
@@ -672,10 +780,10 @@ class FarmerList extends Component {
                     fullWidth
                     helperText="Please select district"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {districts.map(option => (
+                    {districts.map((option) => (
                       <MenuItem key={option.id} value={option.district}>
                         {option.district}
                       </MenuItem>
@@ -684,7 +792,6 @@ class FarmerList extends Component {
                 </Grid>
                 <Grid item xs={6} sm={6}>
                   <TextField
-                    required
                     id="traditionalAuthority"
                     name="traditionalAuthority"
                     value={this.state.traditionalAuthority}
@@ -694,10 +801,10 @@ class FarmerList extends Component {
                     fullWidth
                     helperText="Please select Traditional Authority"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {tradAuthorities.map(ta => (
+                    {tradAuthorities.map((ta) => (
                       <MenuItem key={ta.id} value={ta.text}>
                         {ta.text}
                       </MenuItem>
@@ -714,7 +821,6 @@ class FarmerList extends Component {
                 <Grid item xs={6} sm={6}>
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
-                      required
                       //margin="normal"
                       id="date-picker-dialog"
                       label="Year Farm opened"
@@ -725,7 +831,7 @@ class FarmerList extends Component {
                       onChange={this.handleDateChange}
                       maxDate={new Date(Date.now() - 7776000000)} // Disables dates less than 3 months
                       InputLabelProps={{
-                        shrink: true
+                        shrink: true,
                       }}
 
                       //InputAdornmentProps={{ position: "end" }}
@@ -737,7 +843,7 @@ class FarmerList extends Component {
                   <NumberFormat
                     value={this.state.year1}
                     thousandSeparator={true}
-                    onValueChange={values => {
+                    onValueChange={(values) => {
                       const { formattedValue } = values;
 
                       this.setState({ year1: formattedValue });
@@ -753,7 +859,7 @@ class FarmerList extends Component {
                   <NumberFormat
                     value={this.state.year2}
                     thousandSeparator={true}
-                    onValueChange={values => {
+                    onValueChange={(values) => {
                       const { formattedValue } = values;
 
                       this.setState({ year2: formattedValue });
@@ -770,7 +876,7 @@ class FarmerList extends Component {
                   <NumberFormat
                     value={this.state.year3}
                     thousandSeparator={true}
-                    onValueChange={values => {
+                    onValueChange={(values) => {
                       const { formattedValue } = values;
 
                       this.setState({ year3: formattedValue });
@@ -787,7 +893,7 @@ class FarmerList extends Component {
                   <NumberFormat
                     value={this.state.acreage}
                     thousandSeparator={true}
-                    onValueChange={values => {
+                    onValueChange={(values) => {
                       const { formattedValue } = values;
 
                       this.setState({ acreage: formattedValue });
@@ -808,7 +914,6 @@ class FarmerList extends Component {
                     size="large"
                     fullWidth
                     color="secondary"
-                    onClick={this.createNotification("info")}
                     className={classes.updateFarmerButton}
                   >
                     Update Farmer
@@ -824,7 +929,42 @@ class FarmerList extends Component {
           </DialogActions>
         </Dialog>
 
-        <NotificationContainer />
+        <Dialog
+          id="simple-delete-dialog"
+          open={this.state.visible}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.closeDialog}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">
+            {"Delete Farmer?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              Are you sure you want to delete Nathan Baleeta?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={this.closeDialog}
+              color="primary"
+              variant="contained"
+              size="small"
+            >
+              Agree
+            </Button>
+            <Button
+              onClick={this.closeDialog}
+              color="secondary"
+              variant="contained"
+              size="small"
+            >
+              Disagree
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Fragment>
     );
   }

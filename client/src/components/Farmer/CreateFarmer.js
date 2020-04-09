@@ -229,7 +229,6 @@ class CreateFarmer extends React.Component {
     );
     if (errors.length > 0) {
       this.setState({ errors });
-      console.log(errors);
       this.openAlert();
       return;
     } else {
