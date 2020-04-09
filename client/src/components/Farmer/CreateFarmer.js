@@ -10,6 +10,9 @@ import Grid from "@material-ui/core/Grid";
 
 import NumberFormat from "react-number-format";
 
+import { Alert, AlertTitle } from "@material-ui/lab";
+import Box from "@material-ui/core/Box";
+
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -28,6 +31,10 @@ import firebase from "../common/firebase";
 const styles = (theme) => ({
   saveFarmerButton: {
     background: "midnightblue",
+  },
+  link: {
+    textDecoration: "none",
+    color: "inherit",
   },
 });
 
@@ -54,6 +61,10 @@ class CreateFarmer extends React.Component {
       districts: [],
 
       dataValue: "Chitipa",
+
+      //errors
+      errors: [],
+      show: "none",
     };
   }
 
@@ -119,8 +130,112 @@ class CreateFarmer extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  openAlert = () => {
+    this.setState({ show: "block" });
+  };
+
+  closeAlert = () => {
+    this.setState({ show: "none" });
+  };
+
+  onValidate = (
+    firstname,
+    lastname,
+    title,
+    sex,
+    maritalStatus,
+    phone,
+    mmRegistered,
+    mmPayment,
+    district,
+    traditionalAuthority,
+    yearOpened,
+    acreage,
+    year1,
+    year2,
+    year3
+  ) => {
+    // Store errors for all fields in an array
+    const errors = [];
+
+    if (firstname === "") {
+      errors.push("Firstname is required");
+    }
+    if (lastname === "") {
+      errors.push("Lastname is required");
+    }
+    if (title === "") {
+      errors.push("Title is required");
+    }
+    if (sex === "") {
+      errors.push("Gender is required");
+    }
+    if (maritalStatus === "") {
+      errors.push("Marital status is required");
+    }
+    if (phone === "") {
+      errors.push("Phone is required");
+    }
+    if (mmRegistered === "") {
+      errors.push("Mobile Money registered field is required");
+    }
+    if (mmPayment === "") {
+      errors.push("Mobile Money Payments field is required");
+    }
+    if (district === "") {
+      errors.push("District is required");
+    }
+    if (traditionalAuthority === "") {
+      errors.push("Traditional authority is required");
+    }
+    if (yearOpened === "") {
+      errors.push("Date opened is required");
+    }
+    if (acreage === "") {
+      errors.push("Acreage is required");
+    }
+    if (year1 === "") {
+      errors.push("Year 1 tree count is required");
+    }
+    if (year2 === "") {
+      errors.push("Year 2 tree count is required");
+    }
+    if (year3 === "") {
+      errors.push("Year 3 tree count is required");
+    }
+
+    return errors;
+  };
+
   handleSubmit = (event) => {
     event.preventDefault();
+
+    const errors = this.onValidate(
+      this.state.firstname,
+      this.state.lastname,
+      this.state.title,
+      this.state.sex,
+      this.state.maritalStatus,
+      this.state.phone,
+      this.state.mmRegistered,
+      this.state.mmPayment,
+      this.state.district,
+      this.state.traditionalAuthority,
+      this.yearOpened,
+      this.state.acreage,
+      this.state.year1,
+      this.state.year2,
+      this.state.year3
+    );
+    if (errors.length > 0) {
+      this.setState({ errors });
+      console.log(errors);
+      this.openAlert();
+      return;
+    } else {
+      // Clear error stack if no errors; then hide error alert box
+      this.setState({ errors: [], show: "none" });
+    }
 
     // get our form data out of state
     const farmer = {
@@ -176,12 +291,13 @@ class CreateFarmer extends React.Component {
       firstname,
       lastname,
       title,
-      //sex,
-      //maritalStatus,
+      sex,
+      maritalStatus,
       phone,
-      //mmRegistered,
-      //district,
-      //traditionalAuthority,
+      mmRegistered,
+      mmPayment,
+      district,
+      traditionalAuthority,
       yearOpened,
       year1,
       year2,
@@ -190,20 +306,34 @@ class CreateFarmer extends React.Component {
       districts,
     } = this.state;
 
-    const { dataValue } = this.state;
+    const { dataValue, errors } = this.state;
     const options = lookup[dataValue];
 
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
+          <Box component="span" display={this.state.show}>
+            <Alert
+              variant="standard"
+              severity="error"
+              onClose={this.closeAlert}
+            >
+              <AlertTitle>Error</AlertTitle>
+              <ul>
+                {errors.map((msg, index) => (
+                  <li key={index}> {msg} </li>
+                ))}
+              </ul>
+            </Alert>
+          </Box>
+          <br />
           <Typography variant="h5" gutterBottom>
             Autobiography
           </Typography>
 
           <Grid container spacing={2}>
-            <Grid item xs={6} sm={6}>
+            <Grid item lg={4} sm={6}>
               <TextField
-                required
                 id="firstname"
                 name="firstname"
                 value={firstname}
@@ -213,9 +343,8 @@ class CreateFarmer extends React.Component {
                 autoComplete="off"
               />
             </Grid>
-            <Grid item xs={6} sm={6}>
+            <Grid item lg={4} sm={6}>
               <TextField
-                required
                 id="lastname"
                 name="lastname"
                 value={lastname}
@@ -225,9 +354,8 @@ class CreateFarmer extends React.Component {
                 autoComplete="off"
               />
             </Grid>
-            <Grid item xs={6} sm={6}>
+            <Grid item lg={4} sm={6}>
               <TextField
-                required
                 id="title"
                 select
                 name="title"
@@ -247,13 +375,12 @@ class CreateFarmer extends React.Component {
                 ))}
               </TextField>
             </Grid>
-            <Grid item xs={6} sm={6}>
+            <Grid item lg={4} sm={6}>
               <TextField
-                required
                 id="sex"
                 select
                 name="sex"
-                value={this.state.sex}
+                value={sex}
                 onChange={this.onChange}
                 label="Sex*"
                 fullWidth
@@ -269,13 +396,12 @@ class CreateFarmer extends React.Component {
                 ))}
               </TextField>
             </Grid>
-            <Grid item xs={6} sm={6}>
+            <Grid item lg={4} sm={6}>
               <TextField
-                required
                 id="maritalStatus"
                 select
                 name="maritalStatus"
-                value={this.state.maritalStatus}
+                value={maritalStatus}
                 onChange={this.onChange}
                 label="Marital Status*"
                 fullWidth
@@ -291,7 +417,7 @@ class CreateFarmer extends React.Component {
                 ))}
               </TextField>
             </Grid>
-            <Grid item xs={6} sm={6}>
+            <Grid item lg={4} sm={6}>
               <InputMask
                 required
                 mask="265999999999"
@@ -310,12 +436,12 @@ class CreateFarmer extends React.Component {
                 )}
               </InputMask>
             </Grid>
-            <Grid item xs={6} sm={6}>
+            <Grid item lg={6} sm={6}>
               <TextField
                 id="mmRegistered"
                 select
                 name="mmRegistered"
-                value={this.state.mmRegistered}
+                value={mmRegistered}
                 onChange={this.onChange}
                 label="Mobile Money Registered*"
                 fullWidth
@@ -331,15 +457,15 @@ class CreateFarmer extends React.Component {
                 ))}
               </TextField>
             </Grid>
-            <Grid item xs={6} sm={6}>
+            <Grid item lg={6} sm={6}>
               <TextField
                 required
                 id="mmPayment"
                 select
                 name="mmPayment"
-                value={this.state.mmPayment}
+                value={mmPayment}
                 onChange={this.onChange}
-                label="Receive payments on MM*"
+                label="Receive payments on MM"
                 fullWidth
                 helperText="Please select option"
                 InputLabelProps={{
@@ -359,7 +485,7 @@ class CreateFarmer extends React.Component {
                 id="district"
                 select
                 name="district"
-                value={this.state.district}
+                value={district}
                 onChange={this.onChangeDistrict}
                 label="District"
                 fullWidth
@@ -381,7 +507,7 @@ class CreateFarmer extends React.Component {
                 id="traditionalAuthority"
                 select
                 name="traditionalAuthority"
-                value={this.state.traditionalAuthority}
+                value={traditionalAuthority}
                 onChange={this.onChange}
                 label="Traditional Authority"
                 fullWidth
@@ -406,7 +532,6 @@ class CreateFarmer extends React.Component {
             <Grid item xs={6} sm={6}>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardDatePicker
-                  //required
                   //margin="normal"
                   //id="date-picker-dialog"
                   label="Year Farm opened"
@@ -420,59 +545,11 @@ class CreateFarmer extends React.Component {
                   InputLabelProps={{
                     shrink: true,
                   }}
-
-                  //InputAdornmentProps={{ position: "end" }}
+                  InputAdornmentProps={{ position: "end" }}
                 />
               </MuiPickersUtilsProvider>
             </Grid>
-            <Grid item xs={6} sm={6}>
-              <NumberFormat
-                value={year1}
-                thousandSeparator={true}
-                onValueChange={(values) => {
-                  const { formattedValue } = values;
 
-                  this.setState({ year1: formattedValue });
-                }}
-                customInput={TextField}
-                label="Year 1"
-                helperText="Tree count which are 1 year"
-                fullWidth
-                autoComplete="off"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6}>
-              <NumberFormat
-                value={year2}
-                thousandSeparator={true}
-                onValueChange={(values) => {
-                  const { formattedValue } = values;
-
-                  this.setState({ year2: formattedValue });
-                }}
-                customInput={TextField}
-                label="Year 2"
-                helperText="Tree count which are 2 years"
-                fullWidth
-                autoComplete="off"
-              />
-            </Grid>
-            <Grid item xs={6} sm={6}>
-              <NumberFormat
-                value={year3}
-                thousandSeparator={true}
-                onValueChange={(values) => {
-                  const { formattedValue } = values;
-
-                  this.setState({ year3: formattedValue });
-                }}
-                customInput={TextField}
-                label="Year 3"
-                helperText="Tree count above 3 years"
-                fullWidth
-                autoComplete="off"
-              />
-            </Grid>
             <Grid item xs={6} sm={6}>
               <NumberFormat
                 value={acreage}
@@ -489,9 +566,58 @@ class CreateFarmer extends React.Component {
                 autoComplete="off"
               />
             </Grid>
+            <Grid item lg={4} sm={6}>
+              <NumberFormat
+                value={year1}
+                thousandSeparator={true}
+                onValueChange={(values) => {
+                  const { formattedValue } = values;
 
-            <Grid item xs={12} sm={12}>
+                  this.setState({ year1: formattedValue });
+                }}
+                customInput={TextField}
+                label="Year 1"
+                helperText="Tree count which are 1 year"
+                fullWidth
+                autoComplete="off"
+              />
+            </Grid>
+            <Grid item lg={4} sm={6}>
+              <NumberFormat
+                value={year2}
+                thousandSeparator={true}
+                onValueChange={(values) => {
+                  const { formattedValue } = values;
+
+                  this.setState({ year2: formattedValue });
+                }}
+                customInput={TextField}
+                label="Year 2"
+                helperText="Tree count which are 2 years"
+                fullWidth
+                autoComplete="off"
+              />
+            </Grid>
+            <Grid item lg={4} sm={6}>
+              <NumberFormat
+                value={year3}
+                thousandSeparator={true}
+                onValueChange={(values) => {
+                  const { formattedValue } = values;
+
+                  this.setState({ year3: formattedValue });
+                }}
+                customInput={TextField}
+                label="Year 3"
+                helperText="Tree count above 3 years"
+                fullWidth
+                autoComplete="off"
+              />
+            </Grid>
+
+            <Grid item lg={12} sm={12}>
               <br />
+
               <Button
                 type="submit"
                 variant="contained"

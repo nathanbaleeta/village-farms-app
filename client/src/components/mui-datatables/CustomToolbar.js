@@ -17,16 +17,16 @@ import CreateFarmer from "../Farmer/CreateFarmer";
 import CreateProcurement from "../procurement/CreateProcurement";
 import CreateSale from "../sales/CreateSale";
 
-const styles = theme => ({
+const styles = (theme) => ({
   iconButton: {},
-  dialogPaper: {}
+  dialogPaper: {},
 });
 
 class CustomToolbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
     };
   }
 
@@ -51,12 +51,12 @@ class CustomToolbar extends Component {
 
         <Dialog
           id="myDialog"
-          maxWidth="sm"
+          maxWidth="md"
           open={this.state.open}
           aria-labelledby="form-dialog-title"
           onClose={this.handleClose}
           style={{
-            zoom: "80%"
+            zoom: "80%",
           }}
         >
           <DialogTitle
@@ -64,7 +64,7 @@ class CustomToolbar extends Component {
             color="default"
             style={{
               backgroundColor: "white",
-              borderBottom: "2px solid midnightblue"
+              borderBottom: "2px solid midnightblue",
             }}
           >
             <Typography
@@ -95,7 +95,7 @@ class CustomToolbar extends Component {
 }
 
 CustomToolbar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles, { name: "CustomToolbar" })(CustomToolbar);
