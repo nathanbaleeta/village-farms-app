@@ -43,6 +43,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
+import { Alert, AlertTitle } from "@material-ui/lab";
+import Box from "@material-ui/core/Box";
+
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -164,6 +167,10 @@ class FarmerDetails extends Component {
 
       // Editing settings
       isEditing: false,
+
+      //Error stack
+      errors: [],
+      visible: "none",
     };
   }
 
@@ -392,13 +399,114 @@ class FarmerDetails extends Component {
   };
 
   updateFarmer(id) {
-    console.log(id);
-
     this.openDialog();
   }
 
+  openAlert = () => {
+    this.setState({ visible: "block" });
+  };
+
+  closeAlert = () => {
+    this.setState({ visible: "none" });
+  };
+
+  onValidate = (
+    firstname,
+    lastname,
+    title,
+    sex,
+    maritalStatus,
+    phone,
+    mmRegistered,
+    mmPayment,
+    district,
+    traditionalAuthority,
+    yearOpened,
+    acreage,
+    year1,
+    year2,
+    year3
+  ) => {
+    // Store errors for all fields in an array
+    const errors = [];
+
+    if (firstname === "") {
+      errors.push("Firstname is required");
+    }
+    if (lastname === "") {
+      errors.push("Lastname is required");
+    }
+    if (title === "") {
+      errors.push("Title is required");
+    }
+    if (sex === "") {
+      errors.push("Gender is required");
+    }
+    if (maritalStatus === "") {
+      errors.push("Marital status is required");
+    }
+    if (phone === "") {
+      errors.push("Phone is required");
+    }
+    if (mmRegistered === "") {
+      errors.push("Mobile Money registered field is required");
+    }
+    if (mmPayment === "") {
+      errors.push("Mobile Money Payments field is required");
+    }
+    if (district === "") {
+      errors.push("District is required");
+    }
+    if (traditionalAuthority === "") {
+      errors.push("Traditional authority is required");
+    }
+    if (yearOpened === "") {
+      errors.push("Date opened is required");
+    }
+    if (acreage === "") {
+      errors.push("Acreage is required");
+    }
+    if (year1 === "") {
+      errors.push("Year 1 tree count is required");
+    }
+    if (year2 === "") {
+      errors.push("Year 2 tree count is required");
+    }
+    if (year3 === "") {
+      errors.push("Year 3 tree count is required");
+    }
+
+    return errors;
+  };
+
   onSaveFarmer = (event) => {
     event.preventDefault();
+
+    const errors = this.onValidate(
+      this.state.firstname,
+      this.state.lastname,
+      this.state.title,
+      this.state.sex,
+      this.state.maritalStatus,
+      this.state.phone,
+      this.state.mmRegistered,
+      this.state.mmPayment,
+      this.state.district,
+      this.state.traditionalAuthority,
+      this.yearOpened,
+      this.state.acreage,
+      this.state.year1,
+      this.state.year2,
+      this.state.year3
+    );
+    if (errors.length > 0) {
+      this.setState({ errors });
+      this.openAlert();
+      return;
+    } else {
+      // Clear error stack if no errors; then hide error alert box
+      this.setState({ errors: [], visible: "none" });
+    }
 
     // get our form data out of state
     const farmer = {
@@ -488,7 +596,7 @@ class FarmerDetails extends Component {
 
   render() {
     const { classes } = this.props;
-    const { districts, dataValue, value } = this.state;
+    const { districts, dataValue, value, errors } = this.state;
 
     const tradAuthorities = lookup[dataValue];
 
@@ -1213,6 +1321,22 @@ class FarmerDetails extends Component {
           </DialogTitle>
           <DialogContent>
             <form onSubmit={this.onSaveFarmer}>
+              <Box component="span" display={this.state.visible}>
+                <Alert
+                  variant="standard"
+                  severity="error"
+                  onClose={this.closeAlert}
+                >
+                  <AlertTitle>Error</AlertTitle>
+                  <ul>
+                    {errors.map((msg, index) => (
+                      <li key={index}> {msg} </li>
+                    ))}
+                  </ul>
+                </Alert>
+              </Box>
+              <br />
+
               <Typography variant="h5" gutterBottom>
                 Autobiography
               </Typography>
@@ -1220,7 +1344,6 @@ class FarmerDetails extends Component {
               <Grid container spacing={2}>
                 <Grid item xs={6} sm={6}>
                   <TextField
-                    required
                     id="firstname"
                     name="firstname"
                     value={this.state.firstname}
@@ -1235,7 +1358,6 @@ class FarmerDetails extends Component {
                 </Grid>
                 <Grid item xs={6} sm={6}>
                   <TextField
-                    required
                     id="lastname"
                     name="lastname"
                     value={this.state.lastname}
@@ -1385,7 +1507,6 @@ class FarmerDetails extends Component {
 
                 <Grid item xs={6} sm={6}>
                   <TextField
-                    required
                     id="district"
                     select
                     name="district"
@@ -1407,7 +1528,6 @@ class FarmerDetails extends Component {
                 </Grid>
                 <Grid item xs={6} sm={6}>
                   <TextField
-                    required
                     id="traditionalAuthority"
                     name="traditionalAuthority"
                     value={this.state.traditionalAuthority}
@@ -1437,7 +1557,6 @@ class FarmerDetails extends Component {
                 <Grid item xs={6} sm={6}>
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
-                      required
                       //margin="normal"
                       id="date-picker-dialog"
                       label="Year Farm opened"

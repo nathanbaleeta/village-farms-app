@@ -593,7 +593,7 @@ class FarmerList extends Component {
                 >
                   <AlertTitle>Error</AlertTitle>
                   <ul>
-                    {this.state.errors.map((msg, index) => (
+                    {errors.map((msg, index) => (
                       <li key={index}> {msg} </li>
                     ))}
                   </ul>
