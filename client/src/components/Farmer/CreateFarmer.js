@@ -331,7 +331,7 @@ class CreateFarmer extends React.Component {
           </Typography>
 
           <Grid container spacing={2}>
-            <Grid item lg={4} sm={6}>
+            <Grid item lg={6} sm={6}>
               <TextField
                 id="firstname"
                 name="firstname"
@@ -342,7 +342,7 @@ class CreateFarmer extends React.Component {
                 autoComplete="off"
               />
             </Grid>
-            <Grid item lg={4} sm={6}>
+            <Grid item lg={6} sm={6}>
               <TextField
                 id="lastname"
                 name="lastname"
@@ -353,7 +353,7 @@ class CreateFarmer extends React.Component {
                 autoComplete="off"
               />
             </Grid>
-            <Grid item lg={4} sm={6}>
+            <Grid item lg={6} sm={6}>
               <TextField
                 id="title"
                 select
@@ -374,7 +374,7 @@ class CreateFarmer extends React.Component {
                 ))}
               </TextField>
             </Grid>
-            <Grid item lg={4} sm={6}>
+            <Grid item lg={6} sm={6}>
               <TextField
                 id="sex"
                 select
@@ -395,7 +395,7 @@ class CreateFarmer extends React.Component {
                 ))}
               </TextField>
             </Grid>
-            <Grid item lg={4} sm={6}>
+            <Grid item lg={6} sm={6}>
               <TextField
                 id="maritalStatus"
                 select
@@ -416,7 +416,7 @@ class CreateFarmer extends React.Component {
                 ))}
               </TextField>
             </Grid>
-            <Grid item lg={4} sm={6}>
+            <Grid item lg={6} sm={6}>
               <InputMask
                 required
                 mask="265999999999"

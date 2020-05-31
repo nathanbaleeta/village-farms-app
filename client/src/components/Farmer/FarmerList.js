@@ -561,9 +561,11 @@ class FarmerList extends Component {
           open={this.state.open}
           aria-labelledby="form-dialog-title"
           onClose={this.handleClose}
-          style={{
-            zoom: "80%",
-          }}
+          style={
+            {
+              //zoom: "80%",
+            }
+          }
         >
           <DialogTitle
             id="simple-dialog-title"

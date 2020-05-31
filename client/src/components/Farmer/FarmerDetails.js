@@ -1298,7 +1298,7 @@ class FarmerDetails extends Component {
           aria-labelledby="form-dialog-title"
           onClose={this.closeDialog}
           style={{
-            zoom: "80%",
+            //zoom: "80%",
           }}
         >
           <DialogTitle
