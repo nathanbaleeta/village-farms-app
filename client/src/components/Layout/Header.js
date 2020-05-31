@@ -89,12 +89,7 @@ export default function MenuAppBar() {
             <MenuIcon style={{ color: "#212F3D" }} />
           </ListItemIcon>
           <Typography variant="subtitle1" gutterBottom>
-            <img
-              src="logo.png"
-              alt="Village Farms Logo"
-              width="70"
-              height="40"
-            />
+            Village Farms
           </Typography>
         </ListItem>
       </Link>
@@ -174,12 +169,7 @@ export default function MenuAppBar() {
             </IconButton>
           ))}
           <Typography variant="h5" className={classes.title}>
-            <img
-              src="logo.png"
-              alt="Village Farms Logo"
-              width="70"
-              height="54"
-            />
+            Village Farms Manager
           </Typography>
 
           <div>
