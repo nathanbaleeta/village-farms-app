@@ -19,7 +19,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
-//import { districts } from "../common/districtList";
+import { districts } from "../common/districtList";
 import { titles } from "../common/titleList";
 import { genders } from "../common/genderList";
 import { maritalStatuses } from "../common/maritalStatusList";
@@ -69,10 +69,10 @@ class CreateFarmer extends React.Component {
   }
 
   componentDidMount() {
-    this.populateDistricts();
+    //this.populateDistricts();
   }
 
-  populateDistricts = () => {
+  /* populateDistricts = () => {
     const districtsRef = firebase.database().ref("settings").child("districts");
 
     districtsRef.on("value", (snapshot) => {
@@ -91,7 +91,7 @@ class CreateFarmer extends React.Component {
       });
       //console.log(this.state.districts);
     });
-  };
+  }; */
 
   toTitleCase = (phrase) => {
     return phrase
@@ -302,7 +302,7 @@ class CreateFarmer extends React.Component {
       year2,
       year3,
       acreage,
-      districts,
+      //districts,
     } = this.state;
 
     const { dataValue, errors } = this.state;
@@ -494,8 +494,8 @@ class CreateFarmer extends React.Component {
                 }}
               >
                 {districts.map((option) => (
-                  <MenuItem key={option.id} value={option.district}>
-                    {option.district}
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
                   </MenuItem>
                 ))}
               </TextField>
