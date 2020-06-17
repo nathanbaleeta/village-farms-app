@@ -201,7 +201,7 @@ class FarmerList extends Component {
     this.setState({ open: false });
   };
 
-  showDialog = () => {
+  deleteFarmerDialog = (id) => {
     this.setState({ visible: true });
   };
 
@@ -215,7 +215,7 @@ class FarmerList extends Component {
     });
   };
 
-  populateDistricts = () => {
+  /* populateDistricts = () => {
     const districtsRef = firebase.database().ref("settings").child("districts");
 
     districtsRef.on("value", (snapshot) => {
@@ -234,7 +234,7 @@ class FarmerList extends Component {
       });
       //console.log(this.state.districts);
     });
-  };
+  }; */
 
   updateFarmer(id) {
     //const recordToEdit = this.state.data.find(item => item.id === id);
@@ -473,15 +473,15 @@ class FarmerList extends Component {
         const row = rowsDeleted.data[0].index;
         const id = this.state.data[row]["id"];
 
-        this.showDialog();
-
         // Perform farmer deletion and all related objects(advances & procurments)
-        //firebase.database().ref("farmers").child(id).remove();
+        firebase.database().ref("farmers").child(id).remove();
 
-        //firebase.database().ref("advances").child(id).remove();
+        firebase.database().ref("advances").child(id).remove();
 
-        //firebase.database().ref("procurement").child(id).remove();
+        firebase.database().ref("procurement").child(id).remove();
         // Perform farmer deletion and all related objects(advances & procurments)
+
+        //this.deleteFarmerDialog(id);
       },
     };
 
