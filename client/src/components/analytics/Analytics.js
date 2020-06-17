@@ -22,20 +22,21 @@ import FarmerRegistrationReport from "../analytics/FarmerRegistrationReport";
 import FarmersByGender from "../analytics/FarmersByGender";
 import FarmersByDistrict from "../analytics/FarmersByDistrict";
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    backgroundColor: "white",
   },
   paper: {
     padding: theme.spacing.unit * 2,
     textAlign: "center",
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   icon: {
     margin: theme.spacing.unit,
     fontSize: 32,
-    color: theme.palette.text.primary
-  }
+    color: theme.palette.text.primary,
+  },
 });
 
 class Analytics extends Component {
@@ -108,7 +109,7 @@ class Analytics extends Component {
 }
 
 Analytics.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Analytics);

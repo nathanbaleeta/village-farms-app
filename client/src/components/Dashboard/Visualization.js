@@ -13,21 +13,21 @@ import ProcurementSummary from "../analytics/ProcurementSummary";
 import AdvancesReport from "../analytics/AdvancesReport";
 import AdvancesMode from "../analytics/AdvancesMode";
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     //flexGrow: 1,
-    zoom: "80%"
+    zoom: "80%",
   },
   paper: {
     padding: theme.spacing.unit * 2,
     textAlign: "center",
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   icon: {
     margin: theme.spacing.unit,
     fontSize: 32,
-    color: theme.palette.text.primary
-  }
+    color: theme.palette.text.primary,
+  },
 });
 
 class Visualization extends React.Component {
@@ -111,7 +111,7 @@ class Visualization extends React.Component {
 }
 
 Visualization.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Visualization);
