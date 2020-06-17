@@ -37,6 +37,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
+import { districts } from "../common/districtList";
 import { titles } from "../common/titleList";
 import { genders } from "../common/genderList";
 import { maritalStatuses } from "../common/maritalStatusList";
@@ -147,14 +148,14 @@ class FarmerList extends Component {
       year3: "",
       acreage: "",
 
-      districts: [],
+      //districts: [],
 
       dataValue: "Chitipa",
     };
   }
 
   componentDidMount() {
-    this.populateDistricts();
+    //this.populateDistricts();
 
     const farmersRef = firebase.database().ref("farmers");
 
@@ -445,7 +446,7 @@ class FarmerList extends Component {
   }
 
   render() {
-    const { data, districts, dataValue, errors } = this.state;
+    const { data, dataValue, errors } = this.state;
     const { classes } = this.props;
 
     const tradAuthorities = lookup[dataValue];
@@ -786,8 +787,8 @@ class FarmerList extends Component {
                     }}
                   >
                     {districts.map((option) => (
-                      <MenuItem key={option.id} value={option.district}>
-                        {option.district}
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
                       </MenuItem>
                     ))}
                   </TextField>

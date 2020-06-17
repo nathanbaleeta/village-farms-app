@@ -58,7 +58,7 @@ class CreateFarmer extends React.Component {
       year3: "",
       acreage: "",
 
-      districts: [],
+      //districts: [],
 
       dataValue: "Chitipa",
 
