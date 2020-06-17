@@ -63,6 +63,7 @@ import CreateAdvance from "../advances/CreateAdvance";
 import firebase from "../common/firebase";
 import numeral from "numeral";
 
+import { districts } from "../common/districtList";
 import { titles } from "../common/titleList";
 import { genders } from "../common/genderList";
 import { maritalStatuses } from "../common/maritalStatusList";
@@ -148,7 +149,7 @@ class FarmerDetails extends Component {
       todayValueSale: "",
       valueOfSaleLiability: "",
 
-      districts: [],
+      //districts: [],
 
       dataValue: "Chitipa",
 
@@ -175,7 +176,7 @@ class FarmerDetails extends Component {
   }
 
   componentDidMount() {
-    this.populateDistricts();
+    //this.populateDistricts();
 
     const key = this.props.match.params.id;
     //console.log(key);
@@ -310,7 +311,7 @@ class FarmerDetails extends Component {
     });
   }
 
-  populateDistricts = () => {
+  /*   populateDistricts = () => {
     const districtsRef = firebase.database().ref("settings").child("districts");
 
     districtsRef.on("value", (snapshot) => {
@@ -329,7 +330,7 @@ class FarmerDetails extends Component {
       });
       //console.log(this.state.districts);
     });
-  };
+  }; */
 
   onEdit = (e) => {
     this.setState({
@@ -596,7 +597,7 @@ class FarmerDetails extends Component {
 
   render() {
     const { classes } = this.props;
-    const { districts, dataValue, value, errors } = this.state;
+    const { dataValue, value, errors } = this.state;
 
     const tradAuthorities = lookup[dataValue];
 
@@ -1297,9 +1298,11 @@ class FarmerDetails extends Component {
           open={this.state.show}
           aria-labelledby="form-dialog-title"
           onClose={this.closeDialog}
-          style={{
-            //zoom: "80%",
-          }}
+          style={
+            {
+              //zoom: "80%",
+            }
+          }
         >
           <DialogTitle
             id="simple-dialog-title"
@@ -1520,8 +1523,8 @@ class FarmerDetails extends Component {
                     }}
                   >
                     {districts.map((option) => (
-                      <MenuItem key={option.id} value={option.district}>
-                        {option.district}
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
                       </MenuItem>
                     ))}
                   </TextField>
