@@ -16,17 +16,19 @@ import AdvancesList from "../advances/AdvancesList";
 import SalesList from "../sales/SalesList";
 import Nathan from "../sales/Nathan";
 
+import Users from "../Accounts/Users";
+
 import GeneralSettings from "../settings/GeneralSettings";
 
 import ProtectedRoute from "./ProtectedRoute";
 
-const styles = theme => ({
+const styles = (theme) => ({
   main: {
     padding: 3 * theme.spacing.unit,
     [theme.breakpoints.down("xs")]: {
-      padding: 2 * theme.spacing.unit
-    }
-  }
+      padding: 2 * theme.spacing.unit,
+    },
+  },
 });
 
 class Navigation extends Component {
@@ -63,7 +65,7 @@ class Navigation extends Component {
             <Route path="/reports" />
             <Route path="/settings" component={GeneralSettings} />
 
-            <Route path="/users" />
+            <Route path="/users" component={Users} />
             <Route path="/login" component={Login} />
 
             <ProtectedRoute
