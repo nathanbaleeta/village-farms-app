@@ -19,7 +19,7 @@ import NumberFormat from "react-number-format";
 
 import firebase from "../../common/firebase";
 
-const styles = theme => ({});
+const styles = (theme) => ({});
 
 class AddPriceSetting extends Component {
   constructor() {
@@ -27,7 +27,8 @@ class AddPriceSetting extends Component {
     this.state = {
       pricePerKg: "",
       district: "",
-      districts: []
+      marketName: "",
+      districts: [],
     };
   }
 
@@ -36,24 +37,21 @@ class AddPriceSetting extends Component {
   }
 
   populateDistricts = () => {
-    const districtsRef = firebase
-      .database()
-      .ref("settings")
-      .child("districts");
+    const districtsRef = firebase.database().ref("settings").child("districts");
 
-    districtsRef.on("value", snapshot => {
+    districtsRef.on("value", (snapshot) => {
       let items = snapshot.val();
       let newState = [];
       for (let item in items) {
         newState.push({
           id: item,
-          district: items[item].district
+          district: items[item].district,
         });
       }
 
       //console.log(newState);
       this.setState({
-        districts: newState
+        districts: newState,
       });
       //console.log(this.state.districts);
     });
@@ -67,12 +65,12 @@ class AddPriceSetting extends Component {
     this.setState({ open: false });
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   // Boolean function for checking whether district exists already
-  hasDuplicates = district => {
+  hasDuplicates = (district) => {
     let value = false;
     firebase
       .database()
@@ -81,26 +79,31 @@ class AddPriceSetting extends Component {
       .child("prices")
       .orderByChild("district")
       .equalTo(district)
-      .once("value", snapshot => {
+      .once("value", (snapshot) => {
         snapshot.exists() ? (value = true) : (value = false);
       });
     return value;
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
 
     // get our form data out of state
     const priceConfig = {
       pricePerKg: parseInt(this.state.pricePerKg),
       district: this.state.district,
+      marketName: this.state.marketName,
       dateConfigured: new Date().toLocaleString("en-GB", {
-        timeZone: "Africa/Maputo"
-      })
+        timeZone: "Africa/Maputo",
+      }),
     };
 
     //Form validation for adding price setting
-    if (this.state.pricePerKg === "" || this.state.district === "") {
+    if (
+      this.state.pricePerKg === "" ||
+      this.state.district === "" ||
+      this.state.marketName === ""
+    ) {
       return;
     }
     // Prevent duplicate districts by checking if it exists before saving
@@ -113,14 +116,15 @@ class AddPriceSetting extends Component {
       settingsRef.push(priceConfig);
       this.setState({
         pricePerKg: "",
-        district: ""
+        district: "",
+        marketName: "",
       });
     }
   };
 
   render() {
     const { classes } = this.props;
-    const { pricePerKg, districts } = this.state;
+    const { pricePerKg, marketName, districts } = this.state;
 
     return (
       <Fragment>
@@ -134,7 +138,7 @@ class AddPriceSetting extends Component {
               className={classes.fab}
               style={{
                 backgroundColor: "#FFBF00",
-                color: "black"
+                color: "black",
               }}
             >
               <TrendingUpIcon className={classes.extendedIcon} />
@@ -143,25 +147,22 @@ class AddPriceSetting extends Component {
 
             <Dialog
               id="myDialog"
-              maxWidth="sm"
+              maxWidth="xs"
               open={this.state.open}
               aria-labelledby="form-dialog-title"
               onClose={this.handleClose}
-              style={{
-                zoom: "80%"
-              }}
             >
               <DialogTitle
                 maxWidth="sm"
                 id="simple-dialog-title"
                 color="default"
                 style={{
-                  backgroundColor: "white"
+                  backgroundColor: "white",
                 }}
               >
                 <Typography
                   component="h1"
-                  variant="h4"
+                  variant="h5"
                   align="center"
                   style={{ color: "midnightblue" }}
                 >
@@ -189,10 +190,10 @@ class AddPriceSetting extends Component {
                         fullWidth
                         helperText="Please select district"
                         InputLabelProps={{
-                          shrink: true
+                          shrink: true,
                         }}
                       >
-                        {districts.map(option => (
+                        {districts.map((option) => (
                           <MenuItem key={option.id} value={option.district}>
                             {option.district}
                           </MenuItem>
@@ -201,19 +202,31 @@ class AddPriceSetting extends Component {
                     </Grid>
 
                     <Grid item xs={12} sm={12}>
+                      <TextField
+                        id="marketName"
+                        name="marketName"
+                        value={marketName}
+                        onChange={this.onChange}
+                        label="Market name"
+                        fullWidth
+                        autoComplete="off"
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} sm={12}>
                       <NumberFormat
                         value={pricePerKg}
                         thousandSeparator={true}
                         allowNegative={false}
                         decimalScale={2}
-                        onValueChange={values => {
+                        onValueChange={(values) => {
                           const { floatValue } = values;
                           this.setState({
-                            pricePerKg: floatValue
+                            pricePerKg: floatValue,
                           });
                         }}
                         customInput={TextField}
-                        label="Price per kg"
+                        label="Market Price"
                         fullWidth
                         margin="normal"
                         autoComplete="off"
@@ -228,7 +241,7 @@ class AddPriceSetting extends Component {
                         fullWidth
                         style={{
                           backgroundColor: "midnightblue",
-                          color: "white"
+                          color: "white",
                         }}
                       >
                         Save
