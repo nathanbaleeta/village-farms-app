@@ -32,7 +32,7 @@ import moment from "moment";
 import AddPriceSetting from "./AddPriceSetting";
 import firebase from "../../common/firebase";
 
-const styles = theme => ({
+const styles = (theme) => ({
   layout: {
     width: "auto",
     marginLeft: theme.spacing.unit * 2,
@@ -40,18 +40,18 @@ const styles = theme => ({
     [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
       width: 700,
       marginLeft: "auto",
-      marginRight: "auto"
-    }
+      marginRight: "auto",
+    },
   },
 
   buttons: {
     display: "flex",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   button: {
     marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1)
-  }
+    marginLeft: theme.spacing(1),
+  },
 });
 
 class PriceSettings extends Component {
@@ -59,11 +59,12 @@ class PriceSettings extends Component {
     key: "",
     pricePerKg: 0,
     district: "",
+    marketName: "",
     dateConfigured: "",
     visible: false,
 
     priceData: [],
-    districts: []
+    districts: [],
   };
 
   showDialog = () => {
@@ -77,76 +78,68 @@ class PriceSettings extends Component {
   componentWillMount() {
     this.populateDistricts();
 
-    const pricesRef = firebase
-      .database()
-      .ref("settings")
-      .child("prices");
+    const pricesRef = firebase.database().ref("settings").child("prices");
 
-    pricesRef.on("value", snapshot => {
+    pricesRef.on("value", (snapshot) => {
       let items = snapshot.val();
       let newState = [];
       for (let item in items) {
         newState.push({
           id: item,
           district: items[item].district,
+          marketName: items[item].marketName,
           pricePerKg: items[item].pricePerKg,
-          dateConfigured: items[item].dateConfigured
+          dateConfigured: items[item].dateConfigured,
         });
       }
 
       //console.log(newState);
       this.setState({
-        priceData: newState
+        priceData: newState,
       });
       //console.log(this.state.districts);
     });
 
     // procurement price setting.
-    const priceRef = firebase
-      .database()
-      .ref("settings")
-      .orderByKey();
-    priceRef.on("value", snapshot => {
+    const priceRef = firebase.database().ref("settings").orderByKey();
+    priceRef.on("value", (snapshot) => {
       let priceConfig = "";
-      snapshot.forEach(function(childSnapshot) {
+      snapshot.forEach(function (childSnapshot) {
         priceConfig = childSnapshot.child("pricePerKg").val();
       });
       this.setState({
-        pricePerKg: priceConfig
+        pricePerKg: priceConfig,
       });
       //console.log(this.state.pricePerKg);
     });
   }
 
   populateDistricts = () => {
-    const districtsRef = firebase
-      .database()
-      .ref("settings")
-      .child("districts");
+    const districtsRef = firebase.database().ref("settings").child("districts");
 
-    districtsRef.on("value", snapshot => {
+    districtsRef.on("value", (snapshot) => {
       let items = snapshot.val();
       let newState = [];
       for (let item in items) {
         newState.push({
           id: item,
-          district: items[item].district
+          district: items[item].district,
         });
       }
 
       //console.log(newState);
       this.setState({
-        districts: newState
+        districts: newState,
       });
       //console.log(this.state.districts);
     });
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handlePriceSetting = event => {
+  handlePriceSetting = (event) => {
     event.preventDefault();
 
     //Form validation for adding price setting
@@ -162,9 +155,10 @@ class PriceSettings extends Component {
       const priceConfig = {
         pricePerKg: this.state.pricePerKg,
         district: this.state.district,
+        marketName: this.state.marketName,
         dateConfigured: new Date().toLocaleString("en-GB", {
-          timeZone: "Africa/Maputo"
-        })
+          timeZone: "Africa/Maputo",
+        }),
       };
       // Update price setting info for district
       const priceRef = firebase
@@ -174,17 +168,17 @@ class PriceSettings extends Component {
         .child(this.state.key);
       priceRef
         .update(priceConfig)
-        .then(function() {
+        .then(function () {
           console.log("Synchronization succeeded");
           console.log(this.state);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log("Synchronization failed");
         });
     }
   };
 
-  onEditPrice = id => {
+  onEditPrice = (id) => {
     this.showDialog();
     const key = id;
 
@@ -194,27 +188,29 @@ class PriceSettings extends Component {
       .child("prices")
       .child(key);
 
-    pricingRef.on("value", snapshot => {
+    pricingRef.on("value", (snapshot) => {
       this.setState({
         key: snapshot.key,
         pricePerKg: snapshot.child("pricePerKg").val(),
-        district: snapshot.child("district").val()
+        district: snapshot.child("district").val(),
+        marketName: snapshot.child("marketName").val(),
       });
     });
   };
 
-  onDeletePrice = row => {
-    firebase
-      .database()
-      .ref("settings")
-      .child("prices")
-      .child(row.id)
-      .remove();
+  onDeletePrice = (row) => {
+    firebase.database().ref("settings").child("prices").child(row.id).remove();
   };
 
   render() {
     const { classes } = this.props;
-    const { priceData, pricePerKg, district, districts } = this.state;
+    const {
+      priceData,
+      pricePerKg,
+      district,
+      marketName,
+      districts,
+    } = this.state;
 
     return (
       <Fragment>
@@ -230,10 +226,21 @@ class PriceSettings extends Component {
                     color: "white",
                     background: "midnightblue",
                     fontWeight: "bold",
-                    fontSize: 18
+                    fontSize: 18,
                   }}
                 >
                   District
+                </TableCell>
+
+                <TableCell
+                  style={{
+                    color: "white",
+                    background: "midnightblue",
+                    fontWeight: "bold",
+                    fontSize: 18,
+                  }}
+                >
+                  Market Name
                 </TableCell>
 
                 <TableCell
@@ -242,7 +249,7 @@ class PriceSettings extends Component {
                     color: "white",
                     background: "midnightblue",
                     fontWeight: "bold",
-                    fontSize: 18
+                    fontSize: 18,
                   }}
                 >
                   Price per kg
@@ -253,7 +260,7 @@ class PriceSettings extends Component {
                     color: "white",
                     background: "midnightblue",
                     fontWeight: "bold",
-                    fontSize: 18
+                    fontSize: 18,
                   }}
                 >
                   Modified
@@ -264,7 +271,7 @@ class PriceSettings extends Component {
                     color: "white",
                     background: "midnightblue",
                     fontWeight: "bold",
-                    fontSize: 18
+                    fontSize: 18,
                   }}
                 ></TableCell>
                 <TableCell
@@ -273,20 +280,20 @@ class PriceSettings extends Component {
                     color: "white",
                     background: "midnightblue",
                     fontWeight: "bold",
-                    fontSize: 18
+                    fontSize: 18,
                   }}
                 ></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {priceData.map(row => (
+              {priceData.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell
                     component="th"
                     scope="row"
                     style={{
                       color: "black",
-                      fontSize: 16
+                      fontSize: 16,
                     }}
                   >
                     {row.district}
@@ -297,7 +304,18 @@ class PriceSettings extends Component {
                     scope="row"
                     style={{
                       color: "black",
-                      fontSize: 16
+                      fontSize: 16,
+                    }}
+                  >
+                    {row.marketName}
+                  </TableCell>
+
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    style={{
+                      color: "black",
+                      fontSize: 16,
                     }}
                   >
                     {numeral(row.pricePerKg).format("0,0[.]00")}
@@ -308,7 +326,7 @@ class PriceSettings extends Component {
                     scope="row"
                     style={{
                       color: "black",
-                      fontSize: 16
+                      fontSize: 16,
                     }}
                   >
                     {moment(
@@ -321,7 +339,7 @@ class PriceSettings extends Component {
                     align="left"
                     style={{
                       color: "black",
-                      fontSize: 16
+                      fontSize: 16,
                     }}
                   >
                     <EditIcon onClick={this.onEditPrice.bind(this, row.id)} />
@@ -331,7 +349,7 @@ class PriceSettings extends Component {
                     align="left"
                     style={{
                       color: "black",
-                      fontSize: 16
+                      fontSize: 16,
                     }}
                   >
                     <DeleteIcon onClick={this.onDeletePrice.bind(this, row)} />
@@ -349,14 +367,14 @@ class PriceSettings extends Component {
           aria-labelledby="form-dialog-title"
           onClose={this.closeDialog}
           style={{
-            zoom: "80%"
+            zoom: "80%",
           }}
         >
           <DialogTitle
             id="simple-dialog-title"
             color="default"
             style={{
-              backgroundColor: "white"
+              backgroundColor: "white",
             }}
           >
             <Typography
@@ -390,10 +408,10 @@ class PriceSettings extends Component {
                     fullWidth
                     helperText="Please select district"
                     InputLabelProps={{
-                      shrink: true
+                      shrink: true,
                     }}
                   >
-                    {districts.map(option => (
+                    {districts.map((option) => (
                       <MenuItem key={option.id} value={option.district}>
                         {option.district}
                       </MenuItem>
@@ -402,15 +420,27 @@ class PriceSettings extends Component {
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
+                  <TextField
+                    id="marketName"
+                    name="marketName"
+                    value={marketName}
+                    onChange={this.onChange}
+                    label="Market name"
+                    fullWidth
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
                   <NumberFormat
                     value={pricePerKg}
                     thousandSeparator={true}
                     allowNegative={false}
                     decimalScale={2}
-                    onValueChange={values => {
+                    onValueChange={(values) => {
                       const { floatValue } = values;
                       this.setState({
-                        pricePerKg: floatValue
+                        pricePerKg: floatValue,
                       });
                     }}
                     customInput={TextField}
@@ -429,7 +459,7 @@ class PriceSettings extends Component {
                     fullWidth
                     style={{
                       backgroundColor: "midnightblue",
-                      color: "white"
+                      color: "white",
                     }}
                   >
                     Update price
@@ -450,7 +480,7 @@ class PriceSettings extends Component {
 }
 
 PriceSettings.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(PriceSettings);
