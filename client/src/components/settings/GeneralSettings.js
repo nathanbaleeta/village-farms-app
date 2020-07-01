@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import PriceSettings from "../settings/PricePerKg/PriceSettings";
 
 import DistrictSettings from "./District/DistrictSettings";
+import MarketSettings from "./Market/MarketSettings";
 
 function TabContainer(props) {
   return (
@@ -23,19 +24,19 @@ function TabContainer(props) {
 }
 
 TabContainer.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 const styles = {
   root: {
     flexGrow: 1,
-    maxWidth: "100%"
-  }
+    maxWidth: "100%",
+  },
 };
 
 class GeneralSettings extends React.Component {
   state = {
-    value: 0
+    value: 0,
   };
 
   handleChange = (event, value) => {
@@ -67,7 +68,7 @@ class GeneralSettings extends React.Component {
               label="PRICE PER KG"
               style={{
                 fontWeight: "bold",
-                fontSize: 18
+                fontSize: 18,
               }}
             />
             <Tab
@@ -75,15 +76,15 @@ class GeneralSettings extends React.Component {
               label="LOCATIONS"
               style={{
                 fontWeight: "bold",
-                fontSize: 18
+                fontSize: 18,
               }}
             />
             <Tab
               icon={<GroupIcon />}
-              label="USERS"
+              label="MARKETS"
               style={{
                 fontWeight: "bold",
-                fontSize: 18
+                fontSize: 18,
               }}
             />
           </Tabs>
@@ -99,7 +100,12 @@ class GeneralSettings extends React.Component {
               <DistrictSettings />
             </TabContainer>
           )}
-          {value === 2 && <TabContainer />}
+          {value === 2 && (
+            <TabContainer>
+              <br /> <br />
+              <MarketSettings />
+            </TabContainer>
+          )}
         </Paper>
       </div>
     );
@@ -107,7 +113,7 @@ class GeneralSettings extends React.Component {
 }
 
 GeneralSettings.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(GeneralSettings);
