@@ -120,6 +120,19 @@ export default function MenuAppBar() {
 
       <Divider />
 
+      <Link to="/debitors" className={classes.link}>
+        <ListItem button key={"Debitors"}>
+          <ListItemIcon>
+            <GroupIcon />
+          </ListItemIcon>
+          <Typography variant="body2" gutterBottom>
+            Debitors
+          </Typography>
+        </ListItem>
+      </Link>
+
+      <Divider />
+
       <Link to="/users" className={classes.link}>
         <ListItem button key={"Users"}>
           <ListItemIcon>

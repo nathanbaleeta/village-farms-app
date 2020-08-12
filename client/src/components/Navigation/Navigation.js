@@ -11,6 +11,8 @@ import Analytics from "../analytics/Analytics";
 import FarmerList from "../Farmer/FarmerList";
 import FarmerDetails from "../Farmer/FarmerDetails";
 import EditFarmer from "../Farmer/EditFarmer";
+
+import DebitorsList from "../advances/DebitorsList";
 import ProcurementList from "../procurement/ProcurementList";
 import AdvancesList from "../advances/AdvancesList";
 import SalesList from "../sales/SalesList";
@@ -55,6 +57,8 @@ class Navigation extends Component {
             <Route exact path="/" component={Analytics} />
             <Route exact path="/nathan" component={Nathan} />
             <Route path="/farmers" component={FarmerList} />
+
+            <Route path="/debitors" component={DebitorsList} />
             <Route path="/show/:id" component={FarmerDetails} />
             <Route path="/farmers/edit" component={EditFarmer} />
             <Route path="/procurement" component={ProcurementList} />
