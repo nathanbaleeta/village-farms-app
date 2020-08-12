@@ -11,31 +11,27 @@ import Grid from "@material-ui/core/Grid";
 
 import firebase from "../common/firebase";
 
-const styles = theme => ({});
+const styles = (theme) => ({});
 
 class AcreageCalculator extends Component {
   constructor() {
     super();
     this.state = {
-      acreage: 0
+      acreage: 0,
     };
   }
 
   componentDidMount() {
     // Get mature & immature trees count
-    const query = firebase
-      .database()
-      .ref("farmers")
-      .orderByKey();
-    query.on("value", snapshot => {
+    const query = firebase.database().ref("farmers").orderByKey();
+    query.on("value", (snapshot) => {
       let acreageCounter = 0;
-      snapshot.forEach(function(childSnapshot) {
-        // Hectarage counter; convert string to int
+      snapshot.forEach(function (childSnapshot) {
         acreageCounter =
           acreageCounter + parseFloat(childSnapshot.child("acreage").val());
       });
       this.setState({
-        acreage: acreageCounter.toFixed(2) // Round off to 2 decimal places
+        acreage: acreageCounter.toFixed(2), // Round off to 2 decimal places
       });
     });
   }
@@ -52,7 +48,7 @@ class AcreageCalculator extends Component {
               style={{
                 padding: "20px",
                 background: "orange",
-                color: "white"
+                color: "white",
               }}
             >
               <Grid container spacing={1}>

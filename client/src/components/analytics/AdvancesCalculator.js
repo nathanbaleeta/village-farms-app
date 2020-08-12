@@ -39,7 +39,7 @@ class AdvancesCalculator extends Component {
         });
       });
       this.setState({
-        advanceValue: valueCounter,
+        advanceValue: !valueCounter ? 0 : valueCounter,
       });
     });
   }

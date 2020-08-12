@@ -19,7 +19,6 @@ import Nathan from "../sales/Nathan";
 import Users from "../Accounts/Users";
 
 import GeneralSettings from "../settings/GeneralSettings";
-
 import ProtectedRoute from "./ProtectedRoute";
 
 const styles = (theme) => ({
