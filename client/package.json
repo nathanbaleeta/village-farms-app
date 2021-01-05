@@ -10,7 +10,7 @@
     "@material-ui/lab": "^4.0.0-alpha.48",
     "@material-ui/pickers": "^3.2.5",
     "@material-ui/styles": "^3.0.0-alpha.10",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "date-fns": "^2.1.0",
     "highcharts": "^7.1.1",
     "highcharts-react-official": "^2.1.3",
